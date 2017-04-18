@@ -65,22 +65,22 @@ class HabitCard extends Component {
                 marginTop: 15,
                 marginLeft: 15,
                 marginRight: 15,
-                borderStyle: 'solid',
+                padding: 15,
                 borderColor: '#EEE',
+                borderStyle: 'solid',
                 borderBottomWidth: 3,
-                borderRightWidth: 1,
-                borderLeftWidth: 1
+                borderLeftWidth: 1,
+                borderRightWidth: 1
             }}>
                 <View style={{                      //Top container (Img, title, and info)
                     flex: 10,
                     flexDirection: 'row',
-                    margin: 10,
+                    marginBottom: 10
                 }}>
                     <View style={{                  //IMG container
                         flex: 3,
-                        marginLeft: 15,
+                        alignItems: 'center',
                         marginBottom: -10,
-                        justifyContent: 'flex-end'
                     }}>
                         <Image 
                             source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
@@ -95,7 +95,6 @@ class HabitCard extends Component {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginRight: 15
                     }}>
                         <View style={{                  //Title container
                             flex: 1,
@@ -113,7 +112,8 @@ class HabitCard extends Component {
                             </Text>
                             <Text style={{              //Info
                                 flex: 3,
-                                padding: 5,
+                                textAlign: 'center',
+                                padding: 10,
                                 borderColor: '#CFCFCF',
                                 borderTopWidth: 1,
                                 borderRightWidth: 2,
@@ -128,7 +128,10 @@ class HabitCard extends Component {
                 <View style={{                          //Temporary StreakBar
                     flex: 1,
                     alignSelf: 'stretch',
-                    backgroundColor: '#CCC'
+                    backgroundColor: '#CCC',
+                    height: 12,
+                    marginRight: -15,
+                    marginLeft: -15
                 }} />
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
@@ -143,7 +146,7 @@ class HabitCard extends Component {
                         {this.props.notes}
                     </Text>
 
-                    <View style={{
+                    <View style={{                      //Icons
                         flex: 1,
                         flexDirection: 'row',
                         justifyContent: 'space-between',

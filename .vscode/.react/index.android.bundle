@@ -1315,26 +1315,26 @@ var HabitCard = function (_Component2) {
                         marginTop: 15,
                         marginLeft: 15,
                         marginRight: 15,
-                        borderStyle: 'solid',
+                        padding: 15,
                         borderColor: '#EEE',
+                        borderStyle: 'solid',
                         borderBottomWidth: 3,
-                        borderRightWidth: 1,
-                        borderLeftWidth: 1
+                        borderLeftWidth: 1,
+                        borderRightWidth: 1
                     } },
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: {
                             flex: 10,
                             flexDirection: 'row',
-                            margin: 10
+                            marginBottom: 10
                         } },
                     _react2.default.createElement(
                         _reactNative.View,
                         { style: {
                                 flex: 3,
-                                marginLeft: 15,
-                                marginBottom: -10,
-                                justifyContent: 'flex-end'
+                                alignItems: 'center',
+                                marginBottom: -10
                             } },
                         _react2.default.createElement(_reactNative.Image, {
                             source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
@@ -1349,8 +1349,7 @@ var HabitCard = function (_Component2) {
                                 flex: 4,
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginRight: 15
+                                alignItems: 'center'
                             } },
                         _react2.default.createElement(
                             _reactNative.View,
@@ -1374,7 +1373,8 @@ var HabitCard = function (_Component2) {
                                 _reactNative.Text,
                                 { style: {
                                         flex: 3,
-                                        padding: 5,
+                                        textAlign: 'center',
+                                        padding: 10,
                                         borderColor: '#CFCFCF',
                                         borderTopWidth: 1,
                                         borderRightWidth: 2,
@@ -1389,7 +1389,10 @@ var HabitCard = function (_Component2) {
                 _react2.default.createElement(_reactNative.View, { style: {
                         flex: 1,
                         alignSelf: 'stretch',
-                        backgroundColor: '#CCC'
+                        backgroundColor: '#CCC',
+                        height: 12,
+                        marginRight: -15,
+                        marginLeft: -15
                     } }),
                 _react2.default.createElement(
                     _reactNative.View,
