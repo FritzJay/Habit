@@ -7,7 +7,7 @@ import {
     Image,
     StatusBar
  } from 'react-native';
- import App from 'components/App/App';
+ import App from 'src/components/App/App';
 
 /*
 // --------------------- NAVBAR ------------------------
