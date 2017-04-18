@@ -1310,7 +1310,7 @@ var HabitCard = function (_Component2) {
                 { style: {
                         flex: 1,
                         flexDirection: 'column',
-                        height: 181,
+
                         backgroundColor: 'white',
                         alignSelf: 'stretch',
                         marginTop: 15,
@@ -1612,8 +1612,8 @@ var App = function (_React$Component) {
                         justifyContent: 'flex-start'
                     } },
                 _react2.default.createElement(_reactNative.StatusBar, {
-                    backgroundColor: '#FFF',
-                    barStyle: 'dark-content'
+                    backgroundColor: '#222',
+                    barStyle: 'light-content'
                 }),
                 _react2.default.createElement(NavBar, null),
                 _react2.default.createElement(HabitContainer, {

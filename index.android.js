@@ -60,7 +60,6 @@ class HabitCard extends Component {
             <View style={{                  // Main Container
                 flex: 1,
                 flexDirection: 'column',
-                height: 181,
                 backgroundColor: 'white',
                 alignSelf: 'stretch',
                 marginTop: 15,
@@ -325,8 +324,8 @@ class App extends React.Component {
                 justifyContent: 'flex-start'
             }}>
                 <StatusBar
-                    backgroundColor="#FFF"
-                    barStyle="dark-content"
+                    backgroundColor="#222"
+                    barStyle="light-content"
                 />
                 <NavBar />
                 <HabitContainer 
