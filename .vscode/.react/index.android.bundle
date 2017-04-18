@@ -1310,12 +1310,16 @@ var HabitCard = function (_Component2) {
                 { style: {
                         flex: 1,
                         flexDirection: 'column',
-
                         backgroundColor: 'white',
                         alignSelf: 'stretch',
                         marginTop: 15,
                         marginLeft: 15,
-                        marginRight: 15
+                        marginRight: 15,
+                        borderStyle: 'solid',
+                        borderColor: '#EEE',
+                        borderBottomWidth: 3,
+                        borderRightWidth: 1,
+                        borderLeftWidth: 1
                     } },
                 _react2.default.createElement(
                     _reactNative.View,

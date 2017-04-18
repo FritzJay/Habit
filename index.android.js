@@ -64,7 +64,12 @@ class HabitCard extends Component {
                 alignSelf: 'stretch',
                 marginTop: 15,
                 marginLeft: 15,
-                marginRight: 15
+                marginRight: 15,
+                borderStyle: 'solid',
+                borderColor: '#EEE',
+                borderBottomWidth: 3,
+                borderRightWidth: 1,
+                borderLeftWidth: 1
             }}>
                 <View style={{                      //Top container (Img, title, and info)
                     flex: 10,
