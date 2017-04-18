@@ -49,10 +49,10 @@ router.get('/', function(req, res) {
 
 //Create one api call that returns current users information
 //This will include an array of 3 habits
-router.route('/user')
+router.route('/user/:userId')
   //Gets current users profile and habit info
   .get(function (req, res) {
-    User.findOne({ "_id": "58e5f621734d1d12d73a0e5f" }, function (err, user) {
+    User.findOne({ "_id": req.param.userId }, function (err, user) {
       if (err) {
         res.send(err);
       }
