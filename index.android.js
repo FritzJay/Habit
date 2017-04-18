@@ -75,7 +75,10 @@ class HabitCard extends Component {
                         flex: 1,
                         marginLeft: 15
                     }}>
-                        <Image source={this.props.picture} />
+                        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+                            style={{
+                                width: 80, height: 90
+                        }}/>
                     </View>
 
                     <View style={{                  //Top right container (title, info)
@@ -99,7 +102,7 @@ class HabitCard extends Component {
                             }}> 
                                 {this.props.title}
                             </Text>
-                            <Text style={{              //Details
+                            <Text style={{              //Info
                                 flex: 3,
                                 padding: 5,
                                 borderColor: '#CFCFCF',
@@ -108,7 +111,7 @@ class HabitCard extends Component {
                                 borderLeftWidth: 2,
                                 borderBottomWidth: 3
                             }}>
-                                {this.props.title}
+                                {this.props.info}
                             </Text>
                         </View>
                     </View>
@@ -190,8 +193,8 @@ class HabitContainer extends Component {
                         isActive={habit.isActive}
                         streak={habit.streak}
                         notes={habit.notes}
-                        picture={habits.picture}
-                        info={habits.info}
+                        picture={habit.picture}
+                        info={habit.info}
                         title={habit.title}
                         key={habit.id} 
                     />
