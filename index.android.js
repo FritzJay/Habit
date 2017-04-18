@@ -5,7 +5,7 @@ import { AppRegistry, View, Text, ScrollView } from 'react-native';
 class NavBar extends Component {
     render () {
         return (
-            <View style={{
+            <View style={{                          // Navbar Container
                 borderBottomWidth: 4,
                 borderBottomColor: '#CCC',
                 height: 44, 
@@ -14,14 +14,14 @@ class NavBar extends Component {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <View style={{
+                <View style={{                      // Left hand container
                     flex: 1
                 }}>
                 </View>
-                <View style={{
+                <View style={{                      // Middle container
                     flex: 1
                 }}>
-                    <Text style={{
+                    <Text style={{                  // Title
                         alignSelf: 'center', 
                         fontSize: 22, 
                         color: 'blue'
@@ -29,10 +29,10 @@ class NavBar extends Component {
                         Habit 
                     </Text>
                 </View>
-                <View style={{
+                <View style={{                      // Right container
                     flex: 1
                 }}>
-                    <Text style={{
+                    <Text style={{                  // Menu button
                         alignSelf: 'center'
                     }}>
                         Temp Menu
@@ -50,17 +50,17 @@ class HabitCard extends Component {
 
     render () {
         return (
-            <View style={{
+            <View style={{                  // Main Container
                 width: 343, 
                 height: 181,
                 backgroundColor: 'white',
                 marginTop: 15
             }}>
-                <Text style={{
+                <Text style={{              // Title
                     flex: 1,
 
                 }}> 
-                    {this.props.title} 
+                    {this.props.title}
                 </Text>
             </View>
         )
@@ -73,19 +73,23 @@ class HabitContainer extends Component {
     constructor (props) {
         super(props);
         this.state = { habits: props.habits }
+        
+        // Bind functions to component
         this.handleReload = this.handleReload.bind(this);
     }
 
+    // Set state on componentWillReceiveProps to make sure-
+    // habits can be mapped to a HabitCard via state
     componentWillReceiveProps(props) {
         this.setState({
             habits: props.habits
         })
     }
 
-    //Get user info from database
+    // Get user info from database
     handleReload () {
-        fetch(this.props.url)
-            .then((res) => res.json())
+        fetch(this.props.url)           // fetch from supplied url
+            .then((res) => res.json())  // Get json from fetch
             .then((resJson) => {
                 let newUser = resJson;
                 this.setState({
@@ -102,10 +106,17 @@ class HabitContainer extends Component {
         //Map habits to an array of Card 
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
-                return <HabitCard title={habit.title} key={habit.id} />
+                //Create a habit card for each habit in state.habits
+                return (
+                    <HabitCard 
+                        title={habit.title} 
+                        key={habit.id} 
+                    />
+                )
             });
         }
 
+        //Fill remaining space in habits with empty cards
         while (habits.length < 3) {
             habits.push(
                 <Text key={habits.length + 1}>Empty Card</Text>
@@ -113,7 +124,7 @@ class HabitContainer extends Component {
         }
 
         return(
-            <View style={{
+            <View style={{                      //Habit Container
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignText: 'center',
@@ -135,12 +146,15 @@ class App extends React.Component {
             user: '',
             habits: []
         };
+
+        // bind functions to this component
         this.queryDB = this.queryDB.bind(this);
     }
 
+    //Get's user info from db
     queryDB () {
-        fetch(this.props.url)
-            .then((res) => res.json())
+        fetch(this.props.url)           // fetches info from supplied url
+            .then((res) => res.json())  // gets json from response
             .then((resJson) => {
                 let newUser = resJson;
                 this.setState({
@@ -153,18 +167,22 @@ class App extends React.Component {
             });
     }
 
+    //Query database before component mounts
     componentWillMount () {
         this.queryDB();
     }
 
     render () {
         return (
-            <View style={{
+            <View style={{                          // App container               
                 flexDirection: 'column',
                 justifyContent: 'flex-start'
             }}>
                 <NavBar />
-                <HabitContainer habits={this.state.habits} url={this.props.url} />
+                <HabitContainer 
+                    habits={this.state.habits} 
+                    url={this.props.url} 
+                />
             </View>
         );
     }
