@@ -1285,21 +1285,26 @@ var NavBar = function (_Component) {
 var HabitCard = function (_Component2) {
     babelHelpers.inherits(HabitCard, _Component2);
 
-    function HabitCard() {
+    function HabitCard(props) {
         babelHelpers.classCallCheck(this, HabitCard);
-        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).apply(this, arguments));
+        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).call(this, props));
     }
 
     babelHelpers.createClass(HabitCard, [{
-        key: 'return',
-        value: function _return() {
-            _react2.default.createElement(
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
                 _reactNative.View,
-                { style: { width: 343, height: 181, backgroundColor: 'white' } },
+                { style: {
+                        width: 343,
+                        height: 181,
+                        backgroundColor: 'white',
+                        marginTop: 15
+                    } },
                 _react2.default.createElement(
                     _reactNative.Text,
                     null,
-                    props.title
+                    this.props.title
                 )
             );
         }
@@ -1346,14 +1351,11 @@ var HabitContainer = function (_Component3) {
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
-
             var habits = [];
-            console.log(this.state.habits);
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
-                    return _react2.default.createElement(EmptyCard, { title: _this5.state.habits.title, style: { flex: 1 }, key: habit.id });
+                    return _react2.default.createElement(HabitCard, { title: habit.title, style: { flex: 1 }, key: habit.id });
                 });
             }
 
@@ -1370,7 +1372,7 @@ var HabitContainer = function (_Component3) {
                 { style: {
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        alignItems: 'center',
+                        alignText: 'center',
                         alignSelf: 'center',
                         backgroundColor: '#E6E6E6'
                     } },
@@ -1387,26 +1389,26 @@ var App = function (_React$Component) {
     function App(props) {
         babelHelpers.classCallCheck(this, App);
 
-        var _this6 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this5 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this6.state = {
+        _this5.state = {
             user: '',
             habits: []
         };
-        _this6.queryDB = _this6.queryDB.bind(_this6);
-        return _this6;
+        _this5.queryDB = _this5.queryDB.bind(_this5);
+        return _this5;
     }
 
     babelHelpers.createClass(App, [{
         key: 'queryDB',
         value: function queryDB() {
-            var _this7 = this;
+            var _this6 = this;
 
             fetch(this.props.url).then(function (res) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
-                _this7.setState({
+                _this6.setState({
                     user: newUser,
                     habits: newUser.habits
                 });

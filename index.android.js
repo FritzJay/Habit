@@ -28,10 +28,21 @@ class NavBar extends Component {
 }
 // --------------------- HABITCARD ------------------------
 class HabitCard extends Component {
-    return () {
-        <View style={{width: 343, height: 181, backgroundColor: 'white'}} >
-            <Text>{props.title}</Text>
-        </View>
+    constructor (props) {
+        super(props);
+    }
+
+    render () {
+        return (
+            <View style={{
+                width: 343, 
+                height: 181,
+                backgroundColor: 'white',
+                marginTop: 15
+         }} >
+                <Text>{this.props.title}</Text>
+            </View>
+        )
     }
 }
 
@@ -67,11 +78,10 @@ class HabitContainer extends Component {
 
     render () {
         let habits = [];
-        console.log(this.state.habits);
         //Map habits to an array of Card 
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
-                return <EmptyCard title={this.state.habits.title} style={{flex: 1}} key={habit.id} />
+                return <HabitCard title={habit.title} style={{flex: 1}} key={habit.id} />
             });
         }
 
@@ -85,7 +95,7 @@ class HabitContainer extends Component {
             <View style={{
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center',
+                alignText: 'center',
                 alignSelf: 'center',
                 backgroundColor: '#E6E6E6',
             }}>
