@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, ScrollView } from 'react-native';
+import { 
+    AppRegistry, 
+    View, 
+    Text, 
+    ScrollView,
+    Image
+ } from 'react-native';
 
 // --------------------- NAVBAR ------------------------
 class NavBar extends Component {
@@ -69,7 +75,7 @@ class HabitCard extends Component {
                         flex: 1,
                         marginLeft: 15
                     }}>
-
+                        <Image source={this.props.picture} />
                     </View>
 
                     <View style={{                  //Top right container (title, info)
@@ -177,9 +183,16 @@ class HabitContainer extends Component {
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
                 //Create a habit card for each habit in state.habits
+                console.log(habit);
                 return (
                     <HabitCard 
-                        title={habit.title} 
+                        isLoved={habit.isLoved}
+                        isActive={habit.isActive}
+                        streak={habit.streak}
+                        notes={habit.notes}
+                        picture={habits.picture}
+                        info={habits.info}
+                        title={habit.title}
                         key={habit.id} 
                     />
                 )

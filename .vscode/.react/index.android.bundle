@@ -1324,10 +1324,14 @@ var HabitCard = function (_Component2) {
                             flexDirection: 'row',
                             margin: 10
                         } },
-                    _react2.default.createElement(_reactNative.View, { style: {
-                            flex: 1,
-                            marginLeft: 15
-                        } }),
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 1,
+                                marginLeft: 15
+                            } },
+                        _react2.default.createElement(_reactNative.Image, { source: this.props.picture })
+                    ),
                     _react2.default.createElement(
                         _reactNative.View,
                         { style: {
@@ -1459,8 +1463,10 @@ var HabitContainer = function (_Component4) {
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
+                    console.log(habit);
                     return _react2.default.createElement(HabitCard, {
                         title: habit.title,
+
                         key: habit.id
                     });
                 });
