@@ -1318,12 +1318,58 @@ var HabitCard = function (_Component2) {
                         marginRight: 15
                     } },
                 _react2.default.createElement(
-                    _reactNative.Text,
+                    _reactNative.View,
                     { style: {
-                            flex: 1
-
+                            flex: 1,
+                            flexDirection: 'row',
+                            margin: 10
                         } },
-                    this.props.title
+                    _react2.default.createElement(_reactNative.View, { style: {
+                            flex: 1,
+                            marginLeft: 15
+                        } }),
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 2,
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginRight: 15
+                            } },
+                        _react2.default.createElement(
+                            _reactNative.View,
+                            { style: {
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end'
+                                } },
+                            _react2.default.createElement(
+                                _reactNative.Text,
+                                { style: {
+                                        flex: 1,
+                                        borderStyle: 'solid',
+                                        borderBottomColor: '#CFCFCF',
+                                        borderBottomWidth: 1,
+                                        marginBottom: 5
+                                    } },
+                                this.props.title
+                            ),
+                            _react2.default.createElement(
+                                _reactNative.Text,
+                                { style: {
+                                        flex: 3,
+                                        padding: 5,
+                                        borderColor: '#CFCFCF',
+                                        borderTopWidth: 1,
+                                        borderRightWidth: 2,
+                                        borderLeftWidth: 2,
+                                        borderBottomWidth: 3
+                                    } },
+                                this.props.title
+                            )
+                        )
+                    )
                 )
             );
         }

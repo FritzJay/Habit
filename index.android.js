@@ -60,12 +60,53 @@ class HabitCard extends Component {
                 marginLeft: 15,
                 marginRight: 15
             }}>
-                <Text style={{              // Title
+                <View style={{                      //Top container (Img, title, and info)
                     flex: 1,
+                    flexDirection: 'row',
+                    margin: 10,
+                }}>
+                    <View style={{                  //IMG container
+                        flex: 1,
+                        marginLeft: 15
+                    }}>
 
-                }}> 
-                    {this.props.title}
-                </Text>
+                    </View>
+
+                    <View style={{                  //Top right container (title, info)
+                        flex: 2,
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginRight: 15
+                    }}>
+                        <View style={{                  //Title container
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'flex-end'
+                        }}>
+                            <Text style={{              // Title
+                                flex: 1,
+                                borderStyle: 'solid',
+                                borderBottomColor: '#CFCFCF',
+                                borderBottomWidth: 1,
+                                marginBottom: 5,
+                            }}> 
+                                {this.props.title}
+                            </Text>
+                            <Text style={{              //Details
+                                flex: 3,
+                                padding: 5,
+                                borderColor: '#CFCFCF',
+                                borderTopWidth: 1,
+                                borderRightWidth: 2,
+                                borderLeftWidth: 2,
+                                borderBottomWidth: 3
+                            }}>
+                                {this.props.title}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
             </View>
         )
     }
