@@ -1303,7 +1303,10 @@ var HabitCard = function (_Component2) {
                     } },
                 _react2.default.createElement(
                     _reactNative.Text,
-                    null,
+                    { style: {
+                            flex: 1
+
+                        } },
                     this.props.title
                 )
             );
@@ -1355,14 +1358,14 @@ var HabitContainer = function (_Component3) {
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
-                    return _react2.default.createElement(HabitCard, { title: habit.title, style: { flex: 1 }, key: habit.id });
+                    return _react2.default.createElement(HabitCard, { title: habit.title, key: habit.id });
                 });
             }
 
             while (habits.length < 3) {
                 habits.push(_react2.default.createElement(
                     _reactNative.Text,
-                    { style: { flex: 1 }, key: habits.length + 1 },
+                    { key: habits.length + 1 },
                     'Empty Card'
                 ));
             }

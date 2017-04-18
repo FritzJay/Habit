@@ -14,13 +14,29 @@ class NavBar extends Component {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <View style={{flex: 1}}>
+                <View style={{
+                    flex: 1
+                }}>
                 </View>
-                <View style={{flex: 1}}>
-                    <Text style={{alignSelf: 'center', fontSize: 22, color: 'blue'}}>Habit</Text>
+                <View style={{
+                    flex: 1
+                }}>
+                    <Text style={{
+                        alignSelf: 'center', 
+                        fontSize: 22, 
+                        color: 'blue'
+                    }}> 
+                        Habit 
+                    </Text>
                 </View>
-                <View style={{flex: 1}}>
-                    <Text style={{alignSelf: 'center'}}>Temp Menu</Text>
+                <View style={{
+                    flex: 1
+                }}>
+                    <Text style={{
+                        alignSelf: 'center'
+                    }}>
+                        Temp Menu
+                    </Text>
                 </View>
             </View>
         );
@@ -39,8 +55,13 @@ class HabitCard extends Component {
                 height: 181,
                 backgroundColor: 'white',
                 marginTop: 15
-         }} >
-                <Text>{this.props.title}</Text>
+            }}>
+                <Text style={{
+                    flex: 1,
+
+                }}> 
+                    {this.props.title} 
+                </Text>
             </View>
         )
     }
@@ -81,13 +102,13 @@ class HabitContainer extends Component {
         //Map habits to an array of Card 
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
-                return <HabitCard title={habit.title} style={{flex: 1}} key={habit.id} />
+                return <HabitCard title={habit.title} key={habit.id} />
             });
         }
 
         while (habits.length < 3) {
             habits.push(
-                <Text style={{flex: 1}} key={habits.length + 1}>Empty Card</Text>
+                <Text key={habits.length + 1}>Empty Card</Text>
             );
         }
 
@@ -138,7 +159,10 @@ class App extends React.Component {
 
     render () {
         return (
-            <View style={{flexDirection: 'column', justifyContent: 'flex-start'}}>
+            <View style={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start'
+            }}>
                 <NavBar />
                 <HabitContainer habits={this.state.habits} url={this.props.url} />
             </View>
