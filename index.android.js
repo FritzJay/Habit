@@ -125,9 +125,51 @@ class HabitCard extends Component {
                     alignSelf: 'stretch',
                     backgroundColor: '#CCC'
                 }} />
-                <View style={{                          //Bottom Container (streak bar, notes, icons, streak)
-                    flex: 3
+                <View style={{                          //Bottom Container (notes, icons, streak)
+                    flex: 3,
+                    flexDirection: 'row',
+                    alignItems: 'center'
                 }}>
+
+                    <Text style={{                      //Notes
+                        marginLeft: 15,
+                        flex: 1,
+                    }}>
+                        {this.props.notes}
+                    </Text>
+
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginRight: 15
+                    }}>
+                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                            style={{
+                                width: 20, 
+                                height: 20
+                            }}
+                        />
+                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                            style={{
+                                width: 20, 
+                                height: 20
+                            }}
+                        />
+                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                            style={{
+                                width: 20, 
+                                height: 20
+                            }}
+                        />
+                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                            style={{
+                                width: 20, 
+                                height: 20
+                            }}
+                        />
+                    </View>
+
                 </View>
             </View>
         )

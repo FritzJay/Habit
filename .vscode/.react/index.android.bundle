@@ -1387,9 +1387,55 @@ var HabitCard = function (_Component2) {
                         alignSelf: 'stretch',
                         backgroundColor: '#CCC'
                     } }),
-                _react2.default.createElement(_reactNative.View, { style: {
-                        flex: 3
-                    } })
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 3,
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        } },
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: {
+                                marginLeft: 15,
+                                flex: 1
+                            } },
+                        this.props.notes
+                    ),
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginRight: 15
+                            } },
+                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        })
+                    )
+                )
             );
         }
     }]);
