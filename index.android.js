@@ -7,7 +7,9 @@ import {
     Image,
     StatusBar
  } from 'react-native';
+ import App from 'components/App/App';
 
+/*
 // --------------------- NAVBAR ------------------------
 class NavBar extends Component {
     render () {
@@ -343,7 +345,7 @@ class App extends React.Component {
             </View>
         );
     }
-}
+}*/
 
 // --------------------- HABIT ------------------------
 class Habit extends Component {
