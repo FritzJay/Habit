@@ -136,7 +136,7 @@ class HabitCard extends Component {
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
                     flexDirection: 'row',
-                    alignItems: 'center'
+                    marginTop: 10
                 }}>
 
                     <Text style={{                      //Notes

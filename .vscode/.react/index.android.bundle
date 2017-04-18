@@ -1399,7 +1399,7 @@ var HabitCard = function (_Component2) {
                     { style: {
                             flex: 3,
                             flexDirection: 'row',
-                            alignItems: 'center'
+                            marginTop: 10
                         } },
                     _react2.default.createElement(
                         _reactNative.Text,
