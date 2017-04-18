@@ -51,10 +51,14 @@ class HabitCard extends Component {
     render () {
         return (
             <View style={{                  // Main Container
-                width: 343, 
+                flex: 1,
+                flexDirection: 'column',
                 height: 181,
                 backgroundColor: 'white',
-                marginTop: 15
+                alignSelf: 'stretch',
+                marginTop: 15,
+                marginLeft: 15,
+                marginRight: 15
             }}>
                 <Text style={{              // Title
                     flex: 1,
@@ -92,6 +96,7 @@ class HabitContainer extends Component {
             .then((res) => res.json())  // Get json from fetch
             .then((resJson) => {
                 let newUser = resJson;
+                console.log('Successfully reloaded: ' + resJson);                
                 this.setState({
                     habits: newUser.habits
                 });
@@ -119,16 +124,17 @@ class HabitContainer extends Component {
         //Fill remaining space in habits with empty cards
         while (habits.length < 3) {
             habits.push(
-                <Text key={habits.length + 1}>Empty Card</Text>
+                <Text style={{flex:1}} key={habits.length + 1}>Empty Card</Text>
             );
         }
 
         return(
             <View style={{                      //Habit Container
+                flex: 1,
                 flexDirection: 'column',
-                justifyContent: 'center',
-                alignText: 'center',
-                alignSelf: 'center',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                alignSelf: 'stretch',
                 backgroundColor: '#E6E6E6',
             }}>
                 {habits}
@@ -157,6 +163,7 @@ class App extends React.Component {
             .then((res) => res.json())  // gets json from response
             .then((resJson) => {
                 let newUser = resJson;
+                console.log('Successfully queried db: ' + resJson);
                 this.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -174,7 +181,8 @@ class App extends React.Component {
 
     render () {
         return (
-            <View style={{                          // App container               
+            <View style={{                          // App container
+                flex: 1,       
                 flexDirection: 'column',
                 justifyContent: 'flex-start'
             }}>
@@ -192,8 +200,8 @@ class App extends React.Component {
 class Habit extends Component {
   render() {
     return (
-        <View>
-            <App url="http://192.168.0.107:3001/api/user" />
+        <View style={{flex:1}}>
+            <App url="http://172.20.10.2:3001/api/user" />
         </View>
     );
   }

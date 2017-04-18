@@ -1257,22 +1257,34 @@ var NavBar = function (_Component) {
                         justifyContent: 'space-between',
                         alignItems: 'center'
                     } },
-                _react2.default.createElement(_reactNative.View, { style: { flex: 1 } }),
+                _react2.default.createElement(_reactNative.View, { style: {
+                        flex: 1
+                    } }),
                 _react2.default.createElement(
                     _reactNative.View,
-                    { style: { flex: 1 } },
+                    { style: {
+                            flex: 1
+                        } },
                     _react2.default.createElement(
                         _reactNative.Text,
-                        { style: { alignSelf: 'center', fontSize: 22, color: 'blue' } },
+                        { style: {
+                                alignSelf: 'center',
+                                fontSize: 22,
+                                color: 'blue'
+                            } },
                         'Habit'
                     )
                 ),
                 _react2.default.createElement(
                     _reactNative.View,
-                    { style: { flex: 1 } },
+                    { style: {
+                            flex: 1
+                        } },
                     _react2.default.createElement(
                         _reactNative.Text,
-                        { style: { alignSelf: 'center' } },
+                        { style: {
+                                alignSelf: 'center'
+                            } },
                         'Temp Menu'
                     )
                 )
@@ -1296,10 +1308,14 @@ var HabitCard = function (_Component2) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
-                        width: 343,
+                        flex: 1,
+                        flexDirection: 'column',
                         height: 181,
                         backgroundColor: 'white',
-                        marginTop: 15
+                        alignSelf: 'stretch',
+                        marginTop: 15,
+                        marginLeft: 15,
+                        marginRight: 15
                     } },
                 _react2.default.createElement(
                     _reactNative.Text,
@@ -1324,6 +1340,7 @@ var HabitContainer = function (_Component3) {
         var _this3 = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
 
         _this3.state = { habits: props.habits };
+
         _this3.handleReload = _this3.handleReload.bind(_this3);
         return _this3;
     }
@@ -1344,6 +1361,7 @@ var HabitContainer = function (_Component3) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
+                console.log('Successfully reloaded: ' + resJson);
                 _this4.setState({
                     habits: newUser.habits
                 });
@@ -1358,14 +1376,17 @@ var HabitContainer = function (_Component3) {
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
-                    return _react2.default.createElement(HabitCard, { title: habit.title, key: habit.id });
+                    return _react2.default.createElement(HabitCard, {
+                        title: habit.title,
+                        key: habit.id
+                    });
                 });
             }
 
             while (habits.length < 3) {
                 habits.push(_react2.default.createElement(
                     _reactNative.Text,
-                    { key: habits.length + 1 },
+                    { style: { flex: 1 }, key: habits.length + 1 },
                     'Empty Card'
                 ));
             }
@@ -1373,10 +1394,11 @@ var HabitContainer = function (_Component3) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
+                        flex: 1,
                         flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignText: 'center',
-                        alignSelf: 'center',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        alignSelf: 'stretch',
                         backgroundColor: '#E6E6E6'
                     } },
                 habits
@@ -1398,6 +1420,7 @@ var App = function (_React$Component) {
             user: '',
             habits: []
         };
+
         _this5.queryDB = _this5.queryDB.bind(_this5);
         return _this5;
     }
@@ -1411,6 +1434,7 @@ var App = function (_React$Component) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
+                console.log('Successfully queried db: ' + resJson);
                 _this6.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -1429,9 +1453,16 @@ var App = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 _reactNative.View,
-                { style: { flexDirection: 'column', justifyContent: 'flex-start' } },
+                { style: {
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start'
+                    } },
                 _react2.default.createElement(NavBar, null),
-                _react2.default.createElement(HabitContainer, { habits: this.state.habits, url: this.props.url })
+                _react2.default.createElement(HabitContainer, {
+                    habits: this.state.habits,
+                    url: this.props.url
+                })
             );
         }
     }]);
@@ -1451,8 +1482,8 @@ var Habit = function (_Component4) {
         value: function render() {
             return _react2.default.createElement(
                 _reactNative.View,
-                null,
-                _react2.default.createElement(App, { url: 'http://192.168.0.107:3001/api/user' })
+                { style: { flex: 1 } },
+                _react2.default.createElement(App, { url: 'http://172.20.10.2:3001/api/user' })
             );
         }
     }]);
