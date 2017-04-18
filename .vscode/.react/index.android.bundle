@@ -1320,25 +1320,29 @@ var HabitCard = function (_Component2) {
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: {
-                            flex: 1,
+                            flex: 10,
                             flexDirection: 'row',
                             margin: 10
                         } },
                     _react2.default.createElement(
                         _reactNative.View,
                         { style: {
-                                flex: 1,
-                                marginLeft: 15
+                                flex: 3,
+                                marginLeft: 15,
+                                marginBottom: -10,
+                                justifyContent: 'flex-end'
                             } },
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                        _react2.default.createElement(_reactNative.Image, {
+                            source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
                             style: {
-                                width: 80, height: 90
+                                width: 100,
+                                height: 120
                             } })
                     ),
                     _react2.default.createElement(
                         _reactNative.View,
                         { style: {
-                                flex: 2,
+                                flex: 4,
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
@@ -1377,7 +1381,15 @@ var HabitCard = function (_Component2) {
                             )
                         )
                     )
-                )
+                ),
+                _react2.default.createElement(_reactNative.View, { style: {
+                        flex: 1,
+                        alignSelf: 'stretch',
+                        backgroundColor: '#CCC'
+                    } }),
+                _react2.default.createElement(_reactNative.View, { style: {
+                        flex: 3
+                    } })
             );
         }
     }]);

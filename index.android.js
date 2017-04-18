@@ -67,22 +67,26 @@ class HabitCard extends Component {
                 marginRight: 15
             }}>
                 <View style={{                      //Top container (Img, title, and info)
-                    flex: 1,
+                    flex: 10,
                     flexDirection: 'row',
                     margin: 10,
                 }}>
                     <View style={{                  //IMG container
-                        flex: 1,
-                        marginLeft: 15
+                        flex: 3,
+                        marginLeft: 15,
+                        marginBottom: -10,
+                        justifyContent: 'flex-end'
                     }}>
-                        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+                        <Image 
+                            source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
                             style={{
-                                width: 80, height: 90
+                                width: 100, 
+                                height: 120
                         }}/>
                     </View>
 
                     <View style={{                  //Top right container (title, info)
-                        flex: 2,
+                        flex: 4,
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         alignItems: 'center',
@@ -115,6 +119,15 @@ class HabitCard extends Component {
                             </Text>
                         </View>
                     </View>
+                </View>
+                <View style={{                          //Temporary StreakBar
+                    flex: 1,
+                    alignSelf: 'stretch',
+                    backgroundColor: '#CCC'
+                }} />
+                <View style={{                          //Bottom Container (streak bar, notes, icons, streak)
+                    flex: 3
+                }}>
                 </View>
             </View>
         )
