@@ -1,3 +1,5 @@
+//config holds connection and user info
+import config from '../config';
 import React, { Component } from 'react';
 import HabitContainer from '/HabitContainer/HabitContainer';
 import NavBar from '/NavBar/NavBar';
