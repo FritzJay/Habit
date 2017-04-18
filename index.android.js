@@ -144,7 +144,7 @@ class HabitCard extends Component {
                         justifyContent: 'space-between',
                         marginRight: 15
                     }}>
-                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                        <Image source={require('./images/Heart.svg') }
                             style={{
                                 width: 20, 
                                 height: 20
