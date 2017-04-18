@@ -1249,7 +1249,10 @@ var NavBar = function (_Component) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
-                        height: 44, backgroundColor: 'white',
+                        borderBottomWidth: 4,
+                        borderBottomColor: '#CCC',
+                        height: 44,
+                        backgroundColor: 'white',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center'
@@ -1290,7 +1293,15 @@ var HabitCard = function (_Component2) {
     babelHelpers.createClass(HabitCard, [{
         key: 'return',
         value: function _return() {
-            _react2.default.createElement(_reactNative.View, { style: { width: 343, height: 181, backgroundColor: 'white' } });
+            _react2.default.createElement(
+                _reactNative.View,
+                { style: { width: 343, height: 181, backgroundColor: 'white' } },
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    props.title
+                )
+            );
         }
     }]);
     return HabitCard;
@@ -1335,16 +1346,14 @@ var HabitContainer = function (_Component3) {
     }, {
         key: 'render',
         value: function render() {
+            var _this5 = this;
+
             var habits = [];
             console.log(this.state.habits);
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
-                    return _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: { flex: 1 }, key: habit.id },
-                        habit.title
-                    );
+                    return _react2.default.createElement(EmptyCard, { title: _this5.state.habits.title, style: { flex: 1 }, key: habit.id });
                 });
             }
 
@@ -1359,10 +1368,11 @@ var HabitContainer = function (_Component3) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
-                        flex: 3,
                         flexDirection: 'column',
-
-                        alignSelf: 'center'
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        backgroundColor: '#E6E6E6'
                     } },
                 habits
             );
@@ -1377,26 +1387,26 @@ var App = function (_React$Component) {
     function App(props) {
         babelHelpers.classCallCheck(this, App);
 
-        var _this5 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this6 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this5.state = {
+        _this6.state = {
             user: '',
             habits: []
         };
-        _this5.queryDB = _this5.queryDB.bind(_this5);
-        return _this5;
+        _this6.queryDB = _this6.queryDB.bind(_this6);
+        return _this6;
     }
 
     babelHelpers.createClass(App, [{
         key: 'queryDB',
         value: function queryDB() {
-            var _this6 = this;
+            var _this7 = this;
 
             fetch(this.props.url).then(function (res) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
-                _this6.setState({
+                _this7.setState({
                     user: newUser,
                     habits: newUser.habits
                 });
@@ -1414,7 +1424,7 @@ var App = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 _reactNative.View,
-                { style: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start' } },
+                { style: { flexDirection: 'column', justifyContent: 'flex-start' } },
                 _react2.default.createElement(NavBar, null),
                 _react2.default.createElement(HabitContainer, { habits: this.state.habits, url: this.props.url })
             );

@@ -6,7 +6,10 @@ class NavBar extends Component {
     render () {
         return (
             <View style={{
-                height: 44, backgroundColor: 'white',
+                borderBottomWidth: 4,
+                borderBottomColor: '#CCC',
+                height: 44, 
+                backgroundColor: 'white',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center'
@@ -27,7 +30,7 @@ class NavBar extends Component {
 class HabitCard extends Component {
     return () {
         <View style={{width: 343, height: 181, backgroundColor: 'white'}} >
-
+            <Text>{props.title}</Text>
         </View>
     }
 }
@@ -68,7 +71,7 @@ class HabitContainer extends Component {
         //Map habits to an array of Card 
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
-                return <Text style={{flex: 1}}key={habit.id}>{habit.title}</Text>
+                return <EmptyCard title={this.state.habits.title} style={{flex: 1}} key={habit.id} />
             });
         }
 
@@ -80,11 +83,11 @@ class HabitContainer extends Component {
 
         return(
             <View style={{
-                flex: 3,
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                alignSelf: 'center'
+                alignSelf: 'center',
+                backgroundColor: '#E6E6E6',
             }}>
                 {habits}
             </View>
@@ -125,7 +128,7 @@ class App extends React.Component {
 
     render () {
         return (
-            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start'}}>
+            <View style={{flexDirection: 'column', justifyContent: 'flex-start'}}>
                 <NavBar />
                 <HabitContainer habits={this.state.habits} url={this.props.url} />
             </View>
