@@ -4,7 +4,8 @@ import {
     View, 
     Text, 
     ScrollView,
-    Image
+    Image,
+    StatusBar
  } from 'react-native';
 
 // --------------------- NAVBAR ------------------------
@@ -13,7 +14,7 @@ class NavBar extends Component {
         return (
             <View style={{                          // Navbar Container
                 borderBottomWidth: 4,
-                borderBottomColor: '#CCC',
+                borderBottomColor: '#EEE',
                 height: 44, 
                 backgroundColor: 'white',
                 flexDirection: 'row',
@@ -144,12 +145,7 @@ class HabitCard extends Component {
                         justifyContent: 'space-between',
                         marginRight: 15
                     }}>
-                        <Image source={require('./images/Heart.svg') }
-                            style={{
-                                width: 20, 
-                                height: 20
-                            }}
-                        />
+
                         <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
                             style={{
                                 width: 20, 
@@ -276,7 +272,7 @@ class HabitContainer extends Component {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     alignSelf: 'stretch',
-                    backgroundColor: '#E6E6E6',
+                    backgroundColor: '#F9F9F9',
                 }}>
                     {habits}
                 </View>
@@ -328,6 +324,10 @@ class App extends React.Component {
                 flexDirection: 'column',
                 justifyContent: 'flex-start'
             }}>
+                <StatusBar
+                    backgroundColor="#FFF"
+                    barStyle="dark-content"
+                />
                 <NavBar />
                 <HabitContainer 
                     habits={this.state.habits} 
@@ -343,7 +343,7 @@ class Habit extends Component {
   render() {
     return (
         <View style={{flex:1}}>
-            <App url="http://172.20.10.2:3001/api/user" />
+            <App url="http://192.168.0.101:3001/api/user" />
         </View>
     );
   }
