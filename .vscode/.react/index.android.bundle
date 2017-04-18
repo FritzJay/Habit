@@ -1331,18 +1331,55 @@ var HabitCard = function (_Component2) {
     return HabitCard;
 }(_react.Component);
 
-var HabitContainer = function (_Component3) {
-    babelHelpers.inherits(HabitContainer, _Component3);
+var EmptyCard = function (_Component3) {
+    babelHelpers.inherits(EmptyCard, _Component3);
+
+    function EmptyCard() {
+        babelHelpers.classCallCheck(this, EmptyCard);
+        return babelHelpers.possibleConstructorReturn(this, (EmptyCard.__proto__ || Object.getPrototypeOf(EmptyCard)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(EmptyCard, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        flex: 1,
+                        flexDirection: 'column',
+                        height: 181,
+                        backgroundColor: 'white',
+                        alignSelf: 'stretch',
+                        marginTop: 15,
+                        marginLeft: 15,
+                        marginRight: 15
+                    } },
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: {
+                            flex: 1
+
+                        } },
+                    'Empty Card'
+                )
+            );
+        }
+    }]);
+    return EmptyCard;
+}(_react.Component);
+
+var HabitContainer = function (_Component4) {
+    babelHelpers.inherits(HabitContainer, _Component4);
 
     function HabitContainer(props) {
         babelHelpers.classCallCheck(this, HabitContainer);
 
-        var _this3 = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
+        var _this4 = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
 
-        _this3.state = { habits: props.habits };
+        _this4.state = { habits: props.habits };
 
-        _this3.handleReload = _this3.handleReload.bind(_this3);
-        return _this3;
+        _this4.handleReload = _this4.handleReload.bind(_this4);
+        return _this4;
     }
 
     babelHelpers.createClass(HabitContainer, [{
@@ -1355,14 +1392,14 @@ var HabitContainer = function (_Component3) {
     }, {
         key: 'handleReload',
         value: function handleReload() {
-            var _this4 = this;
+            var _this5 = this;
 
             fetch(this.props.url).then(function (res) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
                 console.log('Successfully reloaded: ' + resJson);
-                _this4.setState({
+                _this5.setState({
                     habits: newUser.habits
                 });
             }).catch(function (err) {
@@ -1384,24 +1421,26 @@ var HabitContainer = function (_Component3) {
             }
 
             while (habits.length < 3) {
-                habits.push(_react2.default.createElement(
-                    _reactNative.Text,
-                    { style: { flex: 1 }, key: habits.length + 1 },
-                    'Empty Card'
-                ));
+                habits.push(_react2.default.createElement(EmptyCard, null));
             }
 
             return _react2.default.createElement(
-                _reactNative.View,
+                _reactNative.ScrollView,
                 { style: {
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        alignSelf: 'stretch',
-                        backgroundColor: '#E6E6E6'
+                        flex: 1
                     } },
-                habits
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            alignSelf: 'stretch',
+                            backgroundColor: '#E6E6E6'
+                        } },
+                    habits
+                )
             );
         }
     }]);
@@ -1414,28 +1453,28 @@ var App = function (_React$Component) {
     function App(props) {
         babelHelpers.classCallCheck(this, App);
 
-        var _this5 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this6 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this5.state = {
+        _this6.state = {
             user: '',
             habits: []
         };
 
-        _this5.queryDB = _this5.queryDB.bind(_this5);
-        return _this5;
+        _this6.queryDB = _this6.queryDB.bind(_this6);
+        return _this6;
     }
 
     babelHelpers.createClass(App, [{
         key: 'queryDB',
         value: function queryDB() {
-            var _this6 = this;
+            var _this7 = this;
 
             fetch(this.props.url).then(function (res) {
                 return res.json();
             }).then(function (resJson) {
                 var newUser = resJson;
                 console.log('Successfully queried db: ' + resJson);
-                _this6.setState({
+                _this7.setState({
                     user: newUser,
                     habits: newUser.habits
                 });
@@ -1469,8 +1508,8 @@ var App = function (_React$Component) {
     return App;
 }(_react2.default.Component);
 
-var Habit = function (_Component4) {
-    babelHelpers.inherits(Habit, _Component4);
+var Habit = function (_Component5) {
+    babelHelpers.inherits(Habit, _Component5);
 
     function Habit() {
         babelHelpers.classCallCheck(this, Habit);

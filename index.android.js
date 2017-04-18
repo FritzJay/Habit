@@ -71,6 +71,30 @@ class HabitCard extends Component {
     }
 }
 
+// --------------------- EMPTYCARD -----------------------------
+class EmptyCard extends Component {
+    render () {
+        return (
+            <View style={{                  // Main Container
+                flex: 1,
+                flexDirection: 'column',
+                height: 181,
+                backgroundColor: 'white',
+                alignSelf: 'stretch',
+                marginTop: 15,
+                marginLeft: 15,
+                marginRight: 15
+            }}>
+                <Text style={{              // Title
+                    flex: 1,
+
+                }}> 
+                    Empty Card
+                </Text>
+            </View>
+        )
+    }
+}
 
 // --------------------- HABITCONTAINER ------------------------
 class HabitContainer extends Component {
@@ -124,21 +148,25 @@ class HabitContainer extends Component {
         //Fill remaining space in habits with empty cards
         while (habits.length < 3) {
             habits.push(
-                <Text style={{flex:1}} key={habits.length + 1}>Empty Card</Text>
+                <EmptyCard />    
             );
         }
 
         return(
-            <View style={{                      //Habit Container
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                alignSelf: 'stretch',
-                backgroundColor: '#E6E6E6',
+            <ScrollView style={{
+                flex:1
             }}>
-                {habits}
-            </View>
+                <View style={{                      //Habit Container
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    alignSelf: 'stretch',
+                    backgroundColor: '#E6E6E6',
+                }}>
+                    {habits}
+                </View>
+            </ScrollView>
         );
     }
 }
