@@ -148,7 +148,9 @@ class HabitContainer extends Component {
         //Fill remaining space in habits with empty cards
         while (habits.length < 3) {
             habits.push(
-                <EmptyCard />    
+                <EmptyCard 
+                    key={habits.length + 1}
+                />    
             );
         }
 

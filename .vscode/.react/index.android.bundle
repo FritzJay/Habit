@@ -1421,7 +1421,9 @@ var HabitContainer = function (_Component4) {
             }
 
             while (habits.length < 3) {
-                habits.push(_react2.default.createElement(EmptyCard, null));
+                habits.push(_react2.default.createElement(EmptyCard, {
+                    key: habits.length + 1
+                }));
             }
 
             return _react2.default.createElement(
