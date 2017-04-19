@@ -12,6 +12,7 @@ export default class HabitCard extends Component {
     }
 
     render () {
+        console.log(this.props.picture);
         return (
             <View style={{                  // Main Container
                 flex: 1,
@@ -25,6 +26,7 @@ export default class HabitCard extends Component {
                 borderColor: '#EEE',
                 borderStyle: 'solid',
                 borderBottomWidth: 3,
+                borderLeftColor: '#FFF',
                 borderLeftWidth: 1,
                 borderRightWidth: 1
             }}>
@@ -109,7 +111,7 @@ export default class HabitCard extends Component {
                         marginRight: 15
                     }}>
 
-                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                        <Image source={{ uri: this.props.picture }}
                             style={{
                                 width: 20, 
                                 height: 20
