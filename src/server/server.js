@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
  });
 
 //Serve static files
-app.use(express.static('public'))
+app.use(express.static('src/server/public'))
 
 //Setup router
 router.get('/', function(req, res) {
