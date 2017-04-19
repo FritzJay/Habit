@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
 router.route('/users/:userId')
   //Gets users profile and habit info
   .get(function (req, res) {
-    User.findOne({ "_id": req.param.userId }, function (err, user) {
+    User.findOne({ id: req.param.userId }, function (err, user) {
       if (err) {
         res.send(err);
       }

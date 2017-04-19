@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text,
-    ScrollView 
+    ScrollView,
+    AppRegistry 
 } from 'react-native';
-import HabitCard from 'HabitCard/HabitCard';
-import EmptyCard from 'EmptyCard/EmptyCard';
+import HabitCard from '../HabitCard/HabitCard';
+import EmptyCard from '../EmptyCard/EmptyCard';
 
 export default class HabitContainer extends Component {
     constructor (props) {

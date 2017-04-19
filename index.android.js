@@ -7,7 +7,8 @@ import {
     Image,
     StatusBar
  } from 'react-native';
- import App from 'src/components/App/App';
+ import App from './src/components/App/App';
+ import Config from './src/config';
 
 /*
 // --------------------- NAVBAR ------------------------
@@ -352,7 +353,7 @@ class Habit extends Component {
   render() {
     return (
         <View style={{flex:1}}>
-            <App url="http://192.168.0.101:3001/api/user" />
+            <App url={"http://" + Config.ip + ":3001/api/users/58e5f621734d1d12d73a0e5f"} />
         </View>
     );
   }

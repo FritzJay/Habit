@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { 
     View, 
-    Text
+    Text,
+    AppRegistry
 } from 'react-native';
 
 export default class NavBar extends Component {

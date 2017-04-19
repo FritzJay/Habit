@@ -1,11 +1,12 @@
 //config holds connection and user info
-import config from '../config';
+import config from '../../config';
 import React, { Component } from 'react';
-import HabitContainer from '/HabitContainer/HabitContainer';
-import NavBar from '/NavBar/NavBar';
+import HabitContainer from '../HabitContainer/HabitContainer';
+import NavBar from '../NavBar/NavBar';
 import {
    View,
-   StatusBar
+   StatusBar,
+    AppRegistry
 } from 'react-native';
 
 

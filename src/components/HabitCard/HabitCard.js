@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text,
-    Image
+    Image,
+    AppRegistry
 } from 'react-native';
 
 export default class HabitCard extends Component {
