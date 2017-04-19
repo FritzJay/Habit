@@ -29,6 +29,11 @@ export default class App extends React.Component {
             .then((resJson) => {
                 let newUser = resJson;
                 console.log('Successfully queried db: ' + resJson);
+                //Format user.picture
+                newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
+                console.log(newUser.picture);
+                console.log(newUser);
+                console.log("-----------");
                 this.setState({
                     user: newUser,
                     habits: newUser.habits

@@ -105,5 +105,5 @@ app.use('/api', router);
 
 //Start server
 app.listen(port, function() {
-    console.log(`Listening on port $(port)`);
+    console.log(`Listening on port ${port}`);
 })

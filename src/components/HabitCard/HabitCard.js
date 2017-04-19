@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from '../../config';
 import { 
     View, 
     Text,
@@ -41,11 +42,12 @@ export default class HabitCard extends Component {
                         marginBottom: -10,
                     }}>
                         <Image 
-                            source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
                             style={{
-                                width: 100, 
-                                height: 120
-                        }}/>
+                                    width: 100, 
+                                    height: 120
+                            }}
+                            source={{ uri: "http://" + config.ip + ":" + config.port + "/pics/" + this.props.picture }}
+                        />
                     </View>
 
                     <View style={{                  //Top right container (title, info)

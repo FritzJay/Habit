@@ -1257,7 +1257,7 @@ var Habit = function (_Component) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: { flex: 1 } },
-                _react2.default.createElement(_App2.default, { url: "http://" + _config2.default.ip + ":3001/api/users/58e5f621734d1d12d73a0e5f" })
+                _react2.default.createElement(_App2.default, { url: "http://" + _config2.default.ip + ":" + _config2.default.port + "/api/users/58e5f621734d1d12d73a0e5f" })
             );
         }
     }]);
@@ -50067,6 +50067,11 @@ var App = function (_React$Component) {
             }).then(function (resJson) {
                 var newUser = resJson;
                 console.log('Successfully queried db: ' + resJson);
+
+                newUser.picture = "http://" + _config2.default.ip + ":" + _config2.default.port + "/pics/" + newUser.picture;
+                console.log(newUser.picture);
+                console.log(newUser);
+                console.log("-----------");
                 _this2.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -50237,6 +50242,10 @@ var _react = require(12     ); // 12 = react
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
+var _config = require(415           ); // 415 = ../../config
+
+var _config2 = babelHelpers.interopRequireDefault(_config);
+
 var _reactNative = require(45            ); // 45 = react-native
 
 var HabitCard = function (_Component) {
@@ -50284,11 +50293,12 @@ var HabitCard = function (_Component) {
                                 marginBottom: -10
                             } },
                         _react2.default.createElement(_reactNative.Image, {
-                            source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
                             style: {
                                 width: 100,
                                 height: 120
-                            } })
+                            },
+                            source: { uri: "http://" + _config2.default.ip + ":" + _config2.default.port + "/pics/" + this.props.picture }
+                        })
                     ),
                     _react2.default.createElement(
                         _reactNative.View,
