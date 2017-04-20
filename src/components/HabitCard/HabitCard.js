@@ -113,7 +113,7 @@ export default class HabitCard extends Component {
                         marginRight: 15
                     }}>
 
-                        <Image source={{ uri: this.props.picture }}
+                        <Image source={require('./pics/heart.png')}
                             style={{
                                 width: 20, 
                                 height: 20

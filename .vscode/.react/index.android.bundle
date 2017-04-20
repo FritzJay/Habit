@@ -50117,7 +50117,7 @@ _reactNative.AppRegistry.registerComponent('App', function () {
     return App;
 });
 }, 414, null, "AwesomeProject/src/components/App/App.js");
-__d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {module.exports.ip = '192.168.0.104';
+__d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {module.exports.ip = '172.20.10.2';
 module.exports.port = 3001;
 module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb';
 }, 415, null, "AwesomeProject/src/config.js");
@@ -50374,12 +50374,6 @@ var HabitCard = function (_Component) {
                                 justifyContent: 'space-between',
                                 marginRight: 15
                             } },
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: this.props.picture },
-                            style: {
-                                width: 20,
-                                height: 20
-                            }
-                        }),
                         _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
                             style: {
                                 width: 20,
