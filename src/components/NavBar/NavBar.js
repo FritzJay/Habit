@@ -28,7 +28,7 @@ export default class NavBar extends Component {
                     <Text style={{                  // Title
                         alignSelf: 'center', 
                         fontSize: 22, 
-                        color: 'blue'
+                        color: '#000080'
                     }}> 
                         Habit 
                     </Text>

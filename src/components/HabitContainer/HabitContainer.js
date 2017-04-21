@@ -11,7 +11,10 @@ import EmptyCard from '../EmptyCard/EmptyCard';
 export default class HabitContainer extends Component {
     constructor (props) {
         super(props);
-        this.state = { habits: props.habits }
+        this.state = { 
+            habits: props.habits,
+            accentColors: ['#F44336', '#FFC107', '#3F51B5'],        //The accent colors that will be passed down
+        }
         
         // Bind functions to component
         this.handleReload = this.handleReload.bind(this);
@@ -47,7 +50,7 @@ export default class HabitContainer extends Component {
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
                 //Create a habit card for each habit in state.habits
-                console.log(habit);
+                const accentColor = accentColor[habit.id];
                 return (
                     <HabitCard 
                         isLoved={habit.isLoved}
@@ -58,6 +61,7 @@ export default class HabitContainer extends Component {
                         info={habit.info}
                         title={habit.title}
                         key={habit.id} 
+                        accentColor={accentColor}
                     />
                 )
             });

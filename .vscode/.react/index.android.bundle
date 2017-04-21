@@ -50091,7 +50091,7 @@ var App = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 _FadeInView2.default,
-                { duration: 1000, style: {
+                { duration: 500, style: {
                         flex: 1,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -50624,7 +50624,7 @@ var NavBar = function (_Component) {
                         { style: {
                                 alignSelf: 'center',
                                 fontSize: 22,
-                                color: 'blue'
+                                color: '#000080'
                             } },
                         'Habit'
                     )
