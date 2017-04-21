@@ -1,4 +1,5 @@
-module.exports.ip = '172.20.10.2'
+//module.exports.ip = '172.20.10.2'
+module.exports.ip = '192.168.0.103'
 module.exports.port = 3001
 module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb'
 

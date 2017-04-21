@@ -112,6 +112,13 @@ export default class HabitCard extends Component {
                         justifyContent: 'space-between',
                         marginRight: 15
                     }}>
+
+                        <Image source={require('./heart.png')}
+                            style={{
+                                width: 20,
+                                height: 20
+                            }}
+                        />
                        
                         <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
                             style={{
