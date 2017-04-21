@@ -10,20 +10,21 @@ export default class ProgressBar extends Component {
         this.state = { progress: '50%' };
     }
     render () {
+        const progressBorderRadius = (this.state.progress === '100%') ? 0 : 6;
         return (
             <View style={{                          //Progress
                 flex: 1,
                 flexDirection: 'row',
                 alignSelf: 'stretch',
                 backgroundColor: '#DEDEDE',
-                borderRadius: 6,
                 height: 12,
                 marginRight: -15,
                 marginLeft: -15
             }}>
                 <View style={{
                     backgroundColor: '#ffc600',
-                    borderRadius: 6,
+                    borderTopRightRadius: progressBorderRadius,
+                    borderBottomRightRadius: progressBorderRadius,
                     flex: 0,
                     flexBasis: this.state.progress
                 }} />

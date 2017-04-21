@@ -50256,9 +50256,9 @@ var _reactNative = require(45            ); // 45 = react-native
 var HabitCard = function (_Component) {
     babelHelpers.inherits(HabitCard, _Component);
 
-    function HabitCard(props) {
+    function HabitCard() {
         babelHelpers.classCallCheck(this, HabitCard);
-        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).call(this, props));
+        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).apply(this, arguments));
     }
 
     babelHelpers.createClass(HabitCard, [{
@@ -50277,11 +50277,14 @@ var HabitCard = function (_Component) {
                         marginRight: 15,
                         padding: 15,
                         borderColor: '#EEE',
+                        borderLeftColor: '#FFF',
+                        borderTopColor: '#FFF',
                         borderStyle: 'solid',
                         borderBottomWidth: 3,
-                        borderLeftColor: '#FFF',
                         borderLeftWidth: 1,
-                        borderRightWidth: 1
+                        borderRightWidth: 1,
+                        borderTopWidth: 1,
+                        borderRadius: 5
                     } },
                 _react2.default.createElement(
                     _reactNative.View,
@@ -50327,7 +50330,7 @@ var HabitCard = function (_Component) {
                                         borderStyle: 'solid',
                                         borderBottomColor: '#CFCFCF',
                                         borderBottomWidth: 1,
-                                        marginBottom: 5
+                                        marginBottom: 15
                                     } },
                                 this.props.title
                             ),
@@ -50436,6 +50439,7 @@ var ProgressBar = function (_Component) {
     babelHelpers.createClass(ProgressBar, [{
         key: 'render',
         value: function render() {
+            var progressBorderRadius = this.state.progress === '100%' ? 0 : 6;
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
@@ -50443,14 +50447,14 @@ var ProgressBar = function (_Component) {
                         flexDirection: 'row',
                         alignSelf: 'stretch',
                         backgroundColor: '#DEDEDE',
-                        borderRadius: 6,
                         height: 12,
                         marginRight: -15,
                         marginLeft: -15
                     } },
                 _react2.default.createElement(_reactNative.View, { style: {
                         backgroundColor: '#ffc600',
-                        borderRadius: 6,
+                        borderTopRightRadius: progressBorderRadius,
+                        borderBottomRightRadius: progressBorderRadius,
                         flex: 0,
                         flexBasis: this.state.progress
                     } })

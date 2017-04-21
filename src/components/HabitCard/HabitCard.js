@@ -22,11 +22,14 @@ export default class HabitCard extends Component {
                 marginRight: 15,
                 padding: 15,
                 borderColor: '#EEE',
+                borderLeftColor: '#FFF',
+                borderTopColor: '#FFF',
                 borderStyle: 'solid',
                 borderBottomWidth: 3,
-                borderLeftColor: '#FFF',
                 borderLeftWidth: 1,
-                borderRightWidth: 1
+                borderRightWidth: 1,
+                borderTopWidth: 1,
+                borderRadius: 5
             }}>
                 <View style={{                      //Top container (Img, title, and info)
                     flex: 10,
@@ -63,7 +66,7 @@ export default class HabitCard extends Component {
                                 borderStyle: 'solid',
                                 borderBottomColor: '#CFCFCF',
                                 borderBottomWidth: 1,
-                                marginBottom: 5,
+                                marginBottom: 15
                             }}> 
                                 {this.props.title}
                             </Text>
