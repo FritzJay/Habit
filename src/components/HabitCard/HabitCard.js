@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import config from '../../config';
+import ProgressBar from './ProgressBar/ProgressBar';
 import { 
     View, 
     Text,
@@ -85,14 +86,7 @@ export default class HabitCard extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{                          //Temporary StreakBar
-                    flex: 1,
-                    alignSelf: 'stretch',
-                    backgroundColor: '#CCC',
-                    height: 12,
-                    marginRight: -15,
-                    marginLeft: -15
-                }} />
+                <ProgressBar />
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
                     flexDirection: 'row',

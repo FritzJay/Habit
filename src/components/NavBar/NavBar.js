@@ -41,7 +41,7 @@ export default class NavBar extends Component {
                         style={{                  
                             alignSelf: 'center',
                             height: 50,
-                            width: 50
+                            width: 60
                         }}
                     />
                 </View>

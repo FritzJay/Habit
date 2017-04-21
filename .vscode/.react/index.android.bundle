@@ -50247,6 +50247,10 @@ var _config = require(415           ); // 415 = ../../config
 
 var _config2 = babelHelpers.interopRequireDefault(_config);
 
+var _ProgressBar = require(425                        ); // 425 = ./ProgressBar/ProgressBar
+
+var _ProgressBar2 = babelHelpers.interopRequireDefault(_ProgressBar);
+
 var _reactNative = require(45            ); // 45 = react-native
 
 var HabitCard = function (_Component) {
@@ -50344,14 +50348,7 @@ var HabitCard = function (_Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(_reactNative.View, { style: {
-                        flex: 1,
-                        alignSelf: 'stretch',
-                        backgroundColor: '#CCC',
-                        height: 12,
-                        marginRight: -15,
-                        marginLeft: -15
-                    } }),
+                _react2.default.createElement(_ProgressBar2.default, null),
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: {
@@ -50414,6 +50411,58 @@ _reactNative.AppRegistry.registerComponent('HabitCard', function () {
     return HabitCard;
 });
 }, 417, null, "AwesomeProject/src/components/HabitCard/HabitCard.js");
+__d(/* AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var ProgressBar = function (_Component) {
+    babelHelpers.inherits(ProgressBar, _Component);
+
+    function ProgressBar() {
+        babelHelpers.classCallCheck(this, ProgressBar);
+        return babelHelpers.possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(ProgressBar, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignSelf: 'stretch',
+                        backgroundColor: '#DEDEDE',
+                        borderRadius: 6,
+                        height: 12,
+                        marginRight: -15,
+                        marginLeft: -15
+                    } },
+                _react2.default.createElement(_reactNative.View, { style: {
+                        backgroundColor: '#ffc600',
+                        borderRadius: 6,
+                        flex: 0,
+                        flexBasis: '15%'
+                    } })
+            );
+        }
+    }]);
+    return ProgressBar;
+}(_react.Component);
+
+exports.default = ProgressBar;
+
+
+_reactNative.AppRegistry.registerComponent('ProgressBar', function () {
+    return ProgressBar;
+});
+}, 425, null, "AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js");
 __d(/* AwesomeProject/src/components/HabitCard/edit.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"7d92452c3e714e17884fff2c5a926f82","name":"edit","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
 }, 421, null, "AwesomeProject/src/components/HabitCard/edit.png");
 __d(/* AwesomeProject/src/components/HabitCard/heart.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"2044c0a2b810e190e741bed5445f4fef","name":"heart","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
@@ -50536,7 +50585,7 @@ var NavBar = function (_Component) {
                         style: {
                             alignSelf: 'center',
                             height: 50,
-                            width: 50
+                            width: 60
                         }
                     })
                 )
