@@ -50375,19 +50375,25 @@ var HabitCard = function (_Component) {
                                 justifyContent: 'space-between',
                                 marginRight: 15
                             } },
+                        _react2.default.createElement(_reactNative.Image, { source: require(421         ), // 421 = ./edit.png
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
                         _react2.default.createElement(_reactNative.Image, { source: require(420          ), // 420 = ./heart.png
                             style: {
                                 width: 20,
                                 height: 20
                             }
                         }),
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                        _react2.default.createElement(_reactNative.Image, { source: require(422          ), // 422 = ./share.png
                             style: {
                                 width: 20,
                                 height: 20
                             }
                         }),
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
+                        _react2.default.createElement(_reactNative.Image, { source: require(423                 ), // 423 = ./notification.png
                             style: {
                                 width: 20,
                                 height: 20
@@ -50408,8 +50414,14 @@ _reactNative.AppRegistry.registerComponent('HabitCard', function () {
     return HabitCard;
 });
 }, 417, null, "AwesomeProject/src/components/HabitCard/HabitCard.js");
-__d(/* AwesomeProject/src/components/HabitCard/heart.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":2391,"height":2284,"scales":[1],"hash":"89224befa36184e4278cf9a30de15487","name":"heart","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+__d(/* AwesomeProject/src/components/HabitCard/edit.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"7d92452c3e714e17884fff2c5a926f82","name":"edit","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 421, null, "AwesomeProject/src/components/HabitCard/edit.png");
+__d(/* AwesomeProject/src/components/HabitCard/heart.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"2044c0a2b810e190e741bed5445f4fef","name":"heart","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
 }, 420, null, "AwesomeProject/src/components/HabitCard/heart.png");
+__d(/* AwesomeProject/src/components/HabitCard/share.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"c7d93a10c60e10e182256770594450f2","name":"share","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 422, null, "AwesomeProject/src/components/HabitCard/share.png");
+__d(/* AwesomeProject/src/components/HabitCard/notification.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"6c1b2a09f418f0e8d7df2fc86791b856","name":"notification","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 423, null, "AwesomeProject/src/components/HabitCard/notification.png");
 __d(/* AwesomeProject/src/components/EmptyCard/EmptyCard.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
