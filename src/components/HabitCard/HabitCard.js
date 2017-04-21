@@ -86,7 +86,7 @@ export default class HabitCard extends Component {
                     </View>
                 </View>
 
-                <ProgressBar />
+                <ProgressBar accentColor={this.props.accentColor}/>
 
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
