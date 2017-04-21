@@ -50034,6 +50034,10 @@ var _HabitContainer = require(416                               ); // 416 = ../H
 
 var _HabitContainer2 = babelHelpers.interopRequireDefault(_HabitContainer);
 
+var _FadeInView = require(426            ); // 426 = ../FadeInView
+
+var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
+
 var _NavBar = require(419               ); // 419 = ../NavBar/NavBar
 
 var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
@@ -50069,9 +50073,6 @@ var App = function (_React$Component) {
                 console.log('Successfully queried db: ' + resJson);
 
                 newUser.picture = "http://" + _config2.default.ip + ":" + _config2.default.port + "/pics/" + newUser.picture;
-                console.log(newUser.picture);
-                console.log(newUser);
-                console.log("-----------");
                 _this2.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -50089,12 +50090,12 @@ var App = function (_React$Component) {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                _reactNative.View,
-                { style: {
+                _FadeInView2.default,
+                { duration: 1000, style: {
                         flex: 1,
                         flexDirection: 'column',
-                        justifyContent: 'flex-start'
-                    } },
+                        justifyContent: 'flex-start',
+                        opacity: this.state.fadeAnim } },
                 _react2.default.createElement(_reactNative.StatusBar, {
                     backgroundColor: '#222',
                     barStyle: 'light-content'
@@ -50533,6 +50534,51 @@ _reactNative.AppRegistry.registerComponent('EmptyCard', function () {
     return EmptyCard;
 });
 }, 418, null, "AwesomeProject/src/components/EmptyCard/EmptyCard.js");
+__d(/* AwesomeProject/src/components/FadeInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var FadeInView = function (_Component) {
+  babelHelpers.inherits(FadeInView, _Component);
+
+  function FadeInView(props) {
+    babelHelpers.classCallCheck(this, FadeInView);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (FadeInView.__proto__ || Object.getPrototypeOf(FadeInView)).call(this, props));
+
+    _this.state = {
+      fadeAnim: new _reactNative.Animated.Value(0) };
+    return _this;
+  }
+
+  babelHelpers.createClass(FadeInView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _reactNative.Animated.timing(this.state.fadeAnim, {
+        toValue: 1,
+        duration: this.props.duration
+      }).start();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _reactNative.Animated.View,
+        {
+          style: babelHelpers.extends({}, this.props.style, {
+            opacity: this.state.fadeAnim })
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return FadeInView;
+}(_react.Component);
+
+module.exports = FadeInView;
+}, 426, null, "AwesomeProject/src/components/FadeInView.js");
 __d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });

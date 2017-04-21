@@ -2,10 +2,12 @@
 import config from '../../config';
 import React, { Component } from 'react';
 import HabitContainer from '../HabitContainer/HabitContainer';
+import FadeInView from '../FadeInView';
 import NavBar from '../NavBar/NavBar';
 import {
-   View,
-   StatusBar,
+    View,
+    StatusBar,
+    Animated,
     AppRegistry
 } from 'react-native';
 
@@ -15,7 +17,7 @@ export default class App extends React.Component {
         super(props);
         this.state = { 
             user: '',
-            habits: []
+            habits: [],
         };
 
         // bind functions to this component
@@ -31,9 +33,6 @@ export default class App extends React.Component {
                 console.log('Successfully queried db: ' + resJson);
                 //Format user.picture
                 newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
-                console.log(newUser.picture);
-                console.log(newUser);
-                console.log("-----------");
                 this.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -51,10 +50,11 @@ export default class App extends React.Component {
 
     render () {
         return (
-            <View style={{                          // App container
+            <FadeInView duration={500} style={{                          // App container special animated view
                 flex: 1,       
                 flexDirection: 'column',
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                opacity: this.state.fadeAnim                //Bind Opacity
             }}>
                 <StatusBar
                     backgroundColor="#222"
@@ -65,7 +65,7 @@ export default class App extends React.Component {
                     habits={this.state.habits} 
                     url={this.props.url} 
                 />
-            </View>
+            </FadeInView>
         );
     }
 }
