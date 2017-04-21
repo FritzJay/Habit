@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text,
+    Image,
     AppRegistry
 } from 'react-native';
 
@@ -15,7 +16,7 @@ export default class NavBar extends Component {
                 backgroundColor: 'white',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
             }}>
                 <View style={{                      // Left hand container
                     flex: 1
@@ -32,14 +33,17 @@ export default class NavBar extends Component {
                         Habit 
                     </Text>
                 </View>
-                <View style={{                      // Right container
+                <View style={{                          // Right container
                     flex: 1
                 }}>
-                    <Text style={{                  // Menu button
-                        alignSelf: 'center'
-                    }}>
-                        Temp Menu
-                    </Text>
+                    <Image                              // Menu button
+                        source={require('./menu.png')}
+                        style={{                  
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 50
+                        }}
+                    />
                 </View>
             </View>
         );

@@ -50531,13 +50531,14 @@ var NavBar = function (_Component) {
                     { style: {
                             flex: 1
                         } },
-                    _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: {
-                                alignSelf: 'center'
-                            } },
-                        'Temp Menu'
-                    )
+                    _react2.default.createElement(_reactNative.Image, {
+                        source: require(424         ), // 424 = ./menu.png
+                        style: {
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 50
+                        }
+                    })
                 )
             );
         }
@@ -50552,6 +50553,8 @@ _reactNative.AppRegistry.registerComponent('NavBar', function () {
     return NavBar;
 });
 }, 419, null, "AwesomeProject/src/components/NavBar/NavBar.js");
+__d(/* AwesomeProject/src/components/NavBar/menu.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/NavBar","width":128,"height":128,"scales":[1],"hash":"fc219d56320280340ac0bb9ed241d676","name":"menu","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 424, null, "AwesomeProject/src/components/NavBar/menu.png");
 ;require(90);
 ;require(0);
 //# sourceMappingURL=index.android.map
