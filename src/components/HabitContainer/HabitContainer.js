@@ -13,7 +13,7 @@ export default class HabitContainer extends Component {
         super(props);
         this.state = { 
             habits: props.habits,
-            accentColors: ['#F44336', '#FFC107', '#3F51B5'],        //The accent colors that will be passed down
+            accentColors: ['#F44336', '#FFC107', '#3F51B5']        //The accent colors that will be passed down
         }
         
         // Bind functions to component
@@ -50,7 +50,7 @@ export default class HabitContainer extends Component {
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
                 //Create a habit card for each habit in state.habits
-                const accentColor = accentColor[habit.id];
+                const accentColor = this.state.accentColors[habit.id];
                 return (
                     <HabitCard 
                         isLoved={habit.isLoved}

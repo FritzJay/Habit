@@ -9,7 +9,7 @@ export default class ProgressBar extends Component {
         super(props);
         this.state = { progress: '50%' };
     }
-    render () {
+    render (props) {
         const progressBorderRadius = (this.state.progress === '100%') ? 0 : 6;
         return (
             <View style={{                          //Progress
@@ -22,7 +22,7 @@ export default class ProgressBar extends Component {
                 marginLeft: -15
             }}>
                 <View style={{
-                    backgroundColor: '#ffc600',
+                    backgroundColor: this.props.accentColor,
                     borderTopRightRadius: progressBorderRadius,
                     borderBottomRightRadius: progressBorderRadius,
                     flex: 0,

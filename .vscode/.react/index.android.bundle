@@ -50149,7 +50149,9 @@ var HabitContainer = function (_Component) {
 
         var _this = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
 
-        _this.state = { habits: props.habits };
+        _this.state = {
+            habits: props.habits,
+            accentColors: ['#F44336', '#FFC107', '#3F51B5'] };
 
         _this.handleReload = _this.handleReload.bind(_this);
         return _this;
@@ -50182,11 +50184,13 @@ var HabitContainer = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var habits = [];
 
             if (this.state.habits.length > 0) {
                 habits = Array.from(this.state.habits).map(function (habit) {
-                    console.log(habit);
+                    var accentColor = _this3.state.accentColors[habit.id];
                     return _react2.default.createElement(_HabitCard2.default, {
                         isLoved: habit.isLoved,
                         isActive: habit.isActive,
@@ -50195,7 +50199,8 @@ var HabitContainer = function (_Component) {
                         picture: habit.picture,
                         info: habit.info,
                         title: habit.title,
-                        key: habit.id
+                        key: habit.id,
+                        accentColor: accentColor
                     });
                 });
             }
@@ -50352,7 +50357,7 @@ var HabitCard = function (_Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(_ProgressBar2.default, null),
+                _react2.default.createElement(_ProgressBar2.default, { accentColor: this.props.accentColor }),
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: {
@@ -50439,7 +50444,7 @@ var ProgressBar = function (_Component) {
 
     babelHelpers.createClass(ProgressBar, [{
         key: 'render',
-        value: function render() {
+        value: function render(props) {
             var progressBorderRadius = this.state.progress === '100%' ? 0 : 6;
             return _react2.default.createElement(
                 _reactNative.View,
@@ -50453,7 +50458,7 @@ var ProgressBar = function (_Component) {
                         marginLeft: -15
                     } },
                 _react2.default.createElement(_reactNative.View, { style: {
-                        backgroundColor: '#ffc600',
+                        backgroundColor: this.props.accentColor,
                         borderTopRightRadius: progressBorderRadius,
                         borderBottomRightRadius: progressBorderRadius,
                         flex: 0,
