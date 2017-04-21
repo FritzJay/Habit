@@ -9,10 +9,6 @@ import {
 } from 'react-native';
 
 export default class HabitCard extends Component {
-    constructor (props) {
-        super(props);
-    }
-
     render () {
         console.log(this.props.picture);
         return (
@@ -86,7 +82,9 @@ export default class HabitCard extends Component {
                         </View>
                     </View>
                 </View>
+
                 <ProgressBar />
+
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
                     flexDirection: 'row',
