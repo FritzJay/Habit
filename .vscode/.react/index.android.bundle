@@ -50424,9 +50424,13 @@ var _reactNative = require(45            ); // 45 = react-native
 var ProgressBar = function (_Component) {
     babelHelpers.inherits(ProgressBar, _Component);
 
-    function ProgressBar() {
+    function ProgressBar(props) {
         babelHelpers.classCallCheck(this, ProgressBar);
-        return babelHelpers.possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).apply(this, arguments));
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).call(this, props));
+
+        _this.state = { progress: '50%' };
+        return _this;
     }
 
     babelHelpers.createClass(ProgressBar, [{
@@ -50448,7 +50452,7 @@ var ProgressBar = function (_Component) {
                         backgroundColor: '#ffc600',
                         borderRadius: 6,
                         flex: 0,
-                        flexBasis: '15%'
+                        flexBasis: this.state.progress
                     } })
             );
         }

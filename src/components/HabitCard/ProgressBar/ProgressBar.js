@@ -5,6 +5,10 @@ import {
 } from 'react-native';
 
 export default class ProgressBar extends Component {
+    constructor (props) {
+        super(props);
+        this.state = { progress: '50%' };
+    }
     render () {
         return (
             <View style={{                          //Progress
@@ -21,7 +25,7 @@ export default class ProgressBar extends Component {
                     backgroundColor: '#ffc600',
                     borderRadius: 6,
                     flex: 0,
-                    flexBasis: '15%'
+                    flexBasis: this.state.progress
                 }} />
             </View>
         );
