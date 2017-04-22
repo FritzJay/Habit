@@ -50034,11 +50034,11 @@ var _HabitContainer = require(416                               ); // 416 = ../H
 
 var _HabitContainer2 = babelHelpers.interopRequireDefault(_HabitContainer);
 
-var _FadeInView = require(426            ); // 426 = ../FadeInView
+var _FadeInView = require(424            ); // 424 = ../FadeInView
 
 var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
 
-var _NavBar = require(419               ); // 419 = ../NavBar/NavBar
+var _NavBar = require(425               ); // 425 = ../NavBar/NavBar
 
 var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
 
@@ -50119,7 +50119,7 @@ _reactNative.AppRegistry.registerComponent('App', function () {
 });
 }, 414, null, "AwesomeProject/src/components/App/App.js");
 __d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {
-module.exports.ip = '192.168.0.103';
+module.exports.ip = '192.168.0.105';
 module.exports.port = 3001;
 module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb';
 }, 415, null, "AwesomeProject/src/config.js");
@@ -50137,7 +50137,7 @@ var _HabitCard = require(417                     ); // 417 = ../HabitCard/HabitC
 
 var _HabitCard2 = babelHelpers.interopRequireDefault(_HabitCard);
 
-var _EmptyCard = require(418                     ); // 418 = ../EmptyCard/EmptyCard
+var _EmptyCard = require(423                     ); // 423 = ../EmptyCard/EmptyCard
 
 var _EmptyCard2 = babelHelpers.interopRequireDefault(_EmptyCard);
 
@@ -50253,7 +50253,7 @@ var _config = require(415           ); // 415 = ../../config
 
 var _config2 = babelHelpers.interopRequireDefault(_config);
 
-var _ProgressBar = require(425                        ); // 425 = ./ProgressBar/ProgressBar
+var _ProgressBar = require(418                        ); // 418 = ./ProgressBar/ProgressBar
 
 var _ProgressBar2 = babelHelpers.interopRequireDefault(_ProgressBar);
 
@@ -50357,7 +50357,9 @@ var HabitCard = function (_Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(_ProgressBar2.default, { accentColor: this.props.accentColor }),
+                _react2.default.createElement(_ProgressBar2.default, {
+                    accentColor: this.props.accentColor
+                }),
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: {
@@ -50381,7 +50383,7 @@ var HabitCard = function (_Component) {
                                 justifyContent: 'space-between',
                                 marginRight: 15
                             } },
-                        _react2.default.createElement(_reactNative.Image, { source: require(421         ), // 421 = ./edit.png
+                        _react2.default.createElement(_reactNative.Image, { source: require(419         ), // 419 = ./edit.png
                             style: {
                                 width: 20,
                                 height: 20
@@ -50393,13 +50395,13 @@ var HabitCard = function (_Component) {
                                 height: 20
                             }
                         }),
-                        _react2.default.createElement(_reactNative.Image, { source: require(422          ), // 422 = ./share.png
+                        _react2.default.createElement(_reactNative.Image, { source: require(421          ), // 421 = ./share.png
                             style: {
                                 width: 20,
                                 height: 20
                             }
                         }),
-                        _react2.default.createElement(_reactNative.Image, { source: require(423                 ), // 423 = ./notification.png
+                        _react2.default.createElement(_reactNative.Image, { source: require(422                 ), // 422 = ./notification.png
                             style: {
                                 width: 20,
                                 height: 20
@@ -50476,15 +50478,15 @@ exports.default = ProgressBar;
 _reactNative.AppRegistry.registerComponent('ProgressBar', function () {
     return ProgressBar;
 });
-}, 425, null, "AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js");
+}, 418, null, "AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js");
 __d(/* AwesomeProject/src/components/HabitCard/edit.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"7d92452c3e714e17884fff2c5a926f82","name":"edit","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 421, null, "AwesomeProject/src/components/HabitCard/edit.png");
+}, 419, null, "AwesomeProject/src/components/HabitCard/edit.png");
 __d(/* AwesomeProject/src/components/HabitCard/heart.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"2044c0a2b810e190e741bed5445f4fef","name":"heart","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
 }, 420, null, "AwesomeProject/src/components/HabitCard/heart.png");
 __d(/* AwesomeProject/src/components/HabitCard/share.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"c7d93a10c60e10e182256770594450f2","name":"share","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 422, null, "AwesomeProject/src/components/HabitCard/share.png");
+}, 421, null, "AwesomeProject/src/components/HabitCard/share.png");
 __d(/* AwesomeProject/src/components/HabitCard/notification.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"6c1b2a09f418f0e8d7df2fc86791b856","name":"notification","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 423, null, "AwesomeProject/src/components/HabitCard/notification.png");
+}, 422, null, "AwesomeProject/src/components/HabitCard/notification.png");
 __d(/* AwesomeProject/src/components/EmptyCard/EmptyCard.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -50538,7 +50540,7 @@ exports.default = EmptyCard;
 _reactNative.AppRegistry.registerComponent('EmptyCard', function () {
     return EmptyCard;
 });
-}, 418, null, "AwesomeProject/src/components/EmptyCard/EmptyCard.js");
+}, 423, null, "AwesomeProject/src/components/EmptyCard/EmptyCard.js");
 __d(/* AwesomeProject/src/components/FadeInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
@@ -50583,7 +50585,7 @@ var FadeInView = function (_Component) {
 }(_react.Component);
 
 module.exports = FadeInView;
-}, 426, null, "AwesomeProject/src/components/FadeInView.js");
+}, 424, null, "AwesomeProject/src/components/FadeInView.js");
 __d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -50640,7 +50642,7 @@ var NavBar = function (_Component) {
                             flex: 1
                         } },
                     _react2.default.createElement(_reactNative.Image, {
-                        source: require(424         ), // 424 = ./menu.png
+                        source: require(426         ), // 426 = ./menu.png
                         style: {
                             alignSelf: 'center',
                             height: 50,
@@ -50660,9 +50662,9 @@ exports.default = NavBar;
 _reactNative.AppRegistry.registerComponent('NavBar', function () {
     return NavBar;
 });
-}, 419, null, "AwesomeProject/src/components/NavBar/NavBar.js");
+}, 425, null, "AwesomeProject/src/components/NavBar/NavBar.js");
 __d(/* AwesomeProject/src/components/NavBar/menu.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/NavBar","width":128,"height":128,"scales":[1],"hash":"fc219d56320280340ac0bb9ed241d676","name":"menu","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 424, null, "AwesomeProject/src/components/NavBar/menu.png");
+}, 426, null, "AwesomeProject/src/components/NavBar/menu.png");
 ;require(90);
 ;require(0);
 //# sourceMappingURL=index.android.map
