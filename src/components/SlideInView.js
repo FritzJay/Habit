@@ -7,10 +7,13 @@ class SlideInView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slideAnim: new Animated.Value(-200),          // Initial value for Xoffset: 0
-    };
+      slideAnim: new Animated.Value(-this.props.width)          // Initial value for Xoffset: 0
+    }
+    // Bind slideIn
+    this.slideIn = this.slideIn.bind(this);
   }
-  componentDidMount() {
+
+  slideIn() {
     Animated.timing(                            // Animate over time
       this.state.slideAnim,                      // The animated value to drive
       {
@@ -18,8 +21,15 @@ class SlideInView extends Component {
         duration: this.props.duration,
       }
     ).start();                                  // Starts the animation
+    console.log('slideIn')
   }
+
+  onLayout () {
+
+  }
+  
   render() {
+    console.log(this.props.width);
     return (
       <Animated.View                            // Special animatable View
         style={{

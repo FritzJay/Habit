@@ -50058,7 +50058,8 @@ var App = function (_React$Component) {
 
         _this.state = {
             user: '',
-            habits: []
+            habits: [],
+            menu: {}
         };
 
         _this.queryDB = _this.queryDB.bind(_this);
@@ -50091,29 +50092,43 @@ var App = function (_React$Component) {
             this.queryDB();
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({ menu: this.menu });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             return _react2.default.createElement(
                 _FadeInView2.default,
                 { duration: 500, style: {
                         flex: 1,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
-                        opacity: this.state.fadeAnim } },
+                        opacity: this.state.fadeAnim
+                    } },
                 _react2.default.createElement(_reactNative.StatusBar, {
                     backgroundColor: '#222',
                     barStyle: 'light-content'
                 }),
-                _react2.default.createElement(_NavBar2.default, null),
+                _react2.default.createElement(_NavBar2.default, { menu: this.state.menu }),
                 _react2.default.createElement(_HabitContainer2.default, {
                     habits: this.state.habits,
                     url: this.props.url
                 }),
-                _react2.default.createElement(_SlideInView2.default, { duration: 2000, style: {
+                _react2.default.createElement(_SlideInView2.default, {
+                    ref: function ref(menu) {
+                        _this3.menu = menu;
+                    },
+                    width: _reactNative.Dimensions.get('window').width,
+                    duration: 2000,
+                    style: {
                         backgroundColor: 'black',
                         position: "absolute",
                         height: 500,
-                        width: 200,
+                        width: _reactNative.Dimensions.get('window').width,
                         right: this.props.slideAnim
                     } })
             );
@@ -50612,21 +50627,28 @@ var SlideInView = function (_Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, (SlideInView.__proto__ || Object.getPrototypeOf(SlideInView)).call(this, props));
 
     _this.state = {
-      slideAnim: new _reactNative.Animated.Value(-200) };
+      slideAnim: new _reactNative.Animated.Value(-_this.props.width) };
+
+    _this.slideIn = _this.slideIn.bind(_this);
     return _this;
   }
 
   babelHelpers.createClass(SlideInView, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'slideIn',
+    value: function slideIn() {
       _reactNative.Animated.timing(this.state.slideAnim, {
         toValue: 0,
         duration: this.props.duration
       }).start();
+      console.log('slideIn');
     }
+  }, {
+    key: 'onLayout',
+    value: function onLayout() {}
   }, {
     key: 'render',
     value: function render() {
+      console.log(this.props.width);
       return _react2.default.createElement(
         _reactNative.Animated.View,
         {
@@ -50655,14 +50677,37 @@ var _reactNative = require(45            ); // 45 = react-native
 var NavBar = function (_Component) {
     babelHelpers.inherits(NavBar, _Component);
 
-    function NavBar() {
+    function NavBar(props) {
         babelHelpers.classCallCheck(this, NavBar);
-        return babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).apply(this, arguments));
+        return babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
     }
 
     babelHelpers.createClass(NavBar, [{
         key: 'render',
         value: function render() {
+            var menuButton = !this.props.menu.slideIn ? _react2.default.createElement(
+                _reactNative.TouchableHighlight,
+                null,
+                _react2.default.createElement(_reactNative.Image, {
+                    source: require(426         ), // 426 = ./menu.png
+                    style: {
+                        alignSelf: 'center',
+                        height: 50,
+                        width: 60
+                    }
+                })
+            ) : _react2.default.createElement(
+                _reactNative.TouchableHighlight,
+                { onPress: this.props.menu.slideIn },
+                _react2.default.createElement(_reactNative.Image, {
+                    source: require(426         ), // 426 = ./menu.png
+                    style: {
+                        alignSelf: 'center',
+                        height: 50,
+                        width: 60
+                    }
+                })
+            );
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: {
@@ -50697,14 +50742,7 @@ var NavBar = function (_Component) {
                     { style: {
                             flex: 1
                         } },
-                    _react2.default.createElement(_reactNative.Image, {
-                        source: require(426         ), // 426 = ./menu.png
-                        style: {
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 60
-                        }
-                    })
+                    menuButton
                 )
             );
         }

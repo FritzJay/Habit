@@ -9,7 +9,8 @@ import {
     View,
     StatusBar,
     Animated,
-    AppRegistry
+    AppRegistry,
+    Dimensions
 } from 'react-native';
 
 
@@ -19,6 +20,7 @@ export default class App extends React.Component {
         this.state = { 
             user: '',
             habits: [],
+            menu: { }
         };
 
         // bind functions to this component
@@ -49,6 +51,10 @@ export default class App extends React.Component {
         this.queryDB();
     }
 
+    componentDidMount () {
+        this.setState({ menu: this.menu })
+    }
+
     render () {
         return (
             <FadeInView duration={500} style={{                          // App container
@@ -61,17 +67,21 @@ export default class App extends React.Component {
                     backgroundColor="#222"
                     barStyle="light-content"
                 />
-                <NavBar />
+                <NavBar menu={this.state.menu} />
                 <HabitContainer 
                     habits={this.state.habits} 
                     url={this.props.url} 
                 />
-                <SlideInView duration={2000} style={{                   // Menu container
-                    backgroundColor: 'black',
-                    position: "absolute",
-                    height: 500,
-                    width: 200,
-                    right: this.props.slideAnim
+                <SlideInView 
+                    ref={(menu) => { this.menu = menu }}
+                    width={Dimensions.get('window').width}
+                    duration={2000}            // The duration of the slideIn
+                    style={{                   // Menu container
+                        backgroundColor: 'black',
+                        position: "absolute",
+                        height: 500,
+                        width: Dimensions.get('window').width,
+                        right: this.props.slideAnim
                 }} />
             </FadeInView>
         );
