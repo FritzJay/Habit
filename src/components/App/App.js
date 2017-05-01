@@ -3,6 +3,7 @@ import config from '../../config';
 import React, { Component } from 'react';
 import HabitContainer from '../HabitContainer/HabitContainer';
 import FadeInView from '../FadeInView';
+import SlideInView from '../SlideInView';
 import NavBar from '../NavBar/NavBar';
 import {
     View,
@@ -50,11 +51,11 @@ export default class App extends React.Component {
 
     render () {
         return (
-            <FadeInView duration={500} style={{                          // App container special animated view
+            <FadeInView duration={500} style={{                          // App container
                 flex: 1,       
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                opacity: this.state.fadeAnim                //Bind Opacity
+                opacity: this.state.fadeAnim
             }}>
                 <StatusBar
                     backgroundColor="#222"
@@ -65,6 +66,13 @@ export default class App extends React.Component {
                     habits={this.state.habits} 
                     url={this.props.url} 
                 />
+                <SlideInView duration={2000} style={{                   // Menu container
+                    backgroundColor: 'black',
+                    position: "absolute",
+                    height: 500,
+                    width: 200,
+                    right: this.props.slideAnim
+                }} />
             </FadeInView>
         );
     }

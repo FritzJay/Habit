@@ -50038,6 +50038,10 @@ var _FadeInView = require(424            ); // 424 = ../FadeInView
 
 var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
 
+var _SlideInView = require(427             ); // 427 = ../SlideInView
+
+var _SlideInView2 = babelHelpers.interopRequireDefault(_SlideInView);
+
 var _NavBar = require(425               ); // 425 = ../NavBar/NavBar
 
 var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
@@ -50104,7 +50108,14 @@ var App = function (_React$Component) {
                 _react2.default.createElement(_HabitContainer2.default, {
                     habits: this.state.habits,
                     url: this.props.url
-                })
+                }),
+                _react2.default.createElement(_SlideInView2.default, { duration: 2000, style: {
+                        backgroundColor: 'black',
+                        position: "absolute",
+                        height: 500,
+                        width: 200,
+                        right: this.props.slideAnim
+                    } })
             );
         }
     }]);
@@ -50119,7 +50130,7 @@ _reactNative.AppRegistry.registerComponent('App', function () {
 });
 }, 414, null, "AwesomeProject/src/components/App/App.js");
 __d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {
-module.exports.ip = '192.168.0.105';
+module.exports.ip = '192.168.0.106';
 module.exports.port = 3001;
 module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb';
 }, 415, null, "AwesomeProject/src/config.js");
@@ -50586,6 +50597,51 @@ var FadeInView = function (_Component) {
 
 module.exports = FadeInView;
 }, 424, null, "AwesomeProject/src/components/FadeInView.js");
+__d(/* AwesomeProject/src/components/SlideInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var SlideInView = function (_Component) {
+  babelHelpers.inherits(SlideInView, _Component);
+
+  function SlideInView(props) {
+    babelHelpers.classCallCheck(this, SlideInView);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (SlideInView.__proto__ || Object.getPrototypeOf(SlideInView)).call(this, props));
+
+    _this.state = {
+      slideAnim: new _reactNative.Animated.Value(-200) };
+    return _this;
+  }
+
+  babelHelpers.createClass(SlideInView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _reactNative.Animated.timing(this.state.slideAnim, {
+        toValue: 0,
+        duration: this.props.duration
+      }).start();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _reactNative.Animated.View,
+        {
+          style: babelHelpers.extends({}, this.props.style, {
+            right: this.state.slideAnim })
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return SlideInView;
+}(_react.Component);
+
+module.exports = SlideInView;
+}, 427, null, "AwesomeProject/src/components/SlideInView.js");
 __d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
