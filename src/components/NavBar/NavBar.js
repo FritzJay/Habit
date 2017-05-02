@@ -10,10 +10,16 @@ import {
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
+
+        this.handlePress = this.handlePress.bind(this);
+    }
+
+    handlePress () {
+        this.props.menu.slideInView.slideIn();
     }
 
     render () {
-        const menuButton = (!this.props.menu.slideIn) ? 
+        const menuButton = (this.props.menu.slideInView === undefined) ? 
             <TouchableHighlight>
                 <Image                              // Menu button
                     source={require('./menu.png')}
@@ -25,7 +31,7 @@ export default class NavBar extends Component {
                 />
             </TouchableHighlight>
             :
-            <TouchableHighlight onPress={this.props.menu.slideIn}>
+            <TouchableHighlight onPress={this.handlePress}>
                 <Image                              // Menu button
                     source={require('./menu.png')}
                     style={{                  

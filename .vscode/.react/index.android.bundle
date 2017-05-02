@@ -50038,11 +50038,11 @@ var _FadeInView = require(424            ); // 424 = ../FadeInView
 
 var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
 
-var _SlideInView = require(427             ); // 427 = ../SlideInView
+var _Menu = require(428           ); // 428 = ../Menu/Menu
 
-var _SlideInView2 = babelHelpers.interopRequireDefault(_SlideInView);
+var _Menu2 = babelHelpers.interopRequireDefault(_Menu);
 
-var _NavBar = require(425               ); // 425 = ../NavBar/NavBar
+var _NavBar = require(426               ); // 426 = ../NavBar/NavBar
 
 var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
 
@@ -50118,19 +50118,11 @@ var App = function (_React$Component) {
                     habits: this.state.habits,
                     url: this.props.url
                 }),
-                _react2.default.createElement(_SlideInView2.default, {
+                _react2.default.createElement(_Menu2.default, {
                     ref: function ref(menu) {
                         _this3.menu = menu;
-                    },
-                    width: _reactNative.Dimensions.get('window').width,
-                    duration: 2000,
-                    style: {
-                        backgroundColor: 'black',
-                        position: "absolute",
-                        height: 500,
-                        width: _reactNative.Dimensions.get('window').width,
-                        right: this.props.slideAnim
-                    } })
+                    }
+                })
             );
         }
     }]);
@@ -50145,7 +50137,7 @@ _reactNative.AppRegistry.registerComponent('App', function () {
 });
 }, 414, null, "AwesomeProject/src/components/App/App.js");
 __d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {
-module.exports.ip = '192.168.0.106';
+module.exports.ip = '192.168.0.102';
 module.exports.port = 3001;
 module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb';
 }, 415, null, "AwesomeProject/src/config.js");
@@ -50612,6 +50604,58 @@ var FadeInView = function (_Component) {
 
 module.exports = FadeInView;
 }, 424, null, "AwesomeProject/src/components/FadeInView.js");
+__d(/* AwesomeProject/src/components/Menu/Menu.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var _SlideInView = require(425             ); // 425 = ../SlideInView
+
+var _SlideInView2 = babelHelpers.interopRequireDefault(_SlideInView);
+
+var Menu = function (_Component) {
+  babelHelpers.inherits(Menu, _Component);
+
+  function Menu(props) {
+    babelHelpers.classCallCheck(this, Menu);
+    return babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+  }
+
+  babelHelpers.createClass(Menu, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(_SlideInView2.default, {
+        ref: function ref(slideInView) {
+          _this2.slideInView = slideInView;
+        },
+        width: _reactNative.Dimensions.get('window').width,
+        duration: 2000,
+        style: {
+          backgroundColor: "white",
+          position: "absolute",
+          height: 500,
+          width: _reactNative.Dimensions.get('window').width,
+          right: this.props.slideAnim
+        } });
+    }
+  }]);
+  return Menu;
+}(_react.Component);
+
+exports.default = Menu;
+
+
+_reactNative.AppRegistry.registerComponent('Menu', function () {
+  return Menu;
+});
+}, 428, null, "AwesomeProject/src/components/Menu/Menu.js");
 __d(/* AwesomeProject/src/components/SlideInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
@@ -50663,7 +50707,7 @@ var SlideInView = function (_Component) {
 }(_react.Component);
 
 module.exports = SlideInView;
-}, 427, null, "AwesomeProject/src/components/SlideInView.js");
+}, 425, null, "AwesomeProject/src/components/SlideInView.js");
 __d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -50679,17 +50723,26 @@ var NavBar = function (_Component) {
 
     function NavBar(props) {
         babelHelpers.classCallCheck(this, NavBar);
-        return babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+
+        _this.handlePress = _this.handlePress.bind(_this);
+        return _this;
     }
 
     babelHelpers.createClass(NavBar, [{
+        key: 'handlePress',
+        value: function handlePress() {
+            this.props.menu.slideInView.slideIn();
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var menuButton = !this.props.menu.slideIn ? _react2.default.createElement(
+            var menuButton = this.props.menu.slideInView === undefined ? _react2.default.createElement(
                 _reactNative.TouchableHighlight,
                 null,
                 _react2.default.createElement(_reactNative.Image, {
-                    source: require(426         ), // 426 = ./menu.png
+                    source: require(427         ), // 427 = ./menu.png
                     style: {
                         alignSelf: 'center',
                         height: 50,
@@ -50698,9 +50751,9 @@ var NavBar = function (_Component) {
                 })
             ) : _react2.default.createElement(
                 _reactNative.TouchableHighlight,
-                { onPress: this.props.menu.slideIn },
+                { onPress: this.handlePress },
                 _react2.default.createElement(_reactNative.Image, {
-                    source: require(426         ), // 426 = ./menu.png
+                    source: require(427         ), // 427 = ./menu.png
                     style: {
                         alignSelf: 'center',
                         height: 50,
@@ -50756,9 +50809,9 @@ exports.default = NavBar;
 _reactNative.AppRegistry.registerComponent('NavBar', function () {
     return NavBar;
 });
-}, 425, null, "AwesomeProject/src/components/NavBar/NavBar.js");
+}, 426, null, "AwesomeProject/src/components/NavBar/NavBar.js");
 __d(/* AwesomeProject/src/components/NavBar/menu.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/NavBar","width":128,"height":128,"scales":[1],"hash":"fc219d56320280340ac0bb9ed241d676","name":"menu","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 426, null, "AwesomeProject/src/components/NavBar/menu.png");
+}, 427, null, "AwesomeProject/src/components/NavBar/menu.png");
 ;require(90);
 ;require(0);
 //# sourceMappingURL=index.android.map

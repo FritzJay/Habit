@@ -3,14 +3,13 @@ import config from '../../config';
 import React, { Component } from 'react';
 import HabitContainer from '../HabitContainer/HabitContainer';
 import FadeInView from '../FadeInView';
-import SlideInView from '../SlideInView';
+import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
 import {
     View,
     StatusBar,
     Animated,
-    AppRegistry,
-    Dimensions
+    AppRegistry
 } from 'react-native';
 
 
@@ -72,17 +71,9 @@ export default class App extends React.Component {
                     habits={this.state.habits} 
                     url={this.props.url} 
                 />
-                <SlideInView 
+                <Menu
                     ref={(menu) => { this.menu = menu }}
-                    width={Dimensions.get('window').width}
-                    duration={2000}            // The duration of the slideIn
-                    style={{                   // Menu container
-                        backgroundColor: 'black',
-                        position: "absolute",
-                        height: 500,
-                        width: Dimensions.get('window').width,
-                        right: this.props.slideAnim
-                }} />
+                />
             </FadeInView>
         );
     }
