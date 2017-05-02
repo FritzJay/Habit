@@ -1,11 +1,16 @@
 //config holds connection and user info
-import config from '../config';
+import config from '../../config';
 import React, { Component } from 'react';
-import HabitContainer from '/HabitContainer/HabitContainer';
-import NavBar from '/NavBar/NavBar';
+import HabitContainer from '../HabitContainer/HabitContainer';
+import FadeInView from '../FadeInView';
+import SlideInView from '../SlideInView';
+import NavBar from '../NavBar/NavBar';
 import {
-   View,
-   StatusBar
+    View,
+    StatusBar,
+    Animated,
+    AppRegistry,
+    Dimensions
 } from 'react-native';
 
 
@@ -14,7 +19,8 @@ export default class App extends React.Component {
         super(props);
         this.state = { 
             user: '',
-            habits: []
+            habits: [],
+            menu: { }
         };
 
         // bind functions to this component
@@ -28,6 +34,8 @@ export default class App extends React.Component {
             .then((resJson) => {
                 let newUser = resJson;
                 console.log('Successfully queried db: ' + resJson);
+                //Format user.picture
+                newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
                 this.setState({
                     user: newUser,
                     habits: newUser.habits
@@ -43,23 +51,39 @@ export default class App extends React.Component {
         this.queryDB();
     }
 
+    componentDidMount () {
+        this.setState({ menu: this.menu })
+    }
+
     render () {
         return (
-            <View style={{                          // App container
+            <FadeInView duration={500} style={{                          // App container
                 flex: 1,       
                 flexDirection: 'column',
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                opacity: this.state.fadeAnim
             }}>
                 <StatusBar
                     backgroundColor="#222"
                     barStyle="light-content"
                 />
-                <NavBar />
+                <NavBar menu={this.state.menu} />
                 <HabitContainer 
                     habits={this.state.habits} 
                     url={this.props.url} 
                 />
-            </View>
+                <SlideInView 
+                    ref={(menu) => { this.menu = menu }}
+                    width={Dimensions.get('window').width}
+                    duration={2000}            // The duration of the slideIn
+                    style={{                   // Menu container
+                        backgroundColor: 'black',
+                        position: "absolute",
+                        height: 500,
+                        width: Dimensions.get('window').width,
+                        right: this.props.slideAnim
+                }} />
+            </FadeInView>
         );
     }
 }

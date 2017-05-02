@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text,
-    ScrollView 
+    ScrollView,
+    AppRegistry 
 } from 'react-native';
-import HabitCard from 'HabitCard/HabitCard';
-import EmptyCard from 'EmptyCard/EmptyCard';
+import HabitCard from '../HabitCard/HabitCard';
+import EmptyCard from '../EmptyCard/EmptyCard';
 
 export default class HabitContainer extends Component {
     constructor (props) {
         super(props);
-        this.state = { habits: props.habits }
+        this.state = { 
+            habits: props.habits,                                  // The habits that will be passed down to habit cards
+            accentColors: ['#F44336', '#FFC107', '#3F51B5']        // The accent colors that will be passed down to habit Cards
+        }
         
         // Bind functions to component
         this.handleReload = this.handleReload.bind(this);
@@ -29,8 +33,8 @@ export default class HabitContainer extends Component {
         fetch(this.props.url)           // fetch from supplied url
             .then((res) => res.json())  // Get json from fetch
             .then((resJson) => {
-                let newUser = resJson;
-                console.log('Successfully reloaded: ' + resJson);                
+                let newUser = resJson;                              // Make a newUser variable so I can read resJson -
+                console.log('Successfully reloaded: ' + resJson);   // more than once.
                 this.setState({
                     habits: newUser.habits
                 });
@@ -42,11 +46,11 @@ export default class HabitContainer extends Component {
 
     render () {
         let habits = [];
-        //Map habits to an array of Card 
+        // Map habits to an array of Card 
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
-                //Create a habit card for each habit in state.habits
-                console.log(habit);
+                // Create a habit card for each habit in state.habits
+                const accentColor = this.state.accentColors[habit.id];
                 return (
                     <HabitCard 
                         isLoved={habit.isLoved}
@@ -57,12 +61,13 @@ export default class HabitContainer extends Component {
                         info={habit.info}
                         title={habit.title}
                         key={habit.id} 
+                        accentColor={accentColor}
                     />
                 )
             });
         }
 
-        //Fill remaining space in habits with empty cards
+        // Fill remaining space in habits with empty cards
         while (habits.length < 3) {
             habits.push(
                 <EmptyCard 
@@ -75,7 +80,7 @@ export default class HabitContainer extends Component {
             <ScrollView style={{
                 flex:1
             }}>
-                <View style={{                      //Habit Container
+                <View style={{                      // Habit Container
                     flex: 1,
                     flexDirection: 'column',
                     justifyContent: 'space-between',

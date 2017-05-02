@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
  });
 
 //Serve static files
-app.use(express.static('public'))
+app.use(express.static('src/server/public'))
 
 //Setup router
 router.get('/', function(req, res) {
@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
 router.route('/users/:userId')
   //Gets users profile and habit info
   .get(function (req, res) {
-    User.findOne({ "_id": req.param.userId }, function (err, user) {
+    User.findOne({ id: req.param.userId }, function (err, user) {
       if (err) {
         res.send(err);
       }
@@ -105,5 +105,5 @@ app.use('/api', router);
 
 //Start server
 app.listen(port, function() {
-    console.log(`Listening on port $(port)`);
+    console.log(`Listening on port ${port}`);
 })
