@@ -1235,406 +1235,16 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(45            ); // 45 = react-native
 
-var NavBar = function (_Component) {
-    babelHelpers.inherits(NavBar, _Component);
+var _App = require(414                       ); // 414 = ./src/components/App/App
 
-    function NavBar() {
-        babelHelpers.classCallCheck(this, NavBar);
-        return babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).apply(this, arguments));
-    }
+var _App2 = babelHelpers.interopRequireDefault(_App);
 
-    babelHelpers.createClass(NavBar, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: {
-                        borderBottomWidth: 4,
-                        borderBottomColor: '#EEE',
-                        height: 44,
-                        backgroundColor: 'white',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    } },
-                _react2.default.createElement(_reactNative.View, { style: {
-                        flex: 1
-                    } }),
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: {
-                            flex: 1
-                        } },
-                    _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: {
-                                alignSelf: 'center',
-                                fontSize: 22,
-                                color: 'blue'
-                            } },
-                        'Habit'
-                    )
-                ),
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: {
-                            flex: 1
-                        } },
-                    _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: {
-                                alignSelf: 'center'
-                            } },
-                        'Temp Menu'
-                    )
-                )
-            );
-        }
-    }]);
-    return NavBar;
-}(_react.Component);
+var _config = require(415           ); // 415 = ./src/config
 
-var HabitCard = function (_Component2) {
-    babelHelpers.inherits(HabitCard, _Component2);
+var _config2 = babelHelpers.interopRequireDefault(_config);
 
-    function HabitCard(props) {
-        babelHelpers.classCallCheck(this, HabitCard);
-        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).call(this, props));
-    }
-
-    babelHelpers.createClass(HabitCard, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: {
-                        flex: 1,
-                        flexDirection: 'column',
-                        backgroundColor: 'white',
-                        alignSelf: 'stretch',
-                        marginTop: 15,
-                        marginLeft: 15,
-                        marginRight: 15,
-                        padding: 15,
-                        borderColor: '#EEE',
-                        borderStyle: 'solid',
-                        borderBottomWidth: 3,
-                        borderLeftWidth: 1,
-                        borderRightWidth: 1
-                    } },
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: {
-                            flex: 10,
-                            flexDirection: 'row',
-                            marginBottom: 10
-                        } },
-                    _react2.default.createElement(
-                        _reactNative.View,
-                        { style: {
-                                flex: 3,
-                                alignItems: 'center',
-                                marginBottom: -10
-                            } },
-                        _react2.default.createElement(_reactNative.Image, {
-                            source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
-                            style: {
-                                width: 100,
-                                height: 120
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        _reactNative.View,
-                        { style: {
-                                flex: 4,
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            } },
-                        _react2.default.createElement(
-                            _reactNative.View,
-                            { style: {
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'flex-end'
-                                } },
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                { style: {
-                                        flex: 1,
-                                        borderStyle: 'solid',
-                                        borderBottomColor: '#CFCFCF',
-                                        borderBottomWidth: 1,
-                                        marginBottom: 5
-                                    } },
-                                this.props.title
-                            ),
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                { style: {
-                                        flex: 3,
-                                        textAlign: 'center',
-                                        padding: 10,
-                                        borderColor: '#CFCFCF',
-                                        borderTopWidth: 1,
-                                        borderRightWidth: 2,
-                                        borderLeftWidth: 2,
-                                        borderBottomWidth: 3
-                                    } },
-                                this.props.info
-                            )
-                        )
-                    )
-                ),
-                _react2.default.createElement(_reactNative.View, { style: {
-                        flex: 1,
-                        alignSelf: 'stretch',
-                        backgroundColor: '#CCC',
-                        height: 12,
-                        marginRight: -15,
-                        marginLeft: -15
-                    } }),
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: {
-                            flex: 3,
-                            flexDirection: 'row',
-                            marginTop: 10
-                        } },
-                    _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: {
-                                marginLeft: 15,
-                                flex: 1
-                            } },
-                        this.props.notes
-                    ),
-                    _react2.default.createElement(
-                        _reactNative.View,
-                        { style: {
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                marginRight: 15
-                            } },
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
-                            style: {
-                                width: 20,
-                                height: 20
-                            }
-                        }),
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
-                            style: {
-                                width: 20,
-                                height: 20
-                            }
-                        }),
-                        _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://facebook.github.io/react/img/logo_og.png' },
-                            style: {
-                                width: 20,
-                                height: 20
-                            }
-                        })
-                    )
-                )
-            );
-        }
-    }]);
-    return HabitCard;
-}(_react.Component);
-
-var EmptyCard = function (_Component3) {
-    babelHelpers.inherits(EmptyCard, _Component3);
-
-    function EmptyCard() {
-        babelHelpers.classCallCheck(this, EmptyCard);
-        return babelHelpers.possibleConstructorReturn(this, (EmptyCard.__proto__ || Object.getPrototypeOf(EmptyCard)).apply(this, arguments));
-    }
-
-    babelHelpers.createClass(EmptyCard, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: {
-                        flex: 1,
-                        flexDirection: 'column',
-                        height: 181,
-                        backgroundColor: 'white',
-                        alignSelf: 'stretch',
-                        marginTop: 15,
-                        marginLeft: 15,
-                        marginRight: 15
-                    } },
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: {
-                            flex: 1
-
-                        } },
-                    'Empty Card'
-                )
-            );
-        }
-    }]);
-    return EmptyCard;
-}(_react.Component);
-
-var HabitContainer = function (_Component4) {
-    babelHelpers.inherits(HabitContainer, _Component4);
-
-    function HabitContainer(props) {
-        babelHelpers.classCallCheck(this, HabitContainer);
-
-        var _this4 = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
-
-        _this4.state = { habits: props.habits };
-
-        _this4.handleReload = _this4.handleReload.bind(_this4);
-        return _this4;
-    }
-
-    babelHelpers.createClass(HabitContainer, [{
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(props) {
-            this.setState({
-                habits: props.habits
-            });
-        }
-    }, {
-        key: 'handleReload',
-        value: function handleReload() {
-            var _this5 = this;
-
-            fetch(this.props.url).then(function (res) {
-                return res.json();
-            }).then(function (resJson) {
-                var newUser = resJson;
-                console.log('Successfully reloaded: ' + resJson);
-                _this5.setState({
-                    habits: newUser.habits
-                });
-            }).catch(function (err) {
-                console.log(err);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var habits = [];
-
-            if (this.state.habits.length > 0) {
-                habits = Array.from(this.state.habits).map(function (habit) {
-                    console.log(habit);
-                    return _react2.default.createElement(HabitCard, {
-                        isLoved: habit.isLoved,
-                        isActive: habit.isActive,
-                        streak: habit.streak,
-                        notes: habit.notes,
-                        picture: habit.picture,
-                        info: habit.info,
-                        title: habit.title,
-                        key: habit.id
-                    });
-                });
-            }
-
-            while (habits.length < 3) {
-                habits.push(_react2.default.createElement(EmptyCard, {
-                    key: habits.length + 1
-                }));
-            }
-
-            return _react2.default.createElement(
-                _reactNative.ScrollView,
-                { style: {
-                        flex: 1
-                    } },
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: {
-                            flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            alignSelf: 'stretch',
-                            backgroundColor: '#F9F9F9'
-                        } },
-                    habits
-                )
-            );
-        }
-    }]);
-    return HabitContainer;
-}(_react.Component);
-
-var App = function (_React$Component) {
-    babelHelpers.inherits(App, _React$Component);
-
-    function App(props) {
-        babelHelpers.classCallCheck(this, App);
-
-        var _this6 = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-        _this6.state = {
-            user: '',
-            habits: []
-        };
-
-        _this6.queryDB = _this6.queryDB.bind(_this6);
-        return _this6;
-    }
-
-    babelHelpers.createClass(App, [{
-        key: 'queryDB',
-        value: function queryDB() {
-            var _this7 = this;
-
-            fetch(this.props.url).then(function (res) {
-                return res.json();
-            }).then(function (resJson) {
-                var newUser = resJson;
-                console.log('Successfully queried db: ' + resJson);
-                _this7.setState({
-                    user: newUser,
-                    habits: newUser.habits
-                });
-            }).catch(function (err) {
-                console.log(err);
-            });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.queryDB();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: {
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start'
-                    } },
-                _react2.default.createElement(_reactNative.StatusBar, {
-                    backgroundColor: '#222',
-                    barStyle: 'light-content'
-                }),
-                _react2.default.createElement(NavBar, null),
-                _react2.default.createElement(HabitContainer, {
-                    habits: this.state.habits,
-                    url: this.props.url
-                })
-            );
-        }
-    }]);
-    return App;
-}(_react2.default.Component);
-
-var Habit = function (_Component5) {
-    babelHelpers.inherits(Habit, _Component5);
+var Habit = function (_Component) {
+    babelHelpers.inherits(Habit, _Component);
 
     function Habit() {
         babelHelpers.classCallCheck(this, Habit);
@@ -1647,7 +1257,7 @@ var Habit = function (_Component5) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: { flex: 1 } },
-                _react2.default.createElement(App, { url: 'http://192.168.0.101:3001/api/user' })
+                _react2.default.createElement(_App2.default, { url: "http://" + _config2.default.ip + ":" + _config2.default.port + "/api/users/58e5f621734d1d12d73a0e5f" })
             );
         }
     }]);
@@ -50408,6 +50018,747 @@ function throwOnWrongReactAPI(key) {
 
 module.exports = throwOnWrongReactAPI;
 }, 413, null, "throwOnWrongReactAPI");
+__d(/* AwesomeProject/src/components/App/App.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _config = require(415           ); // 415 = ../../config
+
+var _config2 = babelHelpers.interopRequireDefault(_config);
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _HabitContainer = require(416                               ); // 416 = ../HabitContainer/HabitContainer
+
+var _HabitContainer2 = babelHelpers.interopRequireDefault(_HabitContainer);
+
+var _FadeInView = require(424            ); // 424 = ../FadeInView
+
+var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
+
+var _SlideInView = require(427             ); // 427 = ../SlideInView
+
+var _SlideInView2 = babelHelpers.interopRequireDefault(_SlideInView);
+
+var _NavBar = require(425               ); // 425 = ../NavBar/NavBar
+
+var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var App = function (_React$Component) {
+    babelHelpers.inherits(App, _React$Component);
+
+    function App(props) {
+        babelHelpers.classCallCheck(this, App);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this.state = {
+            user: '',
+            habits: [],
+            menu: {}
+        };
+
+        _this.queryDB = _this.queryDB.bind(_this);
+        return _this;
+    }
+
+    babelHelpers.createClass(App, [{
+        key: 'queryDB',
+        value: function queryDB() {
+            var _this2 = this;
+
+            fetch(this.props.url).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                var newUser = resJson;
+                console.log('Successfully queried db: ' + resJson);
+
+                newUser.picture = "http://" + _config2.default.ip + ":" + _config2.default.port + "/pics/" + newUser.picture;
+                _this2.setState({
+                    user: newUser,
+                    habits: newUser.habits
+                });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.queryDB();
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({ menu: this.menu });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                _FadeInView2.default,
+                { duration: 500, style: {
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                        opacity: this.state.fadeAnim
+                    } },
+                _react2.default.createElement(_reactNative.StatusBar, {
+                    backgroundColor: '#222',
+                    barStyle: 'light-content'
+                }),
+                _react2.default.createElement(_NavBar2.default, { menu: this.state.menu }),
+                _react2.default.createElement(_HabitContainer2.default, {
+                    habits: this.state.habits,
+                    url: this.props.url
+                }),
+                _react2.default.createElement(_SlideInView2.default, {
+                    ref: function ref(menu) {
+                        _this3.menu = menu;
+                    },
+                    width: _reactNative.Dimensions.get('window').width,
+                    duration: 2000,
+                    style: {
+                        backgroundColor: 'black',
+                        position: "absolute",
+                        height: 500,
+                        width: _reactNative.Dimensions.get('window').width,
+                        right: this.props.slideAnim
+                    } })
+            );
+        }
+    }]);
+    return App;
+}(_react2.default.Component);
+
+exports.default = App;
+
+
+_reactNative.AppRegistry.registerComponent('App', function () {
+    return App;
+});
+}, 414, null, "AwesomeProject/src/components/App/App.js");
+__d(/* AwesomeProject/src/config.js */function(global, require, module, exports) {
+module.exports.ip = '192.168.0.106';
+module.exports.port = 3001;
+module.exports.con = 'mongodb://habitUser:fritzish@ds145220.mlab.com:45220/habitdb';
+}, 415, null, "AwesomeProject/src/config.js");
+__d(/* AwesomeProject/src/components/HabitContainer/HabitContainer.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var _HabitCard = require(417                     ); // 417 = ../HabitCard/HabitCard
+
+var _HabitCard2 = babelHelpers.interopRequireDefault(_HabitCard);
+
+var _EmptyCard = require(423                     ); // 423 = ../EmptyCard/EmptyCard
+
+var _EmptyCard2 = babelHelpers.interopRequireDefault(_EmptyCard);
+
+var HabitContainer = function (_Component) {
+    babelHelpers.inherits(HabitContainer, _Component);
+
+    function HabitContainer(props) {
+        babelHelpers.classCallCheck(this, HabitContainer);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (HabitContainer.__proto__ || Object.getPrototypeOf(HabitContainer)).call(this, props));
+
+        _this.state = {
+            habits: props.habits,
+            accentColors: ['#F44336', '#FFC107', '#3F51B5'] };
+
+        _this.handleReload = _this.handleReload.bind(_this);
+        return _this;
+    }
+
+    babelHelpers.createClass(HabitContainer, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(props) {
+            this.setState({
+                habits: props.habits
+            });
+        }
+    }, {
+        key: 'handleReload',
+        value: function handleReload() {
+            var _this2 = this;
+
+            fetch(this.props.url).then(function (res) {
+                return res.json();
+            }).then(function (resJson) {
+                var newUser = resJson;
+                console.log('Successfully reloaded: ' + resJson);
+                _this2.setState({
+                    habits: newUser.habits
+                });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            var habits = [];
+
+            if (this.state.habits.length > 0) {
+                habits = Array.from(this.state.habits).map(function (habit) {
+                    var accentColor = _this3.state.accentColors[habit.id];
+                    return _react2.default.createElement(_HabitCard2.default, {
+                        isLoved: habit.isLoved,
+                        isActive: habit.isActive,
+                        streak: habit.streak,
+                        notes: habit.notes,
+                        picture: habit.picture,
+                        info: habit.info,
+                        title: habit.title,
+                        key: habit.id,
+                        accentColor: accentColor
+                    });
+                });
+            }
+
+            while (habits.length < 3) {
+                habits.push(_react2.default.createElement(_EmptyCard2.default, {
+                    key: habits.length + 1
+                }));
+            }
+
+            return _react2.default.createElement(
+                _reactNative.ScrollView,
+                { style: {
+                        flex: 1
+                    } },
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            alignSelf: 'stretch',
+                            backgroundColor: '#F9F9F9'
+                        } },
+                    habits
+                )
+            );
+        }
+    }]);
+    return HabitContainer;
+}(_react.Component);
+
+exports.default = HabitContainer;
+
+
+_reactNative.AppRegistry.registerComponent('HabitContainer', function () {
+    return HabitContainer;
+});
+}, 416, null, "AwesomeProject/src/components/HabitContainer/HabitContainer.js");
+__d(/* AwesomeProject/src/components/HabitCard/HabitCard.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _config = require(415           ); // 415 = ../../config
+
+var _config2 = babelHelpers.interopRequireDefault(_config);
+
+var _ProgressBar = require(418                        ); // 418 = ./ProgressBar/ProgressBar
+
+var _ProgressBar2 = babelHelpers.interopRequireDefault(_ProgressBar);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var HabitCard = function (_Component) {
+    babelHelpers.inherits(HabitCard, _Component);
+
+    function HabitCard() {
+        babelHelpers.classCallCheck(this, HabitCard);
+        return babelHelpers.possibleConstructorReturn(this, (HabitCard.__proto__ || Object.getPrototypeOf(HabitCard)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(HabitCard, [{
+        key: 'render',
+        value: function render() {
+            console.log(this.props.picture);
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        flex: 1,
+                        flexDirection: 'column',
+                        backgroundColor: 'white',
+                        alignSelf: 'stretch',
+                        marginTop: 15,
+                        marginLeft: 15,
+                        marginRight: 15,
+                        padding: 15,
+                        borderColor: '#EEE',
+                        borderLeftColor: '#FFF',
+                        borderTopColor: '#FFF',
+                        borderStyle: 'solid',
+                        borderBottomWidth: 3,
+                        borderLeftWidth: 1,
+                        borderRightWidth: 1,
+                        borderTopWidth: 1,
+                        borderRadius: 5
+                    } },
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 10,
+                            flexDirection: 'row',
+                            marginBottom: 10
+                        } },
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 3,
+                                alignItems: 'center',
+                                marginBottom: -10
+                            } },
+                        _react2.default.createElement(_reactNative.Image, {
+                            style: {
+                                width: 100,
+                                height: 120
+                            },
+                            source: { uri: "http://" + _config2.default.ip + ":" + _config2.default.port + "/pics/" + this.props.picture }
+                        })
+                    ),
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 4,
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                            } },
+                        _react2.default.createElement(
+                            _reactNative.View,
+                            { style: {
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end'
+                                } },
+                            _react2.default.createElement(
+                                _reactNative.Text,
+                                { style: {
+                                        flex: 1,
+                                        borderStyle: 'solid',
+                                        borderBottomColor: '#CFCFCF',
+                                        borderBottomWidth: 1,
+                                        marginBottom: 15
+                                    } },
+                                this.props.title
+                            ),
+                            _react2.default.createElement(
+                                _reactNative.Text,
+                                { style: {
+                                        flex: 3,
+                                        textAlign: 'center',
+                                        padding: 10,
+                                        borderColor: '#CFCFCF',
+                                        borderTopWidth: 1,
+                                        borderRightWidth: 2,
+                                        borderLeftWidth: 2,
+                                        borderBottomWidth: 3
+                                    } },
+                                this.props.info
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(_ProgressBar2.default, {
+                    accentColor: this.props.accentColor
+                }),
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 3,
+                            flexDirection: 'row',
+                            marginTop: 10
+                        } },
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: {
+                                marginLeft: 15,
+                                flex: 1
+                            } },
+                        this.props.notes
+                    ),
+                    _react2.default.createElement(
+                        _reactNative.View,
+                        { style: {
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginRight: 15
+                            } },
+                        _react2.default.createElement(_reactNative.Image, { source: require(419         ), // 419 = ./edit.png
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: require(420          ), // 420 = ./heart.png
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: require(421          ), // 421 = ./share.png
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        }),
+                        _react2.default.createElement(_reactNative.Image, { source: require(422                 ), // 422 = ./notification.png
+                            style: {
+                                width: 20,
+                                height: 20
+                            }
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+    return HabitCard;
+}(_react.Component);
+
+exports.default = HabitCard;
+
+
+_reactNative.AppRegistry.registerComponent('HabitCard', function () {
+    return HabitCard;
+});
+}, 417, null, "AwesomeProject/src/components/HabitCard/HabitCard.js");
+__d(/* AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var ProgressBar = function (_Component) {
+    babelHelpers.inherits(ProgressBar, _Component);
+
+    function ProgressBar(props) {
+        babelHelpers.classCallCheck(this, ProgressBar);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (ProgressBar.__proto__ || Object.getPrototypeOf(ProgressBar)).call(this, props));
+
+        _this.state = { progress: '50%' };
+        return _this;
+    }
+
+    babelHelpers.createClass(ProgressBar, [{
+        key: 'render',
+        value: function render(props) {
+            var progressBorderRadius = this.state.progress === '100%' ? 0 : 6;
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignSelf: 'stretch',
+                        backgroundColor: '#DEDEDE',
+                        height: 12,
+                        marginRight: -15,
+                        marginLeft: -15
+                    } },
+                _react2.default.createElement(_reactNative.View, { style: {
+                        backgroundColor: this.props.accentColor,
+                        borderTopRightRadius: progressBorderRadius,
+                        borderBottomRightRadius: progressBorderRadius,
+                        flex: 0,
+                        flexBasis: this.state.progress
+                    } })
+            );
+        }
+    }]);
+    return ProgressBar;
+}(_react.Component);
+
+exports.default = ProgressBar;
+
+
+_reactNative.AppRegistry.registerComponent('ProgressBar', function () {
+    return ProgressBar;
+});
+}, 418, null, "AwesomeProject/src/components/HabitCard/ProgressBar/ProgressBar.js");
+__d(/* AwesomeProject/src/components/HabitCard/edit.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"7d92452c3e714e17884fff2c5a926f82","name":"edit","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 419, null, "AwesomeProject/src/components/HabitCard/edit.png");
+__d(/* AwesomeProject/src/components/HabitCard/heart.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"2044c0a2b810e190e741bed5445f4fef","name":"heart","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 420, null, "AwesomeProject/src/components/HabitCard/heart.png");
+__d(/* AwesomeProject/src/components/HabitCard/share.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"c7d93a10c60e10e182256770594450f2","name":"share","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 421, null, "AwesomeProject/src/components/HabitCard/share.png");
+__d(/* AwesomeProject/src/components/HabitCard/notification.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/HabitCard","width":128,"height":128,"scales":[1],"hash":"6c1b2a09f418f0e8d7df2fc86791b856","name":"notification","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 422, null, "AwesomeProject/src/components/HabitCard/notification.png");
+__d(/* AwesomeProject/src/components/EmptyCard/EmptyCard.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var EmptyCard = function (_Component) {
+    babelHelpers.inherits(EmptyCard, _Component);
+
+    function EmptyCard() {
+        babelHelpers.classCallCheck(this, EmptyCard);
+        return babelHelpers.possibleConstructorReturn(this, (EmptyCard.__proto__ || Object.getPrototypeOf(EmptyCard)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(EmptyCard, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        flex: 1,
+                        flexDirection: 'column',
+                        height: 181,
+                        backgroundColor: 'white',
+                        alignSelf: 'stretch',
+                        marginTop: 15,
+                        marginLeft: 15,
+                        marginRight: 15
+                    } },
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: {
+                            flex: 1
+
+                        } },
+                    'Empty Card'
+                )
+            );
+        }
+    }]);
+    return EmptyCard;
+}(_react.Component);
+
+exports.default = EmptyCard;
+
+
+_reactNative.AppRegistry.registerComponent('EmptyCard', function () {
+    return EmptyCard;
+});
+}, 423, null, "AwesomeProject/src/components/EmptyCard/EmptyCard.js");
+__d(/* AwesomeProject/src/components/FadeInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var FadeInView = function (_Component) {
+  babelHelpers.inherits(FadeInView, _Component);
+
+  function FadeInView(props) {
+    babelHelpers.classCallCheck(this, FadeInView);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (FadeInView.__proto__ || Object.getPrototypeOf(FadeInView)).call(this, props));
+
+    _this.state = {
+      fadeAnim: new _reactNative.Animated.Value(0) };
+    return _this;
+  }
+
+  babelHelpers.createClass(FadeInView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _reactNative.Animated.timing(this.state.fadeAnim, {
+        toValue: 1,
+        duration: this.props.duration
+      }).start();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _reactNative.Animated.View,
+        {
+          style: babelHelpers.extends({}, this.props.style, {
+            opacity: this.state.fadeAnim })
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return FadeInView;
+}(_react.Component);
+
+module.exports = FadeInView;
+}, 424, null, "AwesomeProject/src/components/FadeInView.js");
+__d(/* AwesomeProject/src/components/SlideInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var SlideInView = function (_Component) {
+  babelHelpers.inherits(SlideInView, _Component);
+
+  function SlideInView(props) {
+    babelHelpers.classCallCheck(this, SlideInView);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, (SlideInView.__proto__ || Object.getPrototypeOf(SlideInView)).call(this, props));
+
+    _this.state = {
+      slideAnim: new _reactNative.Animated.Value(-_this.props.width) };
+
+    _this.slideIn = _this.slideIn.bind(_this);
+    return _this;
+  }
+
+  babelHelpers.createClass(SlideInView, [{
+    key: 'slideIn',
+    value: function slideIn() {
+      _reactNative.Animated.timing(this.state.slideAnim, {
+        toValue: 0,
+        duration: this.props.duration
+      }).start();
+      console.log('slideIn');
+    }
+  }, {
+    key: 'onLayout',
+    value: function onLayout() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log(this.props.width);
+      return _react2.default.createElement(
+        _reactNative.Animated.View,
+        {
+          style: babelHelpers.extends({}, this.props.style, {
+            right: this.state.slideAnim })
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return SlideInView;
+}(_react.Component);
+
+module.exports = SlideInView;
+}, 427, null, "AwesomeProject/src/components/SlideInView.js");
+__d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(45            ); // 45 = react-native
+
+var NavBar = function (_Component) {
+    babelHelpers.inherits(NavBar, _Component);
+
+    function NavBar(props) {
+        babelHelpers.classCallCheck(this, NavBar);
+        return babelHelpers.possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+    }
+
+    babelHelpers.createClass(NavBar, [{
+        key: 'render',
+        value: function render() {
+            var menuButton = !this.props.menu.slideIn ? _react2.default.createElement(
+                _reactNative.TouchableHighlight,
+                null,
+                _react2.default.createElement(_reactNative.Image, {
+                    source: require(426         ), // 426 = ./menu.png
+                    style: {
+                        alignSelf: 'center',
+                        height: 50,
+                        width: 60
+                    }
+                })
+            ) : _react2.default.createElement(
+                _reactNative.TouchableHighlight,
+                { onPress: this.props.menu.slideIn },
+                _react2.default.createElement(_reactNative.Image, {
+                    source: require(426         ), // 426 = ./menu.png
+                    style: {
+                        alignSelf: 'center',
+                        height: 50,
+                        width: 60
+                    }
+                })
+            );
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: {
+                        borderBottomWidth: 4,
+                        borderBottomColor: '#EEE',
+                        height: 44,
+                        backgroundColor: 'white',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    } },
+                _react2.default.createElement(_reactNative.View, { style: {
+                        flex: 1
+                    } }),
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 1
+                        } },
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: {
+                                alignSelf: 'center',
+                                fontSize: 22,
+                                color: '#000080'
+                            } },
+                        'Habit'
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: {
+                            flex: 1
+                        } },
+                    menuButton
+                )
+            );
+        }
+    }]);
+    return NavBar;
+}(_react.Component);
+
+exports.default = NavBar;
+
+
+_reactNative.AppRegistry.registerComponent('NavBar', function () {
+    return NavBar;
+});
+}, 425, null, "AwesomeProject/src/components/NavBar/NavBar.js");
+__d(/* AwesomeProject/src/components/NavBar/menu.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/NavBar","width":128,"height":128,"scales":[1],"hash":"fc219d56320280340ac0bb9ed241d676","name":"menu","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 426, null, "AwesomeProject/src/components/NavBar/menu.png");
 ;require(90);
 ;require(0);
 //# sourceMappingURL=index.android.map

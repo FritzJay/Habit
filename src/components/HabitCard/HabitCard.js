@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
+import config from '../../config';
+import ProgressBar from './ProgressBar/ProgressBar';
 import { 
     View, 
     Text,
-    Image
+    Image,
+    AppRegistry
 } from 'react-native';
 
 export default class HabitCard extends Component {
-    constructor (props) {
-        super(props);
-    }
-
     render () {
+        console.log(this.props.picture);
         return (
             <View style={{                  // Main Container
                 flex: 1,
@@ -22,10 +22,14 @@ export default class HabitCard extends Component {
                 marginRight: 15,
                 padding: 15,
                 borderColor: '#EEE',
+                borderLeftColor: '#FFF',
+                borderTopColor: '#FFF',
                 borderStyle: 'solid',
                 borderBottomWidth: 3,
                 borderLeftWidth: 1,
-                borderRightWidth: 1
+                borderRightWidth: 1,
+                borderTopWidth: 1,
+                borderRadius: 5
             }}>
                 <View style={{                      //Top container (Img, title, and info)
                     flex: 10,
@@ -38,11 +42,12 @@ export default class HabitCard extends Component {
                         marginBottom: -10,
                     }}>
                         <Image 
-                            source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
                             style={{
-                                width: 100, 
-                                height: 120
-                        }}/>
+                                    width: 100, 
+                                    height: 120
+                            }}
+                            source={{ uri: "http://" + config.ip + ":" + config.port + "/pics/" + this.props.picture }}
+                        />
                     </View>
 
                     <View style={{                  //Top right container (title, info)
@@ -61,7 +66,7 @@ export default class HabitCard extends Component {
                                 borderStyle: 'solid',
                                 borderBottomColor: '#CFCFCF',
                                 borderBottomWidth: 1,
-                                marginBottom: 5,
+                                marginBottom: 15
                             }}> 
                                 {this.props.title}
                             </Text>
@@ -80,14 +85,11 @@ export default class HabitCard extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{                          //Temporary StreakBar
-                    flex: 1,
-                    alignSelf: 'stretch',
-                    backgroundColor: '#CCC',
-                    height: 12,
-                    marginRight: -15,
-                    marginLeft: -15
-                }} />
+
+                <ProgressBar
+                     accentColor={this.props.accentColor}
+                />
+
                 <View style={{                          //Bottom Container (notes, icons, streak)
                     flex: 3,
                     flexDirection: 'row',
@@ -108,19 +110,25 @@ export default class HabitCard extends Component {
                         marginRight: 15
                     }}>
 
-                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                        <Image source={require('./edit.png')}
                             style={{
                                 width: 20, 
                                 height: 20
                             }}
                         />
-                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                        <Image source={require('./heart.png')}
+                            style={{
+                                width: 20,
+                                height: 20
+                            }}
+                        />
+                        <Image source={require('./share.png')}
                             style={{
                                 width: 20, 
                                 height: 20
                             }}
                         />
-                        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
+                        <Image source={require('./notification.png')}
                             style={{
                                 width: 20, 
                                 height: 20
