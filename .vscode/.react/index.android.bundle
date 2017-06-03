@@ -11436,7 +11436,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             });
             var bridge = new Bridge(wall),
                 agent = new Agent(window, {
-                rnStyle: !!resolveRNStyle
+                rnStyle: !!resolveRNStyle,
+                rnStyleMeasure: !!resolveRNStyle
             });
             agent.addBridge(bridge), resolveRNStyle && setupRNStyle(bridge, agent, resolveRNStyle), setupRelay(bridge, agent, window.__REACT_DEVTOOLS_GLOBAL_HOOK__);
             var _connectTimeout = setTimeout(function () {
@@ -11446,20 +11447,15 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 agent && (inject(window.__REACT_DEVTOOLS_GLOBAL_HOOK__, agent), clearTimeout(_connectTimeout));
             });
         }
-        window.performance || (window.performance = {
-            now: function now() {
-                return Date.now();
-            }
-        });
         var Agent = __webpack_require__(1),
-            Bridge = __webpack_require__(5),
-            installGlobalHook = __webpack_require__(30),
-            installRelayHook = __webpack_require__(31),
-            inject = __webpack_require__(32),
-            setupRNStyle = __webpack_require__(42),
-            setupRelay = __webpack_require__(43);
+            Bridge = __webpack_require__(6),
+            installGlobalHook = __webpack_require__(31),
+            installRelayHook = __webpack_require__(32),
+            inject = __webpack_require__(33),
+            setupRNStyle = __webpack_require__(43),
+            setupRelay = __webpack_require__(45);
         installGlobalHook(window), installRelayHook(window), window.document && window.__REACT_DEVTOOLS_GLOBAL_HOOK__.on("react-devtools", function (agent) {
-            var setupHighlighter = __webpack_require__(44);
+            var setupHighlighter = __webpack_require__(46);
             setupHighlighter(agent);
         }), module.exports = {
             connectToDevTools: connectToDevTools
@@ -11485,11 +11481,6 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 }
             }), superClass && (Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass);
         }
-        function getIn(base, path) {
-            return path.reduce(function (obj, attr) {
-                return obj ? obj[attr] : null;
-            }, base);
-        }
         var _typeof = "function" == typeof Symbol && "symbol" == typeof (typeof Symbol === "function" ? Symbol.iterator : "@@iterator") ? function (obj) {
             return typeof obj;
         } : function (obj) {
@@ -11510,11 +11501,12 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             EventEmitter = _require.EventEmitter,
             assign = __webpack_require__(3),
             guid = __webpack_require__(4),
+            getIn = __webpack_require__(5),
             Agent = function (_EventEmitter) {
             function Agent(global, capabilities) {
                 _classCallCheck(this, Agent);
                 var _this = _possibleConstructorReturn(this, (Agent.__proto__ || Object.getPrototypeOf(Agent)).call(this));
-                _this.global = global, _this.reactElements = new Map(), _this.ids = new WeakMap(), _this.renderers = new Map(), _this.elementData = new Map(), _this.roots = new Set(), _this.reactInternals = {};
+                _this.global = global, _this.internalInstancesById = new Map(), _this.idsByInternalInstances = new WeakMap(), _this.renderers = new Map(), _this.elementData = new Map(), _this.roots = new Set(), _this.reactInternals = {};
                 var lastSelected;
                 _this.on("selected", function (id) {
                     var data = _this.elementData.get(id);
@@ -11525,7 +11517,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                     scroll: isReactDOM && "function" == typeof window.document.body.scrollIntoView,
                     dom: isReactDOM,
                     editTextContent: !1
-                }, capabilities), isReactDOM && (_this._updateScroll = _this._updateScroll.bind(_this), window.addEventListener("scroll", _this._onScroll.bind(_this), !0)), _this;
+                }, capabilities), isReactDOM && (_this._updateScroll = _this._updateScroll.bind(_this), window.addEventListener("scroll", _this._onScroll.bind(_this), !0), window.addEventListener("click", _this._onClick.bind(_this), !0), window.addEventListener("mouseover", _this._onMouseOver.bind(_this), !0), window.addEventListener("resize", _this._onResize.bind(_this), !0)), _this;
             }
             return _inherits(Agent, _EventEmitter), _createClass(Agent, [{
                 key: "sub",
@@ -11558,6 +11550,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         return _this3.emit("stopInspecting");
                     }), bridge.on("selected", function (id) {
                         return _this3.emit("selected", id);
+                    }), bridge.on("setInspectEnabled", function (enabled) {
+                        _this3._inspectEnabled = enabled, _this3.emit("stopInspecting");
                     }), bridge.on("shutdown", function () {
                         return _this3.emit("shutdown");
                     }), bridge.on("changeTextContent", function (_ref) {
@@ -11569,7 +11563,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$node = _this3.getNodeForID(id);
                     }), bridge.on("putSelectedInstance", function (id) {
                         var node = _this3.elementData.get(id);
-                        node && node.publicInstance ? window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$inst = node.publicInstance : window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$inst = null;
+                        node ? window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$type = node.type : window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$type = null, node && node.publicInstance ? window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$inst = node.publicInstance : window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$inst = null;
                     }), bridge.on("checkSelection", function () {
                         var newSelected = window.__REACT_DEVTOOLS_GLOBAL_HOOK__.$0;
                         if (newSelected !== _this3._prevSelected) {
@@ -11579,8 +11573,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         }
                     }), bridge.on("scrollToNode", function (id) {
                         return _this3.scrollToNode(id);
-                    }), bridge.on("bananaslugchange", function (value) {
-                        return _this3.emit("bananaslugchange", value);
+                    }), bridge.on("traceupdatesstatechange", function (value) {
+                        return _this3.emit("traceupdatesstatechange", value);
                     }), bridge.on("colorizerchange", function (value) {
                         return _this3.emit("colorizerchange", value);
                     }), this.on("root", function (id) {
@@ -11593,6 +11587,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         bridge.send("unmount", id), bridge.forget(id);
                     }), this.on("setSelection", function (data) {
                         return bridge.send("select", data);
+                    }), this.on("setInspectEnabled", function (data) {
+                        return bridge.send("setInspectEnabled", data);
                     });
                 }
             }, {
@@ -11600,8 +11596,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 value: function value(id) {
                     var node = this.getNodeForID(id);
                     if (!node) return void console.warn("unable to get the node for scrolling");
-                    var element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
-                    return element ? ("function" == typeof element.scrollIntoViewIfNeeded ? element.scrollIntoViewIfNeeded() : "function" == typeof element.scrollIntoView && element.scrollIntoView(), void this.highlight(id)) : void console.warn("unable to get the element for scrolling");
+                    var domElement = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+                    return domElement ? ("function" == typeof domElement.scrollIntoViewIfNeeded ? domElement.scrollIntoViewIfNeeded() : "function" == typeof domElement.scrollIntoView && domElement.scrollIntoView(), void this.highlight(id)) : void console.warn("unable to get the domElement for scrolling");
                 }
             }, {
                 key: "highlight",
@@ -11627,7 +11623,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }, {
                 key: "getNodeForID",
                 value: function value(id) {
-                    var component = this.reactElements.get(id);
+                    var component = this.internalInstancesById.get(id);
                     if (!component) return null;
                     var renderer = this.renderers.get(id);
                     return renderer && this.reactInternals[renderer].getNativeFromReactElement ? this.reactInternals[renderer].getNativeFromReactElement(component) : null;
@@ -11635,10 +11631,12 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }, {
                 key: "selectFromDOMNode",
                 value: function value(node, quiet) {
-                    var id = this.getIDForNode(node);
+                    var offsetFromLeaf = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 0,
+                        id = this.getIDForNode(node);
                     id && this.emit("setSelection", {
                         id: id,
-                        quiet: quiet
+                        quiet: quiet,
+                        offsetFromLeaf: offsetFromLeaf
                     });
                 }
             }, {
@@ -11688,7 +11686,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         path = _ref4.path,
                         value = _ref4.value,
                         data = this.elementData.get(id);
-                    data && data.updater && data.updater.setInContext ? data.updater.setInContext(path, value) : console.warn("trying to set state on a component that doesn't support it");
+                    data && data.updater && data.updater.setInContext ? data.updater.setInContext(path, value) : console.warn("trying to set context on a component that doesn't support it");
                 }
             }, {
                 key: "_makeGlobal",
@@ -11703,13 +11701,13 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 }
             }, {
                 key: "getId",
-                value: function value(element) {
-                    return "object" === ("undefined" == typeof element ? "undefined" : _typeof(element)) && element ? (this.ids.has(element) || (this.ids.set(element, guid()), this.reactElements.set(this.ids.get(element), element)), this.ids.get(element)) : element;
+                value: function value(internalInstance) {
+                    return "object" === ("undefined" == typeof internalInstance ? "undefined" : _typeof(internalInstance)) && internalInstance ? (this.idsByInternalInstances.has(internalInstance) || (this.idsByInternalInstances.set(internalInstance, guid()), this.internalInstancesById.set(this.idsByInternalInstances.get(internalInstance), internalInstance)), this.idsByInternalInstances.get(internalInstance)) : internalInstance;
                 }
             }, {
                 key: "addRoot",
-                value: function value(renderer, element) {
-                    var id = this.getId(element);
+                value: function value(renderer, internalInstance) {
+                    var id = this.getId(internalInstance);
                     this.roots.add(id), this.emit("root", id);
                 }
             }, {
@@ -11738,7 +11736,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 key: "onUnmounted",
                 value: function value(component) {
                     var id = this.getId(component);
-                    this.elementData["delete"](id), this.roots["delete"](id), this.renderers["delete"](id), this.emit("unmount", id), this.ids["delete"](component);
+                    this.elementData["delete"](id), this.roots["delete"](id), this.renderers["delete"](id), this.emit("unmount", id), this.idsByInternalInstances["delete"](component);
                 }
             }, {
                 key: "_onScroll",
@@ -11748,7 +11746,31 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }, {
                 key: "_updateScroll",
                 value: function value() {
-                    this.emit("refreshMultiOverlay"), this._scrollUpdate = !1;
+                    this.emit("refreshMultiOverlay"), this.emit("stopInspecting"), this._scrollUpdate = !1;
+                }
+            }, {
+                key: "_onClick",
+                value: function value(event) {
+                    if (this._inspectEnabled) {
+                        var id = this.getIDForNode(event.target);
+                        id && (event.stopPropagation(), event.preventDefault(), this.emit("setSelection", {
+                            id: id
+                        }), this.emit("setInspectEnabled", !1));
+                    }
+                }
+            }, {
+                key: "_onMouseOver",
+                value: function value(event) {
+                    if (this._inspectEnabled) {
+                        var id = this.getIDForNode(event.target);
+                        if (!id) return;
+                        this.highlight(id);
+                    }
+                }
+            }, {
+                key: "_onResize",
+                value: function value(event) {
+                    this.emit("stopInspecting");
                 }
             }]), Agent;
         }(EventEmitter);
@@ -11878,6 +11900,27 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             return "g" + Math.random().toString(16).substr(2);
         }
         module.exports = guid;
+    }, function (module, exports) {
+        "use strict";
+
+        function _toConsumableArray(arr) {
+            if (Array.isArray(arr)) {
+                for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                    arr2[i] = arr[i];
+                }return arr2;
+            }
+            return Array.from(arr);
+        }
+        function getIn(base, path) {
+            return path.reduce(function (obj, attr) {
+                if (obj) {
+                    if (obj.hasOwnProperty(attr)) return obj[attr];
+                    if ("function" == typeof obj[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"]) return [].concat(_toConsumableArray(obj))[attr];
+                }
+                return null;
+            }, base);
+        }
+        module.exports = getIn;
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
@@ -11892,10 +11935,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         function _classCallCheck(instance, Constructor) {
             if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
         }
-        function getIn(base, path) {
-            return path.reduce(function (obj, attr) {
-                return obj ? obj[attr] : null;
-            }, base);
+        function getWindowFunction(name, polyfill) {
+            return String(window[name]).indexOf("[native code]") === -1 ? polyfill : window[name];
         }
         var _extends = Object.assign || function (target) {
             for (var i = 1; i < arguments.length; i++) {
@@ -11917,13 +11958,14 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), Constructor;
             };
         }(),
-            consts = __webpack_require__(6),
-            hydrate = __webpack_require__(25),
-            dehydrate = __webpack_require__(26),
-            performanceNow = __webpack_require__(27),
+            consts = __webpack_require__(7),
+            hydrate = __webpack_require__(26),
+            dehydrate = __webpack_require__(27),
+            getIn = __webpack_require__(5),
+            performanceNow = __webpack_require__(28),
             lastRunTimeMS = 5,
-            cancelIdleCallback = window.cancelIdleCallback || clearTimeout,
-            requestIdleCallback = window.requestIdleCallback || function (cb, options) {
+            cancelIdleCallback = getWindowFunction("cancelIdleCallback", clearTimeout),
+            requestIdleCallback = getWindowFunction("requestIdleCallback", function (cb, options) {
             var delayMS = 3e3 * lastRunTimeMS;
             return delayMS > 500 && (delayMS = 500), setTimeout(function () {
                 var startTime = performanceNow();
@@ -11936,7 +11978,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 var endTime = performanceNow();
                 lastRunTimeMS = (endTime - startTime) / 1e3;
             }, delayMS);
-        },
+        }),
             Bridge = function () {
             function Bridge(wall) {
                 _classCallCheck(this, Bridge), this._cbs = new Map(), this._inspectables = new Map(), this._cid = 0, this._listeners = {}, this._buffer = [], this._flushHandle = null, this._callers = {}, this._paused = !1, this._wall = wall, wall.listen(this._handleMessage.bind(this));
@@ -12130,6 +12172,29 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                         var val = getIn(inspectable, path),
                             protod = !1,
                             isFn = "function" == typeof val;
+                        if (val && "function" == typeof val[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"]) {
+                            var iterVal = Object.create({}),
+                                count = 0,
+                                _iteratorNormalCompletion = !0,
+                                _didIteratorError = !1,
+                                _iteratorError = void 0;
+                            try {
+                                for (var _step, _iterator = val[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = !0) {
+                                    var entry = _step.value;
+                                    if (count > 100) break;
+                                    iterVal[count] = entry, count++;
+                                }
+                            } catch (err) {
+                                _didIteratorError = !0, _iteratorError = err;
+                            } finally {
+                                try {
+                                    !_iteratorNormalCompletion && _iterator["return"] && _iterator["return"]();
+                                } finally {
+                                    if (_didIteratorError) throw _iteratorError;
+                                }
+                            }
+                            val = iterVal;
+                        }
                         if (Object.getOwnPropertyNames(val).forEach(function (name) {
                             "__proto__" === name && (protod = !0), (!isFn || "arguments" !== name && "callee" !== name && "caller" !== name) && (result[name] = dehydrate(val[name], cleaned, [name]));
                         }), !protod && val.__proto__ && "Object" !== val.constructor.name) {
@@ -12152,7 +12217,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var _Symbol = __webpack_require__(7);
+        var _Symbol = __webpack_require__(8);
         module.exports = {
             name: _Symbol("name"),
             type: _Symbol("type"),
@@ -12163,7 +12228,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        module.exports = __webpack_require__(8)() ? Symbol : __webpack_require__(9);
+        module.exports = __webpack_require__(9)() ? Symbol : __webpack_require__(10);
     }, function (module, exports) {
         "use strict";
 
@@ -12184,8 +12249,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         var NativeSymbol,
             SymbolPolyfill,
             _HiddenSymbol,
-            d = __webpack_require__(10),
-            validateSymbol = __webpack_require__(23),
+            d = __webpack_require__(11),
+            validateSymbol = __webpack_require__(24),
             create = Object.create,
             defineProperties = Object.defineProperties,
             defineProperty = Object.defineProperty,
@@ -12253,10 +12318,10 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         "use strict";
 
         var d,
-            assign = __webpack_require__(11),
-            normalizeOpts = __webpack_require__(18),
-            isCallable = __webpack_require__(19),
-            contains = __webpack_require__(20);
+            assign = __webpack_require__(12),
+            normalizeOpts = __webpack_require__(19),
+            isCallable = __webpack_require__(20),
+            contains = __webpack_require__(21);
         d = module.exports = function (dscr, value) {
             var c, e, w, options, desc;
             return arguments.length < 2 || "string" != typeof dscr ? (options = value, value = dscr, dscr = null) : options = arguments[2], null == dscr ? (c = w = !0, e = !1) : (c = contains.call(dscr, "c"), e = contains.call(dscr, "e"), w = contains.call(dscr, "w")), desc = {
@@ -12277,7 +12342,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        module.exports = __webpack_require__(12)() ? Object.assign : __webpack_require__(13);
+        module.exports = __webpack_require__(13)() ? Object.assign : __webpack_require__(14);
     }, function (module, exports) {
         "use strict";
 
@@ -12295,8 +12360,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var keys = __webpack_require__(14),
-            value = __webpack_require__(17),
+        var keys = __webpack_require__(15),
+            value = __webpack_require__(18),
             max = Math.max;
         module.exports = function (dest, src) {
             var error,
@@ -12317,7 +12382,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        module.exports = __webpack_require__(15)() ? Object.keys : __webpack_require__(16);
+        module.exports = __webpack_require__(16)() ? Object.keys : __webpack_require__(17);
     }, function (module, exports) {
         "use strict";
 
@@ -12368,7 +12433,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        module.exports = __webpack_require__(21)() ? String.prototype.contains : __webpack_require__(22);
+        module.exports = __webpack_require__(22)() ? String.prototype.contains : __webpack_require__(23);
     }, function (module, exports) {
         "use strict";
 
@@ -12386,7 +12451,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var isSymbol = __webpack_require__(24);
+        var isSymbol = __webpack_require__(25);
         module.exports = function (value) {
             if (!isSymbol(value)) throw new TypeError(value + " is not a symbol");
             return value;
@@ -12412,43 +12477,94 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 }
             });
         }
-        var consts = __webpack_require__(6);
+        var consts = __webpack_require__(7);
         module.exports = hydrate;
     }, function (module, exports) {
         "use strict";
 
-        function dehydrate(data, cleaned, path, level) {
-            if (level = level || 0, path = path || [], "function" == typeof data) return cleaned.push(path), {
-                name: data.name,
-                type: "function"
-            };
-            if (!data || "object" !== ("undefined" == typeof data ? "undefined" : _typeof(data))) {
-                if ("string" == typeof data && data.length > 500) return data.slice(0, 500) + "...";
-                var type = "undefined" == typeof data ? "undefined" : _typeof(data);
-                return "symbol" === type ? (cleaned.push(path), {
-                    type: "symbol",
-                    name: data.toString()
-                }) : data;
+        function getPropType(data) {
+            if (!data) return null;
+            var type = "undefined" == typeof data ? "undefined" : _typeof(data);
+            if ("object" === type) {
+                if (data._reactFragment) return "react_fragment";
+                if (Array.isArray(data)) return "array";
+                if (ArrayBuffer.isView(data)) return data instanceof DataView ? "data_view" : "typed_array";
+                if (data instanceof ArrayBuffer) return "array_buffer";
+                if ("function" == typeof data[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"]) return "iterator";
+                if ("[object Date]" === Object.prototype.toString.call(data)) return "date";
             }
-            if (data._reactFragment) return "A react fragment";
-            if (level > 2) return cleaned.push(path), {
-                type: Array.isArray(data) ? "array" : "object",
-                name: data.constructor && "Object" !== data.constructor.name ? data.constructor.name : "",
-                meta: Array.isArray(data) ? {
-                    length: data.length
-                } : null
+            return type;
+        }
+        function createDehydrated(type, data, cleaned, path) {
+            var meta = {};
+            return "array" !== type && "typed_array" !== type || (meta.length = data.length), "iterator" !== type && "typed_array" !== type || (meta.readOnly = !0), cleaned.push(path), {
+                type: type,
+                meta: meta,
+                name: data.constructor && "Object" !== data.constructor.name ? data.constructor.name : ""
             };
-            if (Array.isArray(data)) return data.map(function (item, i) {
-                return dehydrate(item, cleaned, path.concat([i]), level + 1);
-            });
-            if (data.constructor && "function" == typeof data.constructor && "Object" !== data.constructor.name) return cleaned.push(path), {
-                name: data.constructor.name,
-                type: "object"
-            };
-            var res = {};
-            for (var name in data) {
-                res[name] = dehydrate(data[name], cleaned, path.concat([name]), level + 1);
-            }return res;
+        }
+        function dehydrate(data, cleaned) {
+            var path = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+                level = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : 0,
+                type = getPropType(data);
+            switch (type) {
+                case "function":
+                    return cleaned.push(path), {
+                        name: data.name,
+                        type: "function"
+                    };
+
+                case "string":
+                    return data.length <= 500 ? data : data.slice(0, 500) + "...";
+
+                case "symbol":
+                    return cleaned.push(path), {
+                        type: "symbol",
+                        name: data.toString()
+                    };
+
+                case "react_fragment":
+                    return "A React Fragment";
+
+                case "array_buffer":
+                case "data_view":
+                    return cleaned.push(path), {
+                        type: type,
+                        name: "data_view" === type ? "DataView" : "ArrayBuffer",
+                        meta: {
+                            length: data.byteLength,
+                            uninspectable: !0
+                        }
+                    };
+
+                case "array":
+                    return level > 2 ? createDehydrated(type, data, cleaned, path) : data.map(function (item, i) {
+                        return dehydrate(item, cleaned, path.concat([i]), level + 1);
+                    });
+
+                case "typed_array":
+                case "iterator":
+                    return createDehydrated(type, data, cleaned, path);
+
+                case "date":
+                    return cleaned.push(path), {
+                        name: data.toString(),
+                        type: "date",
+                        meta: {
+                            uninspectable: !0
+                        }
+                    };
+
+                case "object":
+                    if (level > 2 || data.constructor && "function" == typeof data.constructor && "Object" !== data.constructor.name) return createDehydrated(type, data, cleaned, path);
+                    var res = {};
+                    for (var name in data) {
+                        res[name] = dehydrate(data[name], cleaned, path.concat([name]), level + 1);
+                    }return res;
+
+                default:
+                    return data;
+            }
         }
         var _typeof = "function" == typeof Symbol && "symbol" == typeof (typeof Symbol === "function" ? Symbol.iterator : "@@iterator") ? function (obj) {
             return typeof obj;
@@ -12460,7 +12576,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         "use strict";
 
         var performanceNow,
-            performance = __webpack_require__(28);
+            performance = __webpack_require__(29);
         performanceNow = performance.now ? function () {
             return performance.now();
         } : function () {
@@ -12470,7 +12586,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         "use strict";
 
         var performance,
-            ExecutionEnvironment = __webpack_require__(29);
+            ExecutionEnvironment = __webpack_require__(30);
         ExecutionEnvironment.canUseDOM && (performance = window.performance || window.msPerformance || window.webkitPerformance), module.exports = performance || {};
     }, function (module, exports) {
         "use strict";
@@ -12488,16 +12604,33 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         "use strict";
 
         function installGlobalHook(window) {
+            function detectReactBuildType(renderer) {
+                try {
+                    var toString = Function.prototype.toString;
+                    if ("string" == typeof renderer.version) {
+                        if (renderer.bundleType > 0) return "development";
+                        var findFiberCode = toString.call(renderer.findFiberByHostInstance);
+                        return 0 !== findFiberCode.indexOf("function") ? "production" : findFiberCode.indexOf("getClosestInstanceFromNode") !== -1 ? "unminified" : "production";
+                    }
+                    if (renderer.Mount && renderer.Mount._renderNewRootComponent) {
+                        var renderRootCode = toString.call(renderer.Mount._renderNewRootComponent);
+                        return 0 !== renderRootCode.indexOf("function") ? "production" : renderRootCode.indexOf("storedMeasure") !== -1 ? "development" : renderRootCode.indexOf("should be a pure function") !== -1 ? renderRootCode.indexOf("NODE_ENV") !== -1 ? "development" : renderRootCode.indexOf("development") !== -1 ? "development" : renderRootCode.indexOf("true") !== -1 ? "development" : renderRootCode.indexOf("nextElement") !== -1 || renderRootCode.indexOf("nextComponent") !== -1 ? "unminified" : "development" : renderRootCode.indexOf("nextElement") !== -1 || renderRootCode.indexOf("nextComponent") !== -1 ? "unminified" : renderRootCode.indexOf("._registerComponent") !== -1 ? "outdated" : "production";
+                    }
+                } catch (err) {}
+                return "production";
+            }
             if (!window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
                 var hook = {
                     _renderers: {},
                     helpers: {},
                     inject: function inject(renderer) {
-                        if ("number" == typeof renderer.version && renderer.version > 1) return null;
                         var id = Math.random().toString(16).slice(2);
-                        return hook._renderers[id] = renderer, hook.emit("renderer", {
+                        hook._renderers[id] = renderer;
+                        var reactBuildType = detectReactBuildType(renderer);
+                        return hook.emit("renderer", {
                             id: id,
-                            renderer: renderer
+                            renderer: renderer,
+                            reactBuildType: reactBuildType
                         }), id;
                     },
                     _listeners: {},
@@ -12575,13 +12708,13 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 request.then(function (response) {
                     emit("relay:success", {
                         id: id,
-                        end: performance.now(),
+                        end: performanceNow(),
                         response: response.response
                     });
                 }, function (error) {
                     emit("relay:failure", {
                         id: id,
-                        end: performance.now(),
+                        end: performanceNow(),
                         error: error
                     });
                 });
@@ -12600,10 +12733,10 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             function instrumentRelayRequests(relayInternals) {
                 var NetworkLayer = relayInternals.NetworkLayer;
                 decorate(NetworkLayer, "sendMutation", function (mutation) {
-                    requestNumber++, emit("relay:pending", [recordRequest("mutation", performance.now(), mutation, requestNumber)]);
+                    requestNumber++, emit("relay:pending", [recordRequest("mutation", performanceNow(), mutation, requestNumber)]);
                 }), decorate(NetworkLayer, "sendQueries", function (queries) {
                     requestNumber++;
-                    var start = performance.now();
+                    var start = performanceNow();
                     emit("relay:pending", queries.map(function (query) {
                         return recordRequest("query", start, query, requestNumber);
                     }));
@@ -12613,6 +12746,13 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                     relayInternals.hasOwnProperty(key) && (instrumented[key] = relayInternals[key]);
                 }return instrumented.setRequestListener = setRequestListener, instrumented;
             }
+            var performanceNow,
+                performance = window.performance;
+            performanceNow = performance && "function" == typeof performance.now ? function () {
+                return performance.now();
+            } : function () {
+                return Date.now();
+            };
             var TEXT_CHUNK_LENGTH = 500,
                 hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
             if (hook) {
@@ -12635,7 +12775,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var setupBackend = __webpack_require__(33);
+        var setupBackend = __webpack_require__(34);
         module.exports = function (hook, agent) {
             var subs = [hook.sub("renderer-attached", function (_ref) {
                 var id = _ref.id,
@@ -12643,20 +12783,20 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 agent.setReactInternals(id, helpers), helpers.walkTree(agent.onMounted.bind(agent, id), agent.addRoot.bind(agent, id));
             }), hook.sub("root", function (_ref2) {
                 var renderer = _ref2.renderer,
-                    element = _ref2.element;
-                return agent.addRoot(renderer, element);
+                    internalInstance = _ref2.internalInstance;
+                return agent.addRoot(renderer, internalInstance);
             }), hook.sub("mount", function (_ref3) {
                 var renderer = _ref3.renderer,
-                    element = _ref3.element,
+                    internalInstance = _ref3.internalInstance,
                     data = _ref3.data;
-                return agent.onMounted(renderer, element, data);
+                return agent.onMounted(renderer, internalInstance, data);
             }), hook.sub("update", function (_ref4) {
-                var element = (_ref4.renderer, _ref4.element),
+                var internalInstance = (_ref4.renderer, _ref4.internalInstance),
                     data = _ref4.data;
-                return agent.onUpdated(element, data);
+                return agent.onUpdated(internalInstance, data);
             }), hook.sub("unmount", function (_ref5) {
-                var element = (_ref5.renderer, _ref5.element);
-                return agent.onUnmounted(element);
+                var internalInstance = (_ref5.renderer, _ref5.internalInstance);
+                return agent.onUnmounted(internalInstance);
             })],
                 success = setupBackend(hook);
             success && (hook.emit("react-devtools", agent), hook.reactDevtoolsAgent = agent, agent.on("shutdown", function () {
@@ -12668,7 +12808,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var attachRenderer = __webpack_require__(34);
+        var attachRenderer = __webpack_require__(35);
         module.exports = function (hook) {
             var oldReact = window.React && window.React.__internals;
             oldReact && 0 === Object.keys(hook._renderers).length && hook.inject(oldReact);
@@ -12723,22 +12863,22 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 }return rootNodeIDMap.get(id);
             }) : console.warn("Unknown react version (does not have getID), probably an unshimmed React Native");
             var oldMethods, oldRenderComponent, oldRenderRoot;
-            return renderer.Mount._renderNewRootComponent ? oldRenderRoot = decorateResult(renderer.Mount, "_renderNewRootComponent", function (element) {
+            return renderer.Mount._renderNewRootComponent ? oldRenderRoot = decorateResult(renderer.Mount, "_renderNewRootComponent", function (internalInstance) {
                 hook.emit("root", {
                     renderer: rid,
-                    element: element
+                    internalInstance: internalInstance
                 });
-            }) : renderer.Mount.renderComponent && (oldRenderComponent = decorateResult(renderer.Mount, "renderComponent", function (element) {
+            }) : renderer.Mount.renderComponent && (oldRenderComponent = decorateResult(renderer.Mount, "renderComponent", function (internalInstance) {
                 hook.emit("root", {
                     renderer: rid,
-                    element: element._reactInternalInstance
+                    internalInstance: internalInstance._reactInternalInstance
                 });
             })), renderer.Component ? (console.error("You are using a version of React with limited support in this version of the devtools.\nPlease upgrade to use at least 0.13, or you can downgrade to use the old version of the devtools:\ninstructions here https://github.com/facebook/react-devtools/tree/devtools-next#how-do-i-use-this-for-react--013"), oldMethods = decorateMany(renderer.Component.Mixin, {
                 mountComponent: function mountComponent() {
                     var _this = this;
                     rootNodeIDMap.set(this._rootNodeID, this), setTimeout(function () {
                         hook.emit("mount", {
-                            element: _this,
+                            internalInstance: _this,
                             data: getData012(_this),
                             renderer: rid
                         });
@@ -12748,7 +12888,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                     var _this2 = this;
                     setTimeout(function () {
                         hook.emit("update", {
-                            element: _this2,
+                            internalInstance: _this2,
                             data: getData012(_this2),
                             renderer: rid
                         });
@@ -12756,38 +12896,38 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 },
                 unmountComponent: function unmountComponent() {
                     hook.emit("unmount", {
-                        element: this,
+                        internalInstance: this,
                         renderer: rid
                     }), rootNodeIDMap["delete"](this._rootNodeID, this);
                 }
             })) : renderer.Reconciler && (oldMethods = decorateMany(renderer.Reconciler, {
-                mountComponent: function mountComponent(element, rootID, transaction, context) {
-                    var data = getData(element);
-                    rootNodeIDMap.set(element._rootNodeID, element), hook.emit("mount", {
-                        element: element,
+                mountComponent: function mountComponent(internalInstance, rootID, transaction, context) {
+                    var data = getData(internalInstance);
+                    rootNodeIDMap.set(internalInstance._rootNodeID, internalInstance), hook.emit("mount", {
+                        internalInstance: internalInstance,
                         data: data,
                         renderer: rid
                     });
                 },
-                performUpdateIfNecessary: function performUpdateIfNecessary(element, nextChild, transaction, context) {
+                performUpdateIfNecessary: function performUpdateIfNecessary(internalInstance, nextChild, transaction, context) {
                     hook.emit("update", {
-                        element: element,
-                        data: getData(element),
+                        internalInstance: internalInstance,
+                        data: getData(internalInstance),
                         renderer: rid
                     });
                 },
-                receiveComponent: function receiveComponent(element, nextChild, transaction, context) {
+                receiveComponent: function receiveComponent(internalInstance, nextChild, transaction, context) {
                     hook.emit("update", {
-                        element: element,
-                        data: getData(element),
+                        internalInstance: internalInstance,
+                        data: getData(internalInstance),
                         renderer: rid
                     });
                 },
-                unmountComponent: function unmountComponent(element) {
+                unmountComponent: function unmountComponent(internalInstance) {
                     hook.emit("unmount", {
-                        element: element,
+                        internalInstance: internalInstance,
                         renderer: rid
-                    }), rootNodeIDMap["delete"](element._rootNodeID, element);
+                    }), rootNodeIDMap["delete"](internalInstance._rootNodeID, internalInstance);
                 }
             })), extras.walkTree = function (visit, visitRoot) {
                 var onMount = function onMount(component, data) {
@@ -12803,11 +12943,11 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 walkNode(roots[name], onMount, isPre013), onRoot(roots[name]);
             }
         }
-        function walkNode(element, onMount, isPre013) {
-            var data = isPre013 ? getData012(element) : getData(element);
+        function walkNode(internalInstance, onMount, isPre013) {
+            var data = isPre013 ? getData012(internalInstance) : getData(internalInstance);
             data.children && Array.isArray(data.children) && data.children.forEach(function (child) {
                 return walkNode(child, onMount, isPre013);
-            }), onMount(element, data);
+            }), onMount(internalInstance, data);
         }
         function decorateResult(obj, attr, fn) {
             var old = obj[attr];
@@ -12834,14 +12974,14 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 source[name] = olds[name];
             }
         }
-        var getData = __webpack_require__(35),
-            getData012 = __webpack_require__(38),
-            attachRendererFiber = __webpack_require__(39);
+        var getData = __webpack_require__(36),
+            getData012 = __webpack_require__(39),
+            attachRendererFiber = __webpack_require__(40);
         module.exports = attachRenderer;
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        function getData(element) {
+        function getData(internalInstance) {
             var children = null,
                 props = null,
                 state = null,
@@ -12855,17 +12995,21 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 text = null,
                 publicInstance = null,
                 nodeType = "Native";
-            if ("object" !== ("undefined" == typeof element ? "undefined" : _typeof(element)) ? (nodeType = "Text", text = element + "") : null === element._currentElement || element._currentElement === !1 ? nodeType = "Empty" : element._renderedComponent ? (nodeType = "NativeWrapper", children = [element._renderedComponent], props = element._instance.props, state = element._instance.state, context = element._instance.context, context && 0 === Object.keys(context).length && (context = null)) : element._renderedChildren ? children = childrenList(element._renderedChildren) : element._currentElement && element._currentElement.props && (children = element._currentElement.props.children), !props && element._currentElement && element._currentElement.props && (props = element._currentElement.props), null != element._currentElement && (type = element._currentElement.type, element._currentElement.key && (key = String(element._currentElement.key)), source = element._currentElement._source, ref = element._currentElement.ref, "string" == typeof type ? name = type : "function" == typeof type ? (nodeType = "Composite", name = getDisplayName(type), element._renderedComponent && (element._currentElement.props === element._renderedComponent._currentElement || element._currentElement.type.isReactTopLevelWrapper) && (nodeType = "Wrapper"), null === name && (name = "No display name")) : "string" == typeof element._stringText ? (nodeType = "Text", text = element._stringText) : name = getDisplayName(type)), element._instance) {
-                var inst = element._instance;
+            if ("object" !== ("undefined" == typeof internalInstance ? "undefined" : _typeof(internalInstance)) ? (nodeType = "Text", text = internalInstance + "") : null === internalInstance._currentElement || internalInstance._currentElement === !1 ? nodeType = "Empty" : internalInstance._renderedComponent ? (nodeType = "NativeWrapper", children = [internalInstance._renderedComponent], props = internalInstance._instance.props, state = internalInstance._instance.state, context = internalInstance._instance.context, context && 0 === Object.keys(context).length && (context = null)) : internalInstance._renderedChildren ? children = childrenList(internalInstance._renderedChildren) : internalInstance._currentElement && internalInstance._currentElement.props && (children = internalInstance._currentElement.props.children), !props && internalInstance._currentElement && internalInstance._currentElement.props && (props = internalInstance._currentElement.props), null != internalInstance._currentElement && (type = internalInstance._currentElement.type, internalInstance._currentElement.key && (key = String(internalInstance._currentElement.key)), source = internalInstance._currentElement._source, ref = internalInstance._currentElement.ref, "string" == typeof type ? (name = type, null != internalInstance._nativeNode && (publicInstance = internalInstance._nativeNode), null != internalInstance._hostNode && (publicInstance = internalInstance._hostNode)) : "function" == typeof type ? (nodeType = "Composite", name = getDisplayName(type), internalInstance._renderedComponent && (internalInstance._currentElement.props === internalInstance._renderedComponent._currentElement || internalInstance._currentElement.type.isReactTopLevelWrapper) && (nodeType = "Wrapper"), null === name && (name = "No display name")) : "string" == typeof internalInstance._stringText ? (nodeType = "Text", text = internalInstance._stringText) : name = getDisplayName(type)), internalInstance._instance) {
+                var inst = internalInstance._instance;
                 updater = {
                     setState: inst.setState && inst.setState.bind(inst),
                     forceUpdate: inst.forceUpdate && inst.forceUpdate.bind(inst),
-                    setInProps: inst.forceUpdate && setInProps.bind(null, element),
+                    setInProps: inst.forceUpdate && setInProps.bind(null, internalInstance),
                     setInState: inst.forceUpdate && setInState.bind(null, inst),
                     setInContext: inst.forceUpdate && setInContext.bind(null, inst)
-                }, publicInstance = inst, inst._renderedChildren && (children = childrenList(inst._renderedChildren));
+                }, "function" == typeof type && (publicInstance = inst), inst._renderedChildren && (children = childrenList(inst._renderedChildren));
             }
-            return {
+            return "function" == typeof internalInstance.setNativeProps && (updater = {
+                setNativeProps: function setNativeProps(nativeProps) {
+                    internalInstance.setNativeProps(nativeProps);
+                }
+            }), {
                 nodeType: nodeType,
                 type: type,
                 key: key,
@@ -12920,8 +13064,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
         } : function (obj) {
             return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== (typeof Symbol === "function" ? Symbol.prototype : "@@prototype") ? "symbol" : typeof obj;
         },
-            copyWithSet = __webpack_require__(36),
-            getDisplayName = __webpack_require__(37);
+            copyWithSet = __webpack_require__(37),
+            getDisplayName = __webpack_require__(38);
         module.exports = getData;
     }, function (module, exports) {
         "use strict";
@@ -12965,11 +13109,11 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        function getData012(element) {
+        function getData012(internalInstance) {
             var children = null,
-                props = element.props,
-                state = element.state,
-                context = element.context,
+                props = internalInstance.props,
+                state = internalInstance.state,
+                context = internalInstance.context,
                 updater = null,
                 name = null,
                 type = null,
@@ -12978,13 +13122,13 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 text = null,
                 publicInstance = null,
                 nodeType = "Native";
-            return element._renderedComponent ? (nodeType = "Wrapper", children = [element._renderedComponent], context && 0 === Object.keys(context).length && (context = null)) : element._renderedChildren ? (name = element.constructor.displayName, children = childrenList(element._renderedChildren)) : "string" == typeof props.children && (name = element.constructor.displayName, children = props.children, nodeType = "Native"), !props && element._currentElement && element._currentElement.props && (props = element._currentElement.props), element._currentElement && (type = element._currentElement.type, element._currentElement.key && (key = String(element._currentElement.key)), ref = element._currentElement.ref, "string" == typeof type ? name = type : (nodeType = "Composite", name = type.displayName, name || (name = "No display name"))), name || (name = element.constructor.displayName || "No display name", nodeType = "Composite"), "string" == typeof props && (nodeType = "Text", text = props, props = null, name = null), element.forceUpdate && (updater = {
-                setState: element.setState.bind(element),
-                forceUpdate: element.forceUpdate.bind(element),
-                setInProps: element.forceUpdate && setInProps.bind(null, element),
-                setInState: element.forceUpdate && setInState.bind(null, element),
-                setInContext: element.forceUpdate && setInContext.bind(null, element)
-            }, publicInstance = element), {
+            return internalInstance._renderedComponent ? (nodeType = "Wrapper", children = [internalInstance._renderedComponent], context && 0 === Object.keys(context).length && (context = null)) : internalInstance._renderedChildren ? (name = internalInstance.constructor.displayName, children = childrenList(internalInstance._renderedChildren)) : "string" == typeof props.children && (name = internalInstance.constructor.displayName, children = props.children, nodeType = "Native"), !props && internalInstance._currentElement && internalInstance._currentElement.props && (props = internalInstance._currentElement.props), internalInstance._currentElement && (type = internalInstance._currentElement.type, internalInstance._currentElement.key && (key = String(internalInstance._currentElement.key)), ref = internalInstance._currentElement.ref, "string" == typeof type ? name = type : (nodeType = "Composite", name = type.displayName, name || (name = "No display name"))), name || (name = internalInstance.constructor.displayName || "No display name", nodeType = "Composite"), "string" == typeof props && (nodeType = "Text", text = props, props = null, name = null), internalInstance.forceUpdate && (updater = {
+                setState: internalInstance.setState.bind(internalInstance),
+                forceUpdate: internalInstance.forceUpdate.bind(internalInstance),
+                setInProps: internalInstance.forceUpdate && setInProps.bind(null, internalInstance),
+                setInState: internalInstance.forceUpdate && setInState.bind(null, internalInstance),
+                setInContext: internalInstance.forceUpdate && setInContext.bind(null, internalInstance)
+            }, publicInstance = internalInstance), {
                 nodeType: nodeType,
                 type: type,
                 key: key,
@@ -13022,7 +13166,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 res.push(children[name]);
             }return res;
         }
-        var copyWithSet = __webpack_require__(36);
+        var copyWithSet = __webpack_require__(37);
         module.exports = getData012;
     }, function (module, exports, __webpack_require__) {
         "use strict";
@@ -13050,21 +13194,21 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }
             function enqueueMount(fiber) {
                 pendingEvents.push({
-                    element: getOpaqueNode(fiber),
+                    internalInstance: getOpaqueNode(fiber),
                     data: getDataFiber(fiber, getOpaqueNode),
                     renderer: rid,
                     type: "mount"
                 });
                 var isRoot = fiber.tag === HostRoot;
                 isRoot && pendingEvents.push({
-                    element: getOpaqueNode(fiber),
+                    internalInstance: getOpaqueNode(fiber),
                     renderer: rid,
                     type: "root"
                 });
             }
             function enqueueUpdateIfNecessary(fiber, hasChildOrderChanged) {
                 (hasChildOrderChanged || hasDataChanged(fiber.alternate, fiber)) && pendingEvents.push({
-                    element: getOpaqueNode(fiber),
+                    internalInstance: getOpaqueNode(fiber),
                     data: getDataFiber(fiber, getOpaqueNode),
                     renderer: rid,
                     type: "update"
@@ -13074,7 +13218,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 var isRoot = fiber.tag === HostRoot,
                     opaqueNode = getOpaqueNode(fiber),
                     event = {
-                    element: opaqueNode,
+                    internalInstance: opaqueNode,
                     renderer: rid,
                     type: "unmount"
                 };
@@ -13160,8 +13304,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 walkTree: walkTree
             };
         }
-        var getDataFiber = __webpack_require__(40),
-            _require = __webpack_require__(41),
+        var getDataFiber = __webpack_require__(41),
+            _require = __webpack_require__(42),
             ClassComponent = _require.ClassComponent,
             HostRoot = _require.HostRoot;
         module.exports = attachRendererFiber;
@@ -13207,7 +13351,11 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                     break;
 
                 case HostComponent:
-                    nodeType = "Native", name = fiber.type, props = fiber.memoizedProps, children = "string" == typeof props.children || "number" == typeof props.children ? props.children.toString() : [];
+                    nodeType = "Native", name = fiber.type, name = name.replace("topsecret-", ""), publicInstance = fiber.stateNode, props = fiber.memoizedProps, children = "string" == typeof props.children || "number" == typeof props.children ? props.children.toString() : [], "function" == typeof fiber.stateNode.setNativeProps && (updater = {
+                        setNativeProps: function setNativeProps(nativeProps) {
+                            fiber.stateNode.setNativeProps(nativeProps);
+                        }
+                    });
                     break;
 
                 case HostText:
@@ -13240,7 +13388,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             };
         }
         function setInProps(fiber, path, value) {
-            fiber.pendingProps = copyWithSet(fiber.memoizedProps, path, value), fiber.stateNode.forceUpdate();
+            var inst = fiber.stateNode;
+            fiber.pendingProps = copyWithSet(inst.props, path, value), fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps), fiber.stateNode.forceUpdate();
         }
         function setInState(inst, path, value) {
             setIn(inst.state, path, value), inst.forceUpdate();
@@ -13255,9 +13404,9 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }, obj);
             parent && (parent[last] = value);
         }
-        var copyWithSet = __webpack_require__(36),
-            getDisplayName = __webpack_require__(37),
-            _require = __webpack_require__(41),
+        var copyWithSet = __webpack_require__(37),
+            getDisplayName = __webpack_require__(38),
+            _require = __webpack_require__(42),
             FunctionalComponent = _require.FunctionalComponent,
             ClassComponent = _require.ClassComponent,
             HostRoot = _require.HostRoot,
@@ -13282,7 +13431,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             YieldComponent: 9,
             Fragment: 10
         };
-    }, function (module, exports) {
+    }, function (module, exports, __webpack_require__) {
         "use strict";
 
         function _defineProperty(obj, key, value) {
@@ -13293,6 +13442,35 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 writable: !0
             }) : obj[key] = value, obj;
         }
+        function measureStyle(agent, bridge, resolveRNStyle, id) {
+            var node = agent.elementData.get(id);
+            if (!node || !node.props) return void bridge.send("rn-style:measure", {});
+            var style = resolveRNStyle(node.props.style);
+            styleOverridesByHostComponentId[id] && (style = babelHelpers.extends({}, style, styleOverridesByHostComponentId[id]));
+            var instance = node.publicInstance;
+            return instance && instance.measure ? void instance.measure(function (x, y, width, height, left, top) {
+                if ("number" != typeof x) return void bridge.send("rn-style:measure", {
+                    style: style
+                });
+                var margin = style && resolveBoxStyle("margin", style) || blank,
+                    padding = style && resolveBoxStyle("padding", style) || blank;
+                bridge.send("rn-style:measure", {
+                    style: style,
+                    measuredLayout: {
+                        x: x,
+                        y: y,
+                        width: width,
+                        height: height,
+                        left: left,
+                        top: top,
+                        margin: margin,
+                        padding: padding
+                    }
+                });
+            }) : void bridge.send("rn-style:measure", {
+                style: style
+            });
+        }
         function shallowClone(obj) {
             var nobj = {};
             for (var n in obj) {
@@ -13300,52 +13478,95 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }return nobj;
         }
         function renameStyle(agent, id, oldName, newName, val) {
-            var data = agent.elementData.get(id),
-                newStyle = _defineProperty({}, newName, val);
-            if (!data || !data.updater || !data.updater.setInProps) {
-                var el = agent.reactElements.get(id);
-                return void (el && el.setNativeProps ? el.setNativeProps({
+            var _ref3,
+                data = agent.elementData.get(id),
+                newStyle = newName ? (_ref3 = {}, _defineProperty(_ref3, oldName, void 0), _defineProperty(_ref3, newName, val), _ref3) : _defineProperty({}, oldName, void 0);
+            if (data && data.updater && data.updater.setInProps) {
+                var customStyle,
+                    style = data && data.props && data.props.style;
+                if (Array.isArray(style)) {
+                    var lastLength = style.length - 1;
+                    "object" !== _typeof(style[lastLength]) || Array.isArray(style[lastLength]) ? (style = style.concat([newStyle]), data.updater.setInProps(["style"], style)) : (customStyle = shallowClone(style[lastLength]), delete customStyle[oldName], newName ? customStyle[newName] = val : customStyle[oldName] = void 0, data.updater.setInProps(["style", lastLength], customStyle));
+                } else "object" === ("undefined" == typeof style ? "undefined" : _typeof(style)) ? (customStyle = shallowClone(style), delete customStyle[oldName], newName ? customStyle[newName] = val : customStyle[oldName] = void 0, data.updater.setInProps(["style"], customStyle)) : (style = [style, newStyle], data.updater.setInProps(["style"], style));
+            } else {
+                if (!(data && data.updater && data.updater.setNativeProps)) return;
+                styleOverridesByHostComponentId[id] ? babelHelpers.extends(styleOverridesByHostComponentId[id], newStyle) : styleOverridesByHostComponentId[id] = newStyle, data.updater.setNativeProps({
                     style: newStyle
-                }) : console.error("Unable to set style for this element... (no forceUpdate or setNativeProps)"));
+                });
             }
-            var customStyle,
-                style = data && data.props && data.props.style;
-            Array.isArray(style) ? "object" !== _typeof(style[style.length - 1]) || Array.isArray(style[style.length - 1]) ? (style = style.concat([newStyle]), data.updater.setInProps(["style"], style)) : (customStyle = shallowClone(style[style.length - 1]), delete customStyle[oldName], customStyle[newName] = val, data.updater.setInProps(["style", style.length - 1], customStyle)) : "object" === ("undefined" == typeof style ? "undefined" : _typeof(style)) ? (customStyle = shallowClone(style), delete customStyle[oldName], customStyle[newName] = val, data.updater.setInProps(["style"], customStyle)) : (style = [style, newStyle], data.updater.setInProps(["style"], style)), agent.emit("hideHighlight");
+            agent.emit("hideHighlight");
         }
         function setStyle(agent, id, attr, val) {
             var data = agent.elementData.get(id),
                 newStyle = _defineProperty({}, attr, val);
-            if (!data || !data.updater || !data.updater.setInProps) {
-                var el = agent.reactElements.get(id);
-                return void (el && el.setNativeProps ? el.setNativeProps({
+            if (data && data.updater && data.updater.setInProps) {
+                var style = data.props && data.props.style;
+                if (Array.isArray(style)) {
+                    var lastLength = style.length - 1;
+                    "object" !== _typeof(style[lastLength]) || Array.isArray(style[lastLength]) ? (style = style.concat([newStyle]), data.updater.setInProps(["style"], style)) : data.updater.setInProps(["style", lastLength, attr], val);
+                } else style = [style, newStyle], data.updater.setInProps(["style"], style);
+            } else {
+                if (!(data && data.updater && data.updater.setNativeProps)) return;
+                styleOverridesByHostComponentId[id] ? babelHelpers.extends(styleOverridesByHostComponentId[id], newStyle) : styleOverridesByHostComponentId[id] = newStyle, data.updater.setNativeProps({
                     style: newStyle
-                }) : console.error("Unable to set style for this element... (no forceUpdate or setNativeProps)"));
+                });
             }
-            var style = data.props && data.props.style;
-            Array.isArray(style) ? "object" !== _typeof(style[style.length - 1]) || Array.isArray(style[style.length - 1]) ? (style = style.concat([newStyle]), data.updater.setInProps(["style"], style)) : data.updater.setInProps(["style", style.length - 1, attr], val) : (style = [style, newStyle], data.updater.setInProps(["style"], style)), agent.emit("hideHighlight");
+            agent.emit("hideHighlight");
         }
         var _typeof = "function" == typeof Symbol && "symbol" == typeof (typeof Symbol === "function" ? Symbol.iterator : "@@iterator") ? function (obj) {
             return typeof obj;
         } : function (obj) {
             return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== (typeof Symbol === "function" ? Symbol.prototype : "@@prototype") ? "symbol" : typeof obj;
-        };
+        },
+            resolveBoxStyle = __webpack_require__(44),
+            styleOverridesByHostComponentId = {};
         module.exports = function (bridge, agent, resolveRNStyle) {
             bridge.onCall("rn-style:get", function (id) {
                 var node = agent.elementData.get(id);
                 return node && node.props ? resolveRNStyle(node.props.style) : null;
+            }), bridge.on("rn-style:measure", function (id) {
+                measureStyle(agent, bridge, resolveRNStyle, id);
             }), bridge.on("rn-style:rename", function (_ref) {
                 var id = _ref.id,
                     oldName = _ref.oldName,
                     newName = _ref.newName,
                     val = _ref.val;
-                renameStyle(agent, id, oldName, newName, val);
+                renameStyle(agent, id, oldName, newName, val), setTimeout(function () {
+                    return measureStyle(agent, bridge, resolveRNStyle, id);
+                });
             }), bridge.on("rn-style:set", function (_ref2) {
                 var id = _ref2.id,
                     attr = _ref2.attr,
                     val = _ref2.val;
-                setStyle(agent, id, attr, val);
+                setStyle(agent, id, attr, val), setTimeout(function () {
+                    return measureStyle(agent, bridge, resolveRNStyle, id);
+                });
             });
         };
+        var blank = {
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0
+        };
+    }, function (module, exports) {
+        "use strict";
+
+        function resolveBoxStyle(prefix, style) {
+            var res = {},
+                subs = ["top", "left", "bottom", "right"],
+                set = !1;
+            return subs.forEach(function (sub) {
+                res[sub] = style[prefix] || 0;
+            }), style[prefix] && (set = !0), style[prefix + "Vertical"] && (res.top = res.bottom = style[prefix + "Vertical"], set = !0), style[prefix + "Horizontal"] && (res.left = res.right = style[prefix + "Horizontal"], set = !0), subs.forEach(function (sub) {
+                var val = style[prefix + capFirst(sub)];
+                val && (res[sub] = val, set = !0);
+            }), set ? res : null;
+        }
+        function capFirst(text) {
+            return text[0].toUpperCase() + text.slice(1);
+        }
+        module.exports = resolveBoxStyle;
     }, function (module, exports) {
         "use strict";
 
@@ -13387,7 +13608,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
-        var Highlighter = __webpack_require__(45);
+        var Highlighter = __webpack_require__(47);
         module.exports = function (agent) {
             var hl = new Highlighter(window, function (node) {
                 agent.selectFromDOMNode(node);
@@ -13434,8 +13655,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), Constructor;
             };
         }(),
-            Overlay = __webpack_require__(46),
-            MultiOverlay = __webpack_require__(47),
+            Overlay = __webpack_require__(48),
+            MultiOverlay = __webpack_require__(50),
             Highlighter = function () {
             function Highlighter(win, onSelect) {
                 _classCallCheck(this, Highlighter), this._win = win, this._onSelect = onSelect, this._overlay = null, this._multiOverlay = null, this._subs = [];
@@ -13460,7 +13681,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             }, {
                 key: "highlight",
                 value: function value(node, name) {
-                    this.removeMultiOverlay(), this._overlay || (this._overlay = new Overlay(this._win)), this._overlay.inspect(node, name);
+                    this.removeMultiOverlay(), node.nodeType !== Node.COMMENT_NODE && (this._overlay || (this._overlay = new Overlay(this._win)), this._overlay.inspect(node, name));
                 }
             }, {
                 key: "highlightMany",
@@ -13533,8 +13754,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 left: dims.left + margin + "px"
             };
         }
-        function getElementDimensions(element) {
-            var calculatedStyle = window.getComputedStyle(element);
+        function getElementDimensions(domElement) {
+            var calculatedStyle = window.getComputedStyle(domElement);
             return {
                 borderLeft: +calculatedStyle.borderLeftWidth.match(/[0-9]*/)[0],
                 borderRight: +calculatedStyle.borderRightWidth.match(/[0-9]*/)[0],
@@ -13549,6 +13770,48 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 paddingTop: +calculatedStyle.paddingTop.match(/[0-9]*/)[0],
                 paddingBottom: +calculatedStyle.paddingBottom.match(/[0-9]*/)[0]
             };
+        }
+        function getOwnerWindow(node) {
+            return node.ownerDocument ? node.ownerDocument.defaultView : null;
+        }
+        function getOwnerIframe(node) {
+            var nodeWindow = getOwnerWindow(node);
+            return nodeWindow ? nodeWindow.frameElement : null;
+        }
+        function getBoundingClientRectWithBorderOffset(node) {
+            var dimensions = getElementDimensions(node);
+            return mergeRectOffsets([node.getBoundingClientRect(), {
+                top: dimensions.borderTop,
+                left: dimensions.borderLeft,
+                bottom: dimensions.borderBottom,
+                right: dimensions.borderRight,
+                width: 0,
+                height: 0
+            }]);
+        }
+        function mergeRectOffsets(rects) {
+            return rects.reduce(function (previousRect, rect) {
+                return null == previousRect ? rect : {
+                    top: previousRect.top + rect.top,
+                    left: previousRect.left + rect.left,
+                    width: previousRect.width,
+                    height: previousRect.height,
+                    bottom: previousRect.bottom + rect.bottom,
+                    right: previousRect.right + rect.right
+                };
+            });
+        }
+        function getNestedBoundingClientRect(node, boundaryWindow) {
+            var ownerIframe = getOwnerIframe(node);
+            if (ownerIframe && ownerIframe !== boundaryWindow) {
+                for (var rects = [node.getBoundingClientRect()], currentIframe = ownerIframe, onlyOneMore = !1; currentIframe;) {
+                    var rect = getBoundingClientRectWithBorderOffset(currentIframe);
+                    if (rects.push(rect), currentIframe = getOwnerIframe(currentIframe), onlyOneMore) break;
+                    currentIframe && getOwnerWindow(currentIframe) === boundaryWindow && (onlyOneMore = !0);
+                }
+                return mergeRectOffsets(rects);
+            }
+            return node.getBoundingClientRect();
         }
         function boxWrap(dims, what, node) {
             assign(node.style, {
@@ -13571,6 +13834,8 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             };
         }(),
             assign = __webpack_require__(3),
+            _require = __webpack_require__(49),
+            monospace = _require.monospace,
             Overlay = function () {
             function Overlay(window) {
                 _classCallCheck(this, Overlay);
@@ -13580,18 +13845,20 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                     pointerEvents: "none",
                     position: "fixed"
                 }), this.tip = doc.createElement("div"), assign(this.tip.style, {
-                    border: "1px solid #aaa",
-                    backgroundColor: "rgb(255, 255, 178)",
-                    fontFamily: "sans-serif",
-                    color: "orange",
+                    backgroundColor: "#333740",
+                    borderRadius: "2px",
+                    fontFamily: monospace.family,
+                    fontWeight: "bold",
                     padding: "3px 5px",
                     position: "fixed",
-                    fontSize: "10px"
+                    fontSize: monospace.sizes.normal
                 }), this.nameSpan = doc.createElement("span"), this.tip.appendChild(this.nameSpan), assign(this.nameSpan.style, {
-                    color: "rgb(136, 18, 128)",
-                    marginRight: "5px"
+                    color: "#ee78e6",
+                    borderRight: "1px solid #aaaaaa",
+                    paddingRight: "0.5rem",
+                    marginRight: "0.5rem"
                 }), this.dimSpan = doc.createElement("span"), this.tip.appendChild(this.dimSpan), assign(this.dimSpan.style, {
-                    color: "#888"
+                    color: "#d7d7d7"
                 }), this.container.style.zIndex = 1e7, this.node.style.zIndex = 1e7, this.tip.style.zIndex = 1e7, this.container.appendChild(this.node), this.container.appendChild(this.tip), this.node.appendChild(this.border), this.border.appendChild(this.padding), this.padding.appendChild(this.content), doc.body.appendChild(this.container);
             }
             return _createClass(Overlay, [{
@@ -13603,7 +13870,7 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
                 key: "inspect",
                 value: function value(node, name) {
                     if (node.nodeType === Node.ELEMENT_NODE) {
-                        var box = node.getBoundingClientRect(),
+                        var box = getNestedBoundingClientRect(node, this.win),
                             dims = getElementDimensions(node);
                         boxWrap(dims, "margin", this.node), boxWrap(dims, "border", this.border), boxWrap(dims, "padding", this.padding), assign(this.content.style, {
                             height: box.height - dims.borderTop - dims.borderBottom - dims.paddingTop - dims.paddingBottom + "px",
@@ -13630,6 +13897,26 @@ __d(/* react-devtools-core/build/backend.js */function(global, require, module, 
             border: "rgba(255, 200, 50, 0.3)"
         };
         module.exports = Overlay;
+    }, function (module, exports) {
+        "use strict";
+
+        module.exports = {
+            monospace: {
+                family: "Menlo, Consolas, monospace",
+                sizes: {
+                    normal: 11,
+                    large: 14
+                }
+            },
+            sansSerif: {
+                family: '"Helvetica Neue", "Lucida Grande", -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, sans-serif',
+                sizes: {
+                    small: 10,
+                    normal: 12,
+                    large: 14
+                }
+            }
+        };
     }, function (module, exports, __webpack_require__) {
         "use strict";
 
@@ -50038,11 +50325,11 @@ var _FadeInView = require(424            ); // 424 = ../FadeInView
 
 var _FadeInView2 = babelHelpers.interopRequireDefault(_FadeInView);
 
-var _Menu = require(428           ); // 428 = ../Menu/Menu
+var _Menu = require(425           ); // 425 = ../Menu/Menu
 
 var _Menu2 = babelHelpers.interopRequireDefault(_Menu);
 
-var _NavBar = require(426               ); // 426 = ../NavBar/NavBar
+var _NavBar = require(427               ); // 427 = ../NavBar/NavBar
 
 var _NavBar2 = babelHelpers.interopRequireDefault(_NavBar);
 
@@ -50614,7 +50901,7 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(45            ); // 45 = react-native
 
-var _SlideInView = require(425             ); // 425 = ../SlideInView
+var _SlideInView = require(426             ); // 426 = ../SlideInView
 
 var _SlideInView2 = babelHelpers.interopRequireDefault(_SlideInView);
 
@@ -50655,7 +50942,7 @@ exports.default = Menu;
 _reactNative.AppRegistry.registerComponent('Menu', function () {
   return Menu;
 });
-}, 428, null, "AwesomeProject/src/components/Menu/Menu.js");
+}, 425, null, "AwesomeProject/src/components/Menu/Menu.js");
 __d(/* AwesomeProject/src/components/SlideInView.js */function(global, require, module, exports) {var _react = require(12     ); // 12 = react
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
@@ -50707,7 +50994,7 @@ var SlideInView = function (_Component) {
 }(_react.Component);
 
 module.exports = SlideInView;
-}, 425, null, "AwesomeProject/src/components/SlideInView.js");
+}, 426, null, "AwesomeProject/src/components/SlideInView.js");
 __d(/* AwesomeProject/src/components/NavBar/NavBar.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -50742,7 +51029,7 @@ var NavBar = function (_Component) {
                 _reactNative.TouchableHighlight,
                 null,
                 _react2.default.createElement(_reactNative.Image, {
-                    source: require(427         ), // 427 = ./menu.png
+                    source: require(428         ), // 428 = ./menu.png
                     style: {
                         alignSelf: 'center',
                         height: 50,
@@ -50753,7 +51040,7 @@ var NavBar = function (_Component) {
                 _reactNative.TouchableHighlight,
                 { onPress: this.handlePress },
                 _react2.default.createElement(_reactNative.Image, {
-                    source: require(427         ), // 427 = ./menu.png
+                    source: require(428         ), // 428 = ./menu.png
                     style: {
                         alignSelf: 'center',
                         height: 50,
@@ -50809,9 +51096,9 @@ exports.default = NavBar;
 _reactNative.AppRegistry.registerComponent('NavBar', function () {
     return NavBar;
 });
-}, 426, null, "AwesomeProject/src/components/NavBar/NavBar.js");
+}, 427, null, "AwesomeProject/src/components/NavBar/NavBar.js");
 __d(/* AwesomeProject/src/components/NavBar/menu.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/components/NavBar","width":128,"height":128,"scales":[1],"hash":"fc219d56320280340ac0bb9ed241d676","name":"menu","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 427, null, "AwesomeProject/src/components/NavBar/menu.png");
+}, 428, null, "AwesomeProject/src/components/NavBar/menu.png");
 ;require(90);
 ;require(0);
 //# sourceMappingURL=index.android.map
