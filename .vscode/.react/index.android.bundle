@@ -50349,13 +50349,13 @@ var App = function (_React$Component) {
             menu: {}
         };
 
-        _this.queryDB = _this.queryDB.bind(_this);
+        _this.GetUser = _this.GetUser.bind(_this);
         return _this;
     }
 
     babelHelpers.createClass(App, [{
-        key: 'queryDB',
-        value: function queryDB() {
+        key: 'GetUser',
+        value: function GetUser() {
             var _this2 = this;
 
             fetch(this.props.url).then(function (res) {
@@ -50376,7 +50376,7 @@ var App = function (_React$Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            this.queryDB();
+            this.GetUser();
         }
     }, {
         key: 'componentDidMount',

@@ -12,7 +12,14 @@ import {
     AppRegistry
 } from 'react-native';
 
-
+// App will be in charge of fetching all user related data from the database...
+// and relaying that data to HabitContainer and Menu.
+// Methods:
+//  DisplayLogin: Display the login menu if user isn't already logged in
+//  AddHabit: Takes in a habit and adds it to the database
+//  RemoveHabit: Takes a habitID and removes it from the database
+//  SetActive: Takes a `habit` and sets habit.IsActive = !habit.IsActive
+//  GetHabits: Takes a userID and fetches associated habits from the database
 export default class App extends React.Component {
     constructor (props) {
         super(props);
@@ -23,31 +30,11 @@ export default class App extends React.Component {
         };
 
         // bind functions to this component
-        this.queryDB = this.queryDB.bind(this);
+        this.GetUser = this.GetUser.bind(this);
     }
 
-    //Get's user info from db
-    queryDB () {
-        fetch(this.props.url)           // fetches info from supplied url
-            .then((res) => res.json())  // gets json from response
-            .then((resJson) => {
-                let newUser = resJson;
-                console.log('Successfully queried db: ' + resJson);
-                //Format user.picture
-                newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
-                this.setState({
-                    user: newUser,
-                    habits: newUser.habits
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
-    //Query database before component mounts
     componentWillMount () {
-        this.queryDB();
+        this.GetUser();
     }
 
     componentDidMount () {
@@ -56,7 +43,7 @@ export default class App extends React.Component {
 
     render () {
         return (
-            <FadeInView duration={500} style={{                          // App container
+            <FadeInView duration={500} style={{
                 flex: 1,       
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
@@ -76,6 +63,25 @@ export default class App extends React.Component {
                 />
             </FadeInView>
         );
+    }
+
+    //Get's user info from db
+    GetUser () {
+        fetch(this.props.url)           // fetches info from supplied url
+            .then((res) => res.json())  // gets json from response
+            .then((resJson) => {
+                let newUser = resJson;
+                console.log('Successfully queried db: ' + resJson);
+                //Format user.picture
+                newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
+                this.setState({
+                    user: newUser,
+                    habits: newUser.habits
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 }
 
