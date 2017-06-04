@@ -1,7 +1,7 @@
 'use strict'
 
 //config
-var config = require('../config.js');
+var config = require('./config.js');
 
 //dependencies
 var express = require('express');
@@ -59,46 +59,6 @@ router.route('/users/:userId')
       res.json(user);
     })
   })
-
-//Old api calls
-// //Habits
-// router.route('/habits')
-//     //Get all habits
-//     .get(function (req, res) {
-//         //Check the habit schema
-//         Habit.find(function (err, habits) {
-//             if(err) {
-//                 res.send(err);
-//             }
-//             //returns json of our habits
-//             res.json(habits);
-//         });
-//     })
-//     //Save habit to db
-//     .post(function (req, res) {
-//         var habit = new Habit(req.body);
-//
-//         //Save habit to db
-//         habit.save (function (err, habit) {
-//             if (err) {
-//                 res.send(err);
-//             }
-//             res.json({ message: habit });
-//         });
-//     });
-//
-// router.route('/profile')
-//   //Get users profile information
-//   .get(function (req, res) {
-//     //Check user profile schema
-//     User.findOne(function (err, users) {
-//       if(err) {
-//         res.send(err)
-//       }
-//       //Return json of our user profile
-//       res.json(users)
-//     });
-//   })
 
 //Use router when we call api
 app.use('/api', router);
