@@ -14,12 +14,6 @@ import {
 
 // App will be in charge of fetching all user related data from the database...
 // and relaying that data to HabitContainer and Menu.
-// Methods:
-//  DisplayLogin: Display the login menu if user isn't already logged in
-//  AddHabit: Takes in a habit and adds it to the database
-//  RemoveHabit: Takes a habitID and removes it from the database
-//  SetActive: Takes a `habit` and sets habit.IsActive = !habit.IsActive
-//  GetHabits: Takes a userID and fetches associated habits from the database
 export default class App extends React.Component {
     constructor (props) {
         super(props);
