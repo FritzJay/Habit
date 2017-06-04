@@ -5,7 +5,6 @@ var config = require('./config.js');
 
 //dependencies
 var express = require('express');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 //create instances
@@ -14,13 +13,6 @@ var router = express.Router();
 
 //Set port to env.port or 3000
 var port = process.env.API_PORT || config.port;
-
-//db config
-mongoose.connect(config.con, function(err) {
-  if (err) {
-    console.log('err');
-  }
-});
 
 //Look for json data in the req body
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,8 +39,7 @@ router.get('/', function(req, res) {
     res.json({message: 'api initialized'});
 });
 
-//Create one api call that returns current users information
-//This will include an array of 3 habits
+// Returns relevant users information
 router.route('/users/:userId')
   //Gets users profile and habit info
   .get(function (req, res) {
