@@ -25,7 +25,7 @@ class Habit extends Component {
 
 const HabitRouter = StackNavigator({
     Register:   { screen: Register },
-    Home:       { screen: Habit },
+    Home:       { screen: Habit    },
 })
 
 AppRegistry.registerComponent('AwesomeProject', () => HabitRouter);

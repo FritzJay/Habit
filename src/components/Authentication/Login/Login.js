@@ -17,7 +17,6 @@ export default class Register extends React.Component {
         this.state = {
             username: "",
             password: "",
-            password_confirmation: "",
             errors: [],
             showProgress: false
         }
@@ -25,7 +24,7 @@ export default class Register extends React.Component {
 
     redirect (routeName, accessToken) {
         this.props.navigator.push({
-            name: routName
+            name: routeName
         });
     }
 
@@ -38,10 +37,10 @@ export default class Register extends React.Component {
         }
     }
 
-    async onRegisterPressed () {
+    async onLoginPressed () {
         this.setState({showProgress: true})
         try {
-            let response = await fetch('http://192.168.0.108:3001/api/users', {
+            let response = await fetch('http://192.168.0.108:3001/api/authenticate', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -50,8 +49,7 @@ export default class Register extends React.Component {
                 body: JSON.stringify({
                     user:{
                         username: this.state.username,
-                        password: this.state.password,
-                        password_confirmation: this.state.password_confirmation
+                        password: this.state.password
                     }
                 })
             });
@@ -77,7 +75,7 @@ export default class Register extends React.Component {
     render () {
         return (
             <View>
-                <Text> Join us now! </Text>
+                <Text> Login: </Text>
                 <TextInput
                     onChangeText={ (text) => this.setState({username: text}) }
                     placeholder="Username"
@@ -89,16 +87,10 @@ export default class Register extends React.Component {
                     secureTextEntry={true}
                 >
                 </TextInput>
-                <TextInput
-                    onChangeText={ (text) => this.setState({password_confirmation: text}) }
-                    placeholder="Password Confirm"
-                    secureTextEntry={true}
-                >
-                </TextInput>
                 <TouchableHighlight
-                    onPress={this.onRegisterPressed.bind(this)}
+                    onPress={this.onLoginPressed.bind(this)}
                 >
-                    <Text> Register </Text>
+                    <Text> Login </Text>
                 </TouchableHighlight>
 
                 <Errors errors={this.state.errors}/>
@@ -117,4 +109,4 @@ const Errors = (props) => {
     )
 }
 
-AppRegistry.registerComponent('Register', () => Register);
+AppRegistry.registerComponent('Login', () => Login);

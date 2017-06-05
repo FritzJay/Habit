@@ -6,7 +6,9 @@ module.exports = class User {
     {
         this.user_id = res.user_id;
         this.username = res.username;
-        this.picture = res.picture;
-        this.password = res.password;
+        if (res.picture)
+            this.picture = res.picture;
+        if (res.password)
+            this.password = res.password;
     }
 }
