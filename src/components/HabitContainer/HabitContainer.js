@@ -24,10 +24,6 @@ export default class HabitContainer extends Component {
         this.getHabits();
     }
 
-    componentWillRecieveProps(props) {
-        console.log("ComponentWillRecieveProps");
-    }
-
     // Fetches habits associated with the current user
     // from the api server
     getHabits () {

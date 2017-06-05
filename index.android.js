@@ -7,7 +7,9 @@ import {
     Image,
     StatusBar
  } from 'react-native';
- import App from './src/components/App/App';
+ import { StackNavigator } from 'react-navigation';
+ import Register from './src/components/Authentication/Register/Register';
+ import App from './src/components/App/App'
  import Config from './src/config';
 
 // --------------------- HABIT ------------------------
@@ -21,4 +23,9 @@ class Habit extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => Habit);
+const HabitRouter = StackNavigator({
+    Register:   { screen: Register },
+    Home:       { screen: Habit },
+})
+
+AppRegistry.registerComponent('AwesomeProject', () => HabitRouter);

@@ -6,6 +6,7 @@ import FadeInView from '../FadeInView';
 import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
 import {
+    Text,
     View,
     StatusBar,
     Animated,
@@ -36,6 +37,7 @@ export default class App extends React.Component {
 
     render () {
         return (
+            <View><Text>Hello From App</Text>
             <FadeInView duration={500} style={{
                 flex: 1,       
                 flexDirection: 'column',
@@ -55,6 +57,7 @@ export default class App extends React.Component {
                     ref={(menu) => { this.menu = menu }}
                 />
             </FadeInView>
+            </View>
         );
     }
 
@@ -64,7 +67,8 @@ export default class App extends React.Component {
             .then((res) => res.json())               // gets json from response
             .then((resJson) => {
                 let newUser = resJson;
-                console.log('Successfully queried db: ' + resJson);
+                console.log('Successfully queried db:');
+                console.log(resJson);
                 //Format user.picture
                 newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
                 this.setState({

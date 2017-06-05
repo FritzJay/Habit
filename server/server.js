@@ -54,6 +54,10 @@ router.route('/users/:userID')
         res.json(user);
       })
     })
+  .post(function (req, res) {
+    console.log(req.json());
+    // Saved users info to postgres db
+  })
 
 // Returns habits connected to user
 router.route('/habits/:userID')
