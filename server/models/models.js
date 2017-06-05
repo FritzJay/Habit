@@ -1,18 +1,11 @@
-module.exports = class Habit {
-    Habit(title, picture, info, isActive)
-    {
-        this.title = title;
-        this.picture = picture;
-        this.info = info;
-        this.isActive = isActive;
-    }
-};
+'use strict'
 
 module.exports = class User {
-    User(username, fName, lName)
+    // Takes a postgres query result and converts it into a user
+    constructor(res)
     {
-        this.username = username;
-        this.fName = fName;
-        this.lName = lName;
+        this.user_id = res.user_id;
+        this.username = res.username;
+        this.picture = res.picture;
     }
 }

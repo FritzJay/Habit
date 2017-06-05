@@ -11,38 +11,38 @@ import EmptyCard from '../EmptyCard/EmptyCard';
 export default class HabitContainer extends Component {
     constructor (props) {
         super(props);
-        this.state = { 
-            habits: props.habits,                                  // The habits that will be passed down to habit cards
+        this.state = {
+            habits: [],
             accentColors: ['#F44336', '#FFC107', '#3F51B5']        // The accent colors that will be passed down to habit Cards
         }
         
         // Bind functions to component
-        this.handleReload = this.handleReload.bind(this);
+        this.getHabits = this.getHabits.bind(this);
     }
 
-    // Set state on componentWillReceiveProps to make sure-
-    // habits can be mapped to a HabitCard via state
-    componentWillReceiveProps(props) {
-        this.setState({
-            habits: props.habits
-        })
+    componentWillMount(props) {
+        this.getHabits();
     }
 
-    // Get user info from database
-    handleReload () {
-        fetch(this.props.url)           // fetch from supplied url
-            .then((res) => res.json())  // Get json from fetch
+    componentWillRecieveProps(props) {
+        console.log("ComponentWillRecieveProps");
+    }
+
+    // Fetches habits associated with the current user
+    // from the api server
+    getHabits () {
+        fetch(this.props.url + '/habits/' + this.props.user_id)
+            .then((res) => res.json())
             .then((resJson) => {
-                let newUser = resJson;                              // Make a newUser variable so I can read resJson -
-                console.log('Successfully reloaded: ' + resJson);   // more than once.
+                console.log('Succesfully fetched habits: ' + resJson);
                 this.setState({
-                    habits: newUser.habits
+                    habits: resJson
                 });
             })
             .catch((err) => {
                 console.log(err);
-            });
-    } 
+            })
+    }
 
     render () {
         let habits = [];
@@ -50,17 +50,13 @@ export default class HabitContainer extends Component {
         if (this.state.habits.length > 0) {
             habits = Array.from(this.state.habits).map((habit) => {
                 // Create a habit card for each habit in state.habits
-                const accentColor = this.state.accentColors[habit.id];
+                const accentColor = this.state.accentColors[habit.habit_id];
                 return (
                     <HabitCard 
-                        isLoved={habit.isLoved}
-                        isActive={habit.isActive}
-                        streak={habit.streak}
-                        notes={habit.notes}
                         picture={habit.picture}
                         info={habit.info}
                         title={habit.title}
-                        key={habit.id} 
+                        key={habit.habit_id} 
                         accentColor={accentColor}
                     />
                 )

@@ -1,5 +1,5 @@
 //config holds connection and user info
-import config from '../../config';
+import config from '../../config.js';
 import React, { Component } from 'react';
 import HabitContainer from '../HabitContainer/HabitContainer';
 import FadeInView from '../FadeInView';
@@ -19,7 +19,6 @@ export default class App extends React.Component {
         super(props);
         this.state = { 
             user: '',
-            habits: [],
             menu: { }
         };
 
@@ -49,7 +48,7 @@ export default class App extends React.Component {
                 />
                 <NavBar menu={this.state.menu} />
                 <HabitContainer 
-                    habits={this.state.habits} 
+                    user_id={this.state.user.user_id} 
                     url={this.props.url} 
                 />
                 <Menu
@@ -61,16 +60,15 @@ export default class App extends React.Component {
 
     //Get's user info from db
     GetUser () {
-        fetch(this.props.url)           // fetches info from supplied url
-            .then((res) => res.json())  // gets json from response
+        fetch(this.props.url + '/users/1')           // fetches info from supplied url
+            .then((res) => res.json())               // gets json from response
             .then((resJson) => {
                 let newUser = resJson;
                 console.log('Successfully queried db: ' + resJson);
                 //Format user.picture
                 newUser.picture = "http://" + config.ip + ":" + config.port + "/pics/" + newUser.picture;
                 this.setState({
-                    user: newUser,
-                    habits: newUser.habits
+                    user: newUser
                 });
             })
             .catch((err) => {

@@ -100,7 +100,7 @@ export default class HabitCard extends Component {
                         marginLeft: 15,
                         flex: 1,
                     }}>
-                        {this.props.notes}
+                        Notes will go here.
                     </Text>
 
                     <View style={{                      //Icons
