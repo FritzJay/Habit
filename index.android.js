@@ -15,13 +15,16 @@ import {
 
 // --------------------- HABIT ------------------------
 class Habit extends Component {
-  render() {
+    static navigationOptions = {
+        header: null
+    };
+    render() {
     return (
         <View style={{flex:1}}>
-            <App url={"http://" + Config.ip + ":" + Config.port + "/api"} />
+            <App url={"http://" + Config.ip + ":" + Config.port + "/api"}/>
         </View>
     );
-  }
+    }
 }
 
 const HabitRouter = StackNavigator({

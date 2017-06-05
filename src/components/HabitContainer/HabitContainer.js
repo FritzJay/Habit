@@ -21,7 +21,7 @@ export default class HabitContainer extends Component {
     }
 
     componentWillMount(props) {
-        this.getHabits();
+        //this.getHabits();
     }
 
     // Fetches habits associated with the current user

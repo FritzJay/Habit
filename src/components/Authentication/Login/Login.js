@@ -35,6 +35,15 @@ export default class Register extends React.Component {
         this.redirect('Register');
     }
 
+    async getToken () {
+        try {
+            return await AsyncStorage.getItem('access_token') ? true : false;
+        } catch (error) {
+            console.error("Something went wrong in getToken.", error);
+            return false;
+        }
+    }
+
     async storeToken (accessToken) {
         try {
             await AsyncStorage.setItem('access_token', accessToken);
@@ -77,6 +86,11 @@ export default class Register extends React.Component {
             this.setState({errors: formErrors});
             this.setState({showProgress: false});    
         }
+    }
+
+    componentWillMount () {
+        if (this.getToken())
+            this.redirect('Home');
     }
 
     render () {
