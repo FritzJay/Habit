@@ -21,16 +21,21 @@ export default class Register extends React.Component {
             errors: [],
             showProgress: false
         }
+
+        this.redirect = this.redirect.bind(this);
+        this.onRegisterPressed = this.onRegisterPressed.bind(this);
     }
 
-    redirect (routeName, accessToken) {
-        this.props.navigation('Profile');
+    redirect (routeName) {
+        const { navigate } = this.props.navigation;
+        navigate(routeName);
     }
 
     async storeToken (accessToken) {
         try {
             await AsyncStorage.setItem('access_token', accessToken);
             console.log("Token was stored successfully");
+            this.redirect('Home');
         } catch (error) {
             console.log("Something went wrong: " + error);
         }
@@ -58,7 +63,6 @@ export default class Register extends React.Component {
                 let accessToken = res;
                 console.log(accessToken);
                 this.storeToken(accessToken);
-                this.redirect('home');
             } else {
                 let error = res;
                 console.log(res);
@@ -94,7 +98,7 @@ export default class Register extends React.Component {
                 >
                 </TextInput>
                 <TouchableHighlight
-                    onPress={this.onRegisterPressed.bind(this)}
+                    onPress={this.onRegisterPressed}
                 >
                     <Text> Register </Text>
                 </TouchableHighlight>

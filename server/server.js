@@ -114,30 +114,31 @@ router.route('/authenticate')
         if (result.rowCount < 1) {
           errors.push("Username not found.");
           console.log("Username not found");
-        }
-        // Compare the hash stored in the database with the hash created
-        // from the password
-        let hash = result.rows[0].hash;
-        if (bcrypt.compareSync(session.password, hash))
-        {
-          // Generate a new token
-          // Create a JWT token
-          var token = jwt.sign(session.password, 'fritzish');
-          // Save the new token into the database
-          pool.query('UPDATE users SET token=$1 WHERE username=$2', [token, session.username], function (error, result) {
-            if (error) {
-              return console.error('Something bad happened.', error);
-            }
-            console.log('Updated the hash in database');
-            // return the info including token as JSON
-            res.json({
-              success: true,
-              message: 'Enjoy your token!',
-              token: token
-            })
-          })
         } else {
-          errors.push("Incorrect password.");
+          // Compare the hash stored in the database with the hash created
+          // from the password
+          let hash = result.rows[0].hash;
+          if (bcrypt.compareSync(session.password, hash))
+          {
+            // Generate a new token
+            // Create a JWT token
+            var token = jwt.sign(session.password, 'fritzish');
+            // Save the new token into the database
+            pool.query('UPDATE users SET token=$1 WHERE username=$2', [token, session.username], function (error, result) {
+              if (error) {
+                return console.error('Something bad happened.', error);
+              }
+              console.log('Updated the hash in database');
+              // return the info including token as JSON
+              res.json({
+                success: true,
+                message: 'Enjoy your token!',
+                token: token
+              })
+            })
+          } else {
+            errors.push("Incorrect password.");
+          }
         }
         // If there are any errors send a 300 status with errors
         if (errors.length > 0)
