@@ -9,6 +9,7 @@ import {
  } from 'react-native';
  import { StackNavigator } from 'react-navigation';
  import Register from './src/components/Authentication/Register/Register';
+ import Login from './src/components/Authentication/Login/Login';
  import App from './src/components/App/App'
  import Config from './src/config';
 
@@ -24,6 +25,7 @@ class Habit extends Component {
 }
 
 const HabitRouter = StackNavigator({
+    Login:      { screen: Login    },
     Register:   { screen: Register },
     Home:       { screen: Habit    },
 })

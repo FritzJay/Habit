@@ -23,6 +23,7 @@ var Habit = require('./models/Habit');
 const pool = require('./lib/db');
 
 // Authentication
+var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 //To prevent errors from Cross Origin Resource Sharing, we will set
@@ -74,9 +75,11 @@ router.route('/users')
         else {
           // Create a JWT token
           var token = jwt.sign(user.password, 'fritzish');
+          // Create a hash
+          var hash = bcrypt.hashSync(user.password, 10);
 
           // Save user info into database
-          pool.query('INSERT INTO users (username, picture, token) VALUES ($1, $2, $3);', [user.username, 'profile.jpg', token], function (error, result) {
+          pool.query('INSERT INTO users (username, picture, token, hash) VALUES ($1, $2, $3, $4);', [user.username, 'profile.jpg', token, hash], function (error, result) {
             if (error)
               return console.error('There was a problem.', error);
             else {
@@ -104,23 +107,34 @@ router.route('/authenticate')
         errors.push("Password must be longer than 6 characters.");
       if (session.username.length < 3)
         errors.push("Username must be 3+ characters.");
-      pool.query('SELECT token FROM users WHERE username=$1', [session.username], function (error, result) {
+      pool.query('SELECT hash FROM users WHERE username=$1', [session.username], function (error, result) {
         if (error) {
           return console.log(error);
         }
-        if (!result.rows[0]) {
+        if (result.rowCount < 1) {
           errors.push("Username not found.");
+          console.log("Username not found");
         }
-        // Create a JWT token
-        var sessionToken = jwt.sign(session.password, 'fritzish');
-        var dbToken = result.rows[0].token;
-        if (sessionToken === dbToken)
+        // Compare the hash stored in the database with the hash created
+        // from the password
+        let hash = result.rows[0].hash;
+        if (bcrypt.compareSync(session.password, hash))
         {
-          // return the info including token as JSON
-          res.json({
-            success: true,
-            message: 'Enjoy your token!',
-            token: dbToken
+          // Generate a new token
+          // Create a JWT token
+          var token = jwt.sign(session.password, 'fritzish');
+          // Save the new token into the database
+          pool.query('UPDATE users SET token=$1 WHERE username=$2', [token, session.username], function (error, result) {
+            if (error) {
+              return console.error('Something bad happened.', error);
+            }
+            console.log('Updated the hash in database');
+            // return the info including token as JSON
+            res.json({
+              success: true,
+              message: 'Enjoy your token!',
+              token: token
+            })
           })
         } else {
           errors.push("Incorrect password.");

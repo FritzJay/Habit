@@ -24,9 +24,7 @@ export default class Register extends React.Component {
     }
 
     redirect (routeName, accessToken) {
-        this.props.navigator.push({
-            name: routName
-        });
+        this.props.navigation('Profile');
     }
 
     async storeToken (accessToken) {

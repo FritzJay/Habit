@@ -23,9 +23,7 @@ export default class Register extends React.Component {
     }
 
     redirect (routeName, accessToken) {
-        this.props.navigator.push({
-            name: routeName
-        });
+        this.props.navigation('Home');
     }
 
     async storeToken (accessToken) {
@@ -47,7 +45,7 @@ export default class Register extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user:{
+                    session:{
                         username: this.state.username,
                         password: this.state.password
                     }
@@ -91,6 +89,10 @@ export default class Register extends React.Component {
                     onPress={this.onLoginPressed.bind(this)}
                 >
                     <Text> Login </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    onPress={this.redirect(Register)}>
+                    <Text> Register </Text>
                 </TouchableHighlight>
 
                 <Errors errors={this.state.errors}/>
