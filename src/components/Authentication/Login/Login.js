@@ -26,9 +26,9 @@ export default class Register extends React.Component {
         this.onLoginPressed = this.onLoginPressed.bind(this);
     }
 
-    redirect (routeName) {
+    redirect (routeName, token) {
         const { navigate } = this.props.navigation;
-        navigate(routeName);
+        navigate(routeName, { token: token });
     }
 
     onRegisterPressed () {
@@ -36,6 +36,7 @@ export default class Register extends React.Component {
     }
 
     async getToken () {
+        console.log("getToken");
         try {
             return await AsyncStorage.getItem('access_token') ? true : false;
         } catch (error) {
@@ -45,10 +46,12 @@ export default class Register extends React.Component {
     }
 
     async storeToken (accessToken) {
+        console.log("storeToken");
+        console.log(accessToken)
         try {
             await AsyncStorage.setItem('access_token', accessToken);
             console.log("Token was stored successfully");
-            this.redirect('Home');
+            this.redirect('Home', accessToken);
         } catch (error) {
             console.log("Something went wrong: " + error);
         }
@@ -72,9 +75,10 @@ export default class Register extends React.Component {
             });
             let res = await response.text();
             if (response.status >= 200 && response.status < 300) {
-                let accessToken = res;
-                console.log(accessToken);
-                this.storeToken(accessToken);
+                let result = JSON.parse(res);
+                console.log("AccessToken:");
+                console.log(result.token);
+                this.storeToken(result.token);
             } else {
                 let error = res;
                 console.log('Error!');
@@ -89,8 +93,9 @@ export default class Register extends React.Component {
     }
 
     componentWillMount () {
-        if (this.getToken())
-            this.redirect('Home');
+        // Check if our current token is valid
+        // if it is, skip the login page
+        
     }
 
     render () {

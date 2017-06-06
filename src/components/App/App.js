@@ -10,7 +10,8 @@ import {
     View,
     StatusBar,
     Animated,
-    AppRegistry
+    AppRegistry,
+    AsyncStorage
 } from 'react-native';
 
 // App will be in charge of fetching all user related data from the database...
@@ -25,20 +26,28 @@ export default class App extends React.Component {
 
         // bind functions to this component
         this.GetUser = this.GetUser.bind(this);
+        this.redirect = this.redirect.bind(this);
     }
 
-    componentWillMount () {
-        this.GetUser();
+    redirect (routeName) {
+        let { navigate } = this.props.navigation;
+        //navigate('Login');
     }
 
     componentDidMount () {
-        this.setState({ menu: this.menu })
+        // If we cannot successfully get the user from the database
+        // Return to the login screen
+        if (!this.GetUser()) {
+            // Go back to the login screen
+            this.redirect('Login');
+        }
+        // Set menu to be passed down to children
+        this.setState({ menu: this.menu });
     }
 
     render () {
         return (
-            <View><Text>Hello From App</Text>
-            <FadeInView duration={500} style={{
+            <View duration={500} style={{
                 flex: 1,       
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
@@ -56,15 +65,20 @@ export default class App extends React.Component {
                 <Menu
                     ref={(menu) => { this.menu = menu }}
                 />
-            </FadeInView>
             </View>
         );
     }
 
     //Get's user info from db
     GetUser () {
-        fetch(this.props.url + '/users/1')           // fetches info from supplied url
-            .then((res) => res.json())               // gets json from response
+        console.log("navigation state: ");
+        console.log(this.props.navigation.state.params.token);
+        fetch(this.props.url + '/users/1', {                // fetches info from supplied url
+            method: 'GET',
+            headers: {
+                'x-access-token': this.props.navigation.state.params.token
+            }})
+            .then((res) => res.json())                      // gets json from response
             .then((resJson) => {
                 let newUser = resJson;
                 console.log('Successfully queried db:');
@@ -74,11 +88,12 @@ export default class App extends React.Component {
                 this.setState({
                     user: newUser
                 });
+                return true;
             })
             .catch((err) => {
                 console.log(err);
+                return false;
             });
+        return false;
     }
 }
-
-AppRegistry.registerComponent('App', () => App);

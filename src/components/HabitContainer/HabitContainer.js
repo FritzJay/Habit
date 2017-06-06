@@ -86,5 +86,3 @@ export default class HabitContainer extends Component {
         );
     }
 }
-
-AppRegistry.registerComponent('HabitContainer', () => HabitContainer);

@@ -21,7 +21,7 @@ class Habit extends Component {
     render() {
     return (
         <View style={{flex:1}}>
-            <App url={"http://" + Config.ip + ":" + Config.port + "/api"}/>
+            <App url={"http://" + Config.ip + ":" + Config.port + "/api"} navigation={this.props.navigation} />
         </View>
     );
     }
