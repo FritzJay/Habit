@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import {
     Dimensions,
-    AppRegistry
+    Text,
+    TouchableHighlight
 } from 'react-native';
 import SlideInView from '../SlideInView';
 
@@ -22,12 +23,15 @@ export default class Menu extends Component {
             position: "absolute",
             height: 500,
             width: Dimensions.get('window').width,
-            right: this.props.slideAnim
+            right: this.props.slideAnim,
+            top: 44
         }}>
-
+          <TouchableHighlight onPress={this.onLogoutPressed}>
+            <Text>
+              Logout
+            </Text>
+          </TouchableHighlight>
         </SlideInView>
     );
   }
 }
-
-AppRegistry.registerComponent('Menu', () => Menu);

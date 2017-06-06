@@ -24,6 +24,17 @@ class SlideInView extends Component {
     console.log('slideIn')
   }
 
+  slideOut() {
+    Animated.timing(
+      this.state.slideAnim,
+      {
+        toValue: -this.props.width,
+        duration: this.props.duration
+      }
+    ).start();
+    console.log('slideOut')
+  }
+
   onLayout () {
 
   }

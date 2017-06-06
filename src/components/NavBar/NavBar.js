@@ -11,11 +11,22 @@ export default class NavBar extends Component {
     constructor(props) {
         super(props);
 
-        this.handlePress = this.handlePress.bind(this);
+        this.state = {
+            isMenuActive: false
+        }
+
+        this.onMenuPressed = this.onMenuPressed.bind(this);
     }
 
-    handlePress () {
-        this.props.menu.slideInView.slideIn();
+    onMenuPressed () {
+        if (this.state.isMenuActive) {
+            this.props.menu.slideInView.slideIn();
+            this.setState({ isMenuActive: false });
+        }
+        else {
+            this.props.menu.slideInView.slideOut();
+            this.setState({ isMenuActive: true });
+        }
     }
 
     render () {
@@ -31,7 +42,7 @@ export default class NavBar extends Component {
                 />
             </TouchableHighlight>
             :
-            <TouchableHighlight onPress={this.handlePress}>
+            <TouchableHighlight onPress={this.onMenuPressed}>
                 <Image                              // Menu button
                     source={require('./menu.png')}
                     style={{                  
