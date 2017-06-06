@@ -17,13 +17,13 @@ export default class Menu extends Component {
       <SlideInView
         ref={(slideInView) => { this.slideInView = slideInView }}
         width={Dimensions.get('window').width}
-        duration={2000}            // The duration of the slideIn
+        duration={250}            // The duration of the slideIn
         style={{                   // Menu container
             backgroundColor: "white",
             position: "absolute",
             height: 500,
             width: Dimensions.get('window').width,
-            right: this.props.slideAnim,
+            right: this.props.slideAnim, 
             top: 44
         }}>
           <TouchableHighlight onPress={this.onLogoutPressed}>

@@ -12,7 +12,7 @@ export default class NavBar extends Component {
         super(props);
 
         this.state = {
-            isMenuActive: false
+            isMenuActive: true
         }
 
         this.onMenuPressed = this.onMenuPressed.bind(this);

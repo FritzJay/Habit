@@ -21,13 +21,17 @@ export default class HabitContainer extends Component {
     }
 
     componentWillMount(props) {
-        //this.getHabits();
+        this.getHabits();
     }
 
     // Fetches habits associated with the current user
     // from the api server
     getHabits () {
-        fetch(this.props.url + '/habits/' + this.props.user_id)
+       fetch(this.props.url + '/habits/1', {                // fetches info from supplied url
+            method: 'GET',
+            headers: {
+                'x-access-token': this.props.token
+            }})
             .then((res) => res.json())
             .then((resJson) => {
                 console.log('Succesfully fetched habits: ' + resJson);
@@ -70,7 +74,7 @@ export default class HabitContainer extends Component {
 
         return(
             <ScrollView style={{
-                flex:1
+                flex:1,
             }}>
                 <View style={{                      // Habit Container
                     flex: 1,

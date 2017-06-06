@@ -21,7 +21,8 @@ export default class App extends React.Component {
         super(props);
         this.state = { 
             user: '',
-            menu: { }
+            menu: { },
+            token: this.props.navigation.state.params.token
         };
 
         // bind functions to this component
@@ -51,7 +52,7 @@ export default class App extends React.Component {
                 flex: 1,       
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                opacity: this.state.fadeAnim
+                opacity: this.state.fadeAnim,
             }}>
                 <StatusBar
                     backgroundColor="#222"
@@ -60,7 +61,8 @@ export default class App extends React.Component {
                 <NavBar menu={this.state.menu} />
                 <HabitContainer 
                     user_id={this.state.user.user_id} 
-                    url={this.props.url} 
+                    url={this.props.url}
+                    token={this.state.token}
                 />
                 <Menu
                     ref={(menu) => { this.menu = menu }}
@@ -76,7 +78,7 @@ export default class App extends React.Component {
         fetch(this.props.url + '/users/1', {                // fetches info from supplied url
             method: 'GET',
             headers: {
-                'x-access-token': this.props.navigation.state.params.token
+                'x-access-token': this.state.token
             }})
             .then((res) => res.json())                      // gets json from response
             .then((resJson) => {
