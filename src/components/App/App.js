@@ -32,7 +32,7 @@ export default class App extends React.Component {
 
     redirect (routeName) {
         let { navigate } = this.props.navigation;
-        //navigate('Login');
+        navigate(routName)
     }
 
     componentDidMount () {
@@ -40,7 +40,7 @@ export default class App extends React.Component {
         // Return to the login screen
         if (!this.GetUser()) {
             // Go back to the login screen
-            this.redirect('Login');
+            //this.redirect('Login');
         }
         // Set menu to be passed down to children
         this.setState({ menu: this.menu });
@@ -66,6 +66,7 @@ export default class App extends React.Component {
                 />
                 <Menu
                     ref={(menu) => { this.menu = menu }}
+                    navigate={this.props.navigation}
                 />
             </View>
         );
