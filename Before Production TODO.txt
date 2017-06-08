@@ -1,5 +1,3 @@
 Create a menu
 
 Create the empty card
-
-Close keyboard on login/register press

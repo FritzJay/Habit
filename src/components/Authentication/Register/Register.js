@@ -8,14 +8,11 @@ import {
     TouchableHighlight,
     AsyncStorage,
     ActivityIndicator,
-    AppRegistry
+    AppRegistry,
+    Keyboard
 } from 'react-native';
 
-export default class Register extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
-    
+export default class Register extends React.Component {    
     constructor (props) {
         super(props);
         this.state = {
@@ -37,7 +34,7 @@ export default class Register extends React.Component {
 
     async storeToken (accessToken) {
         try {
-            await AsyncStorage.setItem('access_token', accessToken);
+            await AsyncStorage.multiSet([['access_token', accessToken], ['rememberMe', this.state.rememberMe]]);
             console.log("Token was stored successfully");
             this.redirect('Home');
         } catch (error) {
@@ -66,6 +63,7 @@ export default class Register extends React.Component {
             if (response.status >= 200 && response.status < 300) {
                 let accessToken = res;
                 console.log(accessToken);
+                Keyboard.dismiss();
                 this.storeToken(accessToken);
             } else {
                 let error = res;

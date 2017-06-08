@@ -31,14 +31,17 @@ export default class NavBar extends Component {
 
     render () {
         const menuButton = (this.props.menu.slideInView === undefined) ? 
-            <TouchableHighlight>
+            <TouchableHighlight style={ styles.menuButtonContainer } >
                 <Image                              // Menu button
                     source={require('./menu.png')}
                     style={ styles.menuButton }
                 />
             </TouchableHighlight>
             :
-            <TouchableHighlight onPress={this.onMenuPressed}>
+            <TouchableHighlight
+                style={ styles.menuButtonContainer }
+                onPress={this.onMenuPressed}
+            >
                 <Image                              // Menu button
                     source={require('./menu.png')}
                     style={ styles.menuButton }
@@ -56,7 +59,7 @@ export default class NavBar extends Component {
                         </Text>
                     </View>
                     <View style={{                          // Right container
-                        flex: 1
+                        flex: 1,
                     }}>
                         {menuButton}
                     </View>
@@ -74,6 +77,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    menuButtonContainer: {
+        alignSelf: 'center',
+        justifyContent: 'center',
+        height: 25,
+        width: 35,
+        top: 2
     },
     menuButton: {                  
         alignSelf: 'center',

@@ -8,8 +8,10 @@ import {
     TouchableHighlight,
     AsyncStorage,
     ActivityIndicator,
-    AppRegistry
+    AppRegistry,
+    Keyboard
 } from 'react-native';
+import CheckBox from 'react-native-check-box'
 
 export default class Register extends React.Component {
     static navigationOptions = {
@@ -18,16 +20,19 @@ export default class Register extends React.Component {
     
     constructor (props) {
         super(props);
+
         this.state = {
             username: "",
             password: "",
+            token: "",
             errors: [],
             showProgress: false
-        }
+        };
 
         this.redirect = this.redirect.bind(this);
         this.onRegisterPressed = this.onRegisterPressed.bind(this);
         this.onLoginPressed = this.onLoginPressed.bind(this);
+        this.storeToken = this.storeToken.bind(this);
     }
 
     redirect (routeName, token) {
@@ -37,28 +42,7 @@ export default class Register extends React.Component {
 
     onRegisterPressed () {
         this.redirect('Register');
-    }
-
-    async getToken () {
-        console.log("getToken");
-        try {
-            return await AsyncStorage.getItem('access_token') ? true : false;
-        } catch (error) {
-            console.error("Something went wrong in getToken.", error);
-            return false;
-        }
-    }
-
-    async storeToken (accessToken) {
-        console.log("storeToken");
-        console.log(accessToken)
-        try {
-            await AsyncStorage.setItem('access_token', accessToken);
-            console.log("Token was stored successfully");
-            this.redirect('Home', accessToken);
-        } catch (error) {
-            console.log("Something went wrong: " + error);
-        }
+        Keyboard.dismiss();
     }
 
     async onLoginPressed () {
@@ -82,6 +66,7 @@ export default class Register extends React.Component {
                 let result = JSON.parse(res);
                 console.log("AccessToken:");
                 console.log(result.token);
+                Keyboard.dismiss();
                 this.storeToken(result.token);
             } else {
                 let error = res;
@@ -96,10 +81,29 @@ export default class Register extends React.Component {
         }
     }
 
+    async storeToken (accessToken) {
+        console.log("storeToken");
+        console.log(accessToken)
+        try {
+            await AsyncStorage.setItem('access_token', accessToken);
+            console.log("Token was stored successfully");
+            this.redirect('Home', accessToken);
+        } catch (error) {
+            console.log("Something went wrong: " + error);
+        }
+    }
+
     componentWillMount () {
-        // Check if our current token is valid
-        // if it is, skip the login page
-        
+        // If a token is already stored on the device
+        // redirect to home and send the token as a param
+        var token;
+        AsyncStorage.getItem('access_token').then((data) => {
+            if (data) {
+                console.log('data')
+                console.log(data);
+                this.redirect('Home', data);
+            }
+        });
     }
 
     render () {
@@ -108,10 +112,12 @@ export default class Register extends React.Component {
                 <Text> Login: </Text>
                 <TextInput
                     onChangeText={ (text) => this.setState({username: text}) }
+                    value={this.state.username}
                     placeholder="Username"
                 >
                 </TextInput>
                 <TextInput
+                    value={this.state.password}
                     onChangeText={ (text) => this.setState({password: text}) }
                     placeholder="Password"
                     secureTextEntry={true}

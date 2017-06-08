@@ -62,6 +62,7 @@ export default class App extends React.Component {
                 <Menu
                     ref={(menu) => { this.menu = menu }}
                     navigate={this.props.navigation}
+                    user={this.state.user}
                 />
             </View>
         );
