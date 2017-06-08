@@ -141,5 +141,3 @@ export default class HabitCard extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('HabitCard', () => HabitCard);

@@ -2,4 +2,4 @@ Create a menu
 
 Create the empty card
 
-Fix url to images
+Close keyboard on login/register press
