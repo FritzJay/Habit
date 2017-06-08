@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Animated,
+  Animated
 } from 'react-native';
 
 class SlideInView extends Component {

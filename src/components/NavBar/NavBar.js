@@ -4,7 +4,7 @@ import {
     Text,
     Image,
     TouchableHighlight,
-    AppRegistry
+    StyleSheet
 } from 'react-native';
 
 export default class NavBar extends Component {
@@ -34,46 +34,24 @@ export default class NavBar extends Component {
             <TouchableHighlight>
                 <Image                              // Menu button
                     source={require('./menu.png')}
-                    style={{                  
-                        alignSelf: 'center',
-                        height: 50,
-                        width: 60
-                    }}
+                    style={ styles.menuButton }
                 />
             </TouchableHighlight>
             :
             <TouchableHighlight onPress={this.onMenuPressed}>
                 <Image                              // Menu button
                     source={require('./menu.png')}
-                    style={{                  
-                        alignSelf: 'center',
-                        height: 50,
-                        width: 60
-                    }}
+                    style={ styles.menuButton }
                 />
             </TouchableHighlight>
         return (
-            <View style={{                          // Navbar Container
-                    borderBottomWidth: 4,
-                    borderBottomColor: '#EEE',
-                    height: 44, 
-                    backgroundColor: 'white',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}>
+            <View style={ styles.navbarContainer }>
                     <View style={{                      // Left hand container
                         flex: 1
                     }}>
                     </View>
-                    <View style={{                      // Middle container
-                        flex: 1
-                    }}>
-                        <Text style={{                  // Title
-                            alignSelf: 'center', 
-                            fontSize: 22, 
-                            color: '#000080'
-                        }}> 
+                    <View>
+                        <Text style={ styles.title }> 
                             Habit 
                         </Text>
                     </View>
@@ -87,4 +65,24 @@ export default class NavBar extends Component {
         }
 }
 
-AppRegistry.registerComponent('NavBar', () => NavBar);
+const styles = StyleSheet.create({
+    navbarContainer: {
+        borderBottomWidth: 4,
+        borderBottomColor: '#EEE',
+        height: 44, 
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    menuButton: {                  
+        alignSelf: 'center',
+        height: 50,
+        width: 60
+    },
+    title: {
+        alignSelf: 'center', 
+        fontSize: 22, 
+        color: '#000080'
+    }
+})

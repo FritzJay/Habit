@@ -4,6 +4,7 @@ import {
     Dimensions,
     Text,
     TouchableHighlight,
+    StyleSheet,
     AsyncStorage
 } from 'react-native';
 import SlideInView from '../SlideInView';
@@ -32,22 +33,20 @@ export default class Menu extends Component {
     return (
       <SlideInView
         ref={(slideInView) => { this.slideInView = slideInView }}
-        width={Dimensions.get('window').width}
-        duration={250}            // The duration of the slideIn
-        style={{                   // Menu container
-            backgroundColor: "white",
-            position: "absolute",
-            height: 500,
-            width: Dimensions.get('window').width,
-            right: this.props.slideAnim, 
-            top: 44
-        }}>
+        style={{
+          backgroundColor: "white",
+          position: "absolute",
+          height: 500,
+          width: Dimensions.get('window').width,
+          right: this.props.slideAnim, 
+          top: 44
+         }}
+        width={ Dimensions.get('window').width }
+        duration={ 250 }            // The duration of the slideIn
+      >
           <TouchableHighlight
-            onPress={this.onLogoutPressed}
-            style={{
-              height: 50,
-              backgroundColor: 'gray'
-            }}
+            onPress={ this.onLogoutPressed }
+            style={ styles.button }
           >
             <Text>
               Logout
@@ -55,10 +54,7 @@ export default class Menu extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             onPress={this.onProfilePressed}
-            style={{
-              height: 50,
-              backgroundColor: 'gray'
-            }}
+            style={ styles.button }
           >
             <Text>
               Profile
@@ -69,3 +65,10 @@ export default class Menu extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    height: 50,
+    backgroundColor: 'gray'
+  }
+})
