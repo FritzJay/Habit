@@ -3,7 +3,7 @@ import {
     View, 
     Text,
     ScrollView,
-    AppRegistry 
+    StyleSheet
 } from 'react-native';
 import HabitCard from '../HabitCard/HabitCard';
 import EmptyCard from '../EmptyCard/EmptyCard';
@@ -73,20 +73,22 @@ export default class HabitContainer extends Component {
         }
 
         return(
-            <ScrollView style={{
-                flex:1,
-            }}>
-                <View style={{                      // Habit Container
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    alignSelf: 'stretch',
-                    backgroundColor: '#F9F9F9',
-                }}>
+            <ScrollView>
+                <View style={ styles.habitContainer }>
                     {habits}
                 </View>
             </ScrollView>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    habitContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        backgroundColor: '#F9F9F9',
+    }
+})
