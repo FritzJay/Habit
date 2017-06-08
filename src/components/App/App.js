@@ -10,7 +10,7 @@ import {
     View,
     StatusBar,
     Animated,
-    AppRegistry,
+    StyleSheet,
     AsyncStorage
 } from 'react-native';
 
@@ -48,17 +48,12 @@ export default class App extends React.Component {
 
     render () {
         return (
-            <View duration={500} style={{
-                flex: 1,       
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                opacity: this.state.fadeAnim,
-            }}>
+            <View style={ styles.mainContainer }>
                 <StatusBar
                     backgroundColor="#222"
                     barStyle="light-content"
                 />
-                <NavBar menu={this.state.menu} />
+                <NavBar menu={ this.state.menu } />
                 <HabitContainer 
                     user_id={this.state.user.user_id} 
                     url={this.props.url}
@@ -100,3 +95,11 @@ export default class App extends React.Component {
         return false;
     }
 }
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,       
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    }
+})
