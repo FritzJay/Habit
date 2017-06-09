@@ -44,7 +44,7 @@ export default class HabitCard extends Component {
                 soundName: 'default',
                 number: '100',
                 repeatType: 'time',
-                repeatTime: (this.state.interval * 60)
+                repeatTime: (this.state.interval * 1000)
             })
             this.setState({
                 isNotifiActive: true
