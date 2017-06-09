@@ -72,7 +72,7 @@ export default class App extends React.Component {
     GetUser () {
         console.log("navigation state: ");
         console.log(this.props.navigation.state.params.token);
-        fetch(this.props.url + '/users/1', {                // fetches info from supplied url
+        fetch(this.props.url + '/users/' + this.state.token, {                // fetches info from supplied url
             method: 'GET',
             headers: {
                 'x-access-token': this.state.token

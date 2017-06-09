@@ -151,7 +151,7 @@ router.route('/authenticate')
 router.use(function(req, res, next) {
   // Check for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+  
   // Decode the token
   if (token) {
     // Verify secret and check exp
@@ -174,11 +174,11 @@ router.use(function(req, res, next) {
 });
 
 // Returns relevant users information
-router.route('/users/:userID')
+router.route('/users/:token')
   //Gets users profile and habit info
   .get(function (req, res) {
       // Gets users info from postgres
-      pool.query('SELECT * FROM users WHERE user_id=$1', [req.params.userID], function(error, result) {
+      pool.query('SELECT * FROM users WHERE token=$1', [req.params.token], function(error, result) {
         if (error)
           return console.error('Error running query. ', error);
         // Create a user using the user model
