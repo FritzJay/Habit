@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PushNotification from 'react-native-push-notification';
 import config from '../../config';
 import ProgressBar from './ProgressBar/ProgressBar';
+import PushController from '../PushController/PushController';
 import { 
     View, 
     Text,
@@ -11,12 +13,48 @@ import {
 } from 'react-native';
 
 export default class HabitCard extends Component {
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            isNotifiActive: false
+        }
+    }
     onNotificationPressed () {
-        Vibration.vibrate([0 ,500, 200, 500]);
+        Vibration.vibrate([0, 50]);
+        if (!this.state.isNotifiActive) {
+            console.log('Notification is now enabled');
+            PushNotification.localNotificationSchedule({
+                id: '1',
+                ticker: "My Notification Ticker",
+                bigText: "My Big Text",
+                smallText: "My Small Text",
+                subText: "Subtext",
+                vibrate: true,
+                vibration: 300,
+                tag: 'My Tag',
+                ongoing: true,
+                message: "My Notification Message",
+                date: new Date(Date.now() + (5 * 1000)),
+                title: "My Notification Title",
+                playSound: true,
+                soundName: 'default',
+                number: '100',
+                repeatType: 'minute',
+            })
+            this.setState({
+                isNotifiActive: true
+            })
+        } else {
+            console.log('Notifications are now disabled.');
+            PushNotification.cancelAllLocalNotifications()
+            this.setState({
+                isNotifiActive: false
+            })
+        }
     }
 
     render () {
-        console.log(this.props.picture);
         return (
             <View style={ styles.mainContainer }>
                 <View style={ styles.topContainer }>
@@ -73,6 +111,7 @@ export default class HabitCard extends Component {
                     </View>
 
                 </View>
+                <PushController />
             </View>
         )
     }
