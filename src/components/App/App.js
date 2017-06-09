@@ -1,7 +1,9 @@
 //config holds connection and user info
 import config from '../../config.js';
 import React, { Component } from 'react';
+import PushNotification from 'react-native-push-notification'
 import HabitContainer from '../HabitContainer/HabitContainer';
+import PushController from '../PushController/PushController.js';
 import FadeInView from '../FadeInView';
 import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
@@ -11,7 +13,8 @@ import {
     StatusBar,
     Animated,
     StyleSheet,
-    AsyncStorage
+    AsyncStorage,
+    AppState
 } from 'react-native';
 
 // App will be in charge of fetching all user related data from the database...
@@ -28,6 +31,7 @@ export default class App extends React.Component {
         // bind functions to this component
         this.GetUser = this.GetUser.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 
     redirect (routeName) {
@@ -35,7 +39,19 @@ export default class App extends React.Component {
         navigate(routName)
     }
 
+    handleAppStateChange (appState) {
+        console.log('App state changed');
+        console.log(appState);
+        if (appState === 'background') {
+            PushNotification.localNotificationSchedule({
+                message: "My Notification MEssage",
+                date: new Date(Date.now() + (5 * 1000))
+            })
+        }
+    }
+
     componentDidMount () {
+        AppState.addEventListener('change', this.handleAppStateChange); // Add event listener for push notification
         // If we cannot successfully get the user from the database
         // Return to the login screen
         if (!this.GetUser()) {
@@ -44,6 +60,10 @@ export default class App extends React.Component {
         }
         // Set menu to be passed down to children
         this.setState({ menu: this.menu });
+    }
+
+    componentWillUnmount () {
+        AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
     render () {
@@ -64,6 +84,7 @@ export default class App extends React.Component {
                     navigate={this.props.navigation}
                     user={this.state.user}
                 />
+                <PushController />
             </View>
         );
     }
