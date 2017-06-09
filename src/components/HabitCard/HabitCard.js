@@ -5,10 +5,16 @@ import {
     View, 
     Text,
     Image,
+    Vibration,
+    TouchableHighlight,
     StyleSheet
 } from 'react-native';
 
 export default class HabitCard extends Component {
+    onNotificationPressed () {
+        Vibration.vibrate([0 ,500, 200, 500]);
+    }
+
     render () {
         console.log(this.props.picture);
         return (
@@ -45,21 +51,25 @@ export default class HabitCard extends Component {
                     <View style={ styles.iconContainer }>
 
                         <Image 
-                            source={require('./edit.png')}
+                            source={require('./icons/edit.png')}
                             style={ styles.icon }
                         />
                         <Image 
-                            source={require('./heart.png')}
+                            source={require('./icons/heart.png')}
                             style={ styles.icon }
                         />
                         <Image 
-                            source={require('./share.png')}
+                            source={require('./icons/share.png')}
                             style={ styles.icon }
                         />
-                        <Image 
-                            source={require('./notification.png')}
-                            style={ styles.icon }
-                        />
+                        <TouchableHighlight
+                            onPress={this.onNotificationPressed.bind(this)}
+                        >
+                            <Image 
+                                source={require('./icons/notification.png')}
+                                style={ styles.icon }
+                            />
+                        </TouchableHighlight>
                     </View>
 
                 </View>
