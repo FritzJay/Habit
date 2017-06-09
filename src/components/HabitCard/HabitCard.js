@@ -17,15 +17,18 @@ export default class HabitCard extends Component {
         super(props);
 
         this.state = {
-            isNotifiActive: false
+            isNotifiActive: false,
+            id: this.props.id,
+            interval: this.props.interval
         }
     }
+
     onNotificationPressed () {
         Vibration.vibrate([0, 50]);
         if (!this.state.isNotifiActive) {
             console.log('Notification is now enabled');
             PushNotification.localNotificationSchedule({
-                id: '1',
+                id: this.state.id,
                 ticker: "My Notification Ticker",
                 bigText: "My Big Text",
                 smallText: "My Small Text",
@@ -40,14 +43,15 @@ export default class HabitCard extends Component {
                 playSound: true,
                 soundName: 'default',
                 number: '100',
-                repeatType: 'minute',
+                repeatType: 'time',
+                repeatTime: (this.state.interval * 60)
             })
             this.setState({
                 isNotifiActive: true
             })
         } else {
             console.log('Notifications are now disabled.');
-            PushNotification.cancelAllLocalNotifications()
+            PushNotification.cancelLocalNotifications({ id: this.state.id })
             this.setState({
                 isNotifiActive: false
             })
@@ -55,6 +59,8 @@ export default class HabitCard extends Component {
     }
 
     render () {
+        console.log('Notification interval');
+        console.log(this.state.interval + 's');
         return (
             <View style={ styles.mainContainer }>
                 <View style={ styles.topContainer }>

@@ -8,5 +8,6 @@ module.exports = class Habit {
         this.title = res.title;
         this.picture = res.picture;
         this.info = res.info;
+        this.interval = res.interval;
     }
 };

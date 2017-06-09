@@ -34,7 +34,8 @@ export default class HabitContainer extends Component {
             }})
             .then((res) => res.json())
             .then((resJson) => {
-                console.log('Succesfully fetched habits: ' + resJson);
+                console.log('Succesfully fetched habits: ');
+                console.log(resJson);
                 this.setState({
                     habits: resJson
                 });
@@ -57,7 +58,9 @@ export default class HabitContainer extends Component {
                         info={habit.info}
                         title={habit.title}
                         key={habit.habit_id} 
+                        id={habit.habit_id}
                         accentColor={accentColor}
+                        interval={habit.interval}     // Time between notifications (in seconds)
                     />
                 )
             });
