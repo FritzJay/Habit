@@ -3,13 +3,16 @@ import PushNotification from 'react-native-push-notification';
 
 export default class PushController extends Component {
 
+    handleNotification (notification) {
+        this.props.updateProgress();
+    }
+
     componentDidMount () {
         PushNotification.configure({
-            onNotification: function(notification) {
-                console.log('NOTIFICATION', notification);
-            },
+            onNotification: (notification) => this.handleNotification(notification),
             popInitialNotification: true,
             requestPermissions: true
+        
         });
     }
 

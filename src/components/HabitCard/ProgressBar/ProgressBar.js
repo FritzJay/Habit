@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { 
     View, 
-    AppRegistry
+    Easing
 } from 'react-native';
 
 export default class ProgressBar extends Component {
-    constructor (props) {
-        super(props);
-        this.state = { progress: '50%' };
-    }
-    render (props) {
-        const progressBorderRadius = (this.state.progress === '100%') ? 0 : 6;
+
+    render () {
+        const progressBorderRadius = (this.progress >= 100) ? 0 : 6;
         return (
             <View style={{                          //Progress
                 flex: 1,
@@ -26,11 +23,10 @@ export default class ProgressBar extends Component {
                     borderTopRightRadius: progressBorderRadius,
                     borderBottomRightRadius: progressBorderRadius,
                     flex: 0,
-                    flexBasis: this.state.progress
-                }} />
+                    flexBasis: this.props.progress + '%'
+                }}>
+                </View>
             </View>
         );
     }
 }
-
-AppRegistry.registerComponent('ProgressBar', () => ProgressBar);

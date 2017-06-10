@@ -34,10 +34,6 @@ class SlideInView extends Component {
     ).start();
     console.log('slideOut')
   }
-
-  onLayout () {
-
-  }
   
   render() {
     console.log(this.props.width);
