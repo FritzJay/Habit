@@ -9,5 +9,7 @@ module.exports = class Habit {
         this.picture = res.picture;
         this.info = res.info;
         this.interval = res.interval;
+        this.start_time = res.start_time;
+        this.end_time = res.end_time;
     }
 };
