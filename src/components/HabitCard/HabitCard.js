@@ -20,13 +20,14 @@ export default class HabitCard extends Component {
             isNotifiActive: false,
             id: this.props.id,
             interval: this.props.interval,
-            progress: 0
+            progress: 0,
         }
 
         this.updateProgress = this.updateProgress.bind(this);
     }
 
     onNotificationPressed () {
+        console.log(this)
         Vibration.vibrate([0, 50]);
         if (!this.state.isNotifiActive) {
             console.log('Notification is now enabled');
@@ -62,18 +63,20 @@ export default class HabitCard extends Component {
     }
 
     updateProgress () {
-        // Find the total hours that this habit will be active for per day.
-        let activeHours = 24;
+        // If time.now is within the active hours of this habit
 
-        // Divide the active hours by the interval amount in order to find the total
-        // number of ticks per day.
-        let totalTicks = activeHours / this.state.interval;
+        // Get the total number of active hours
 
-        // Set the tick amount to 100 / the total number of ticks
-        this.setState({ progress: this.state.progress + (100 / totalTicks) });
+        // Get the hours that have already passed this day
+
+        // Get the percentage of the active day that has already passed
+        // TotalHours / passedHours
+
+        // Return percentage * 100
     }
 
     render () {
+        this.updateProgress();
         return (
             <View style={ styles.mainContainer }>
                 <View style={ styles.topContainer }>
@@ -123,22 +126,19 @@ export default class HabitCard extends Component {
                             style={ styles.icon }
                         />
                         <TouchableHighlight
+                            style={ styles.iconButton }
                             onPress={this.onNotificationPressed.bind(this)}
+                            underlayColor='#fff'
+                            accessibilityLabel='Enable/Disable notifications for this habit'
                         >
-                            <View>
-                                <Image 
-                                    source={require('./icons/notification.png')}
-                                    style={ styles.icon }
-                                />
-                            </View>
+                            <Image 
+                                style={ styles.icon }
+                                source={require('./icons/notification.png')}
+                            />
                         </TouchableHighlight>
                     </View>
 
                 </View>
-                <PushController 
-                    updateProgress={this.updateProgress}
-                    interval={this.state.interval}
-                />
             </View>
         )
     }
@@ -220,6 +220,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginRight: 15
+    },
+    iconButton: {
+        width: 20,
+        height: 20,
+        borderRadius: 10
     },
     icon: {
         width: 20, 

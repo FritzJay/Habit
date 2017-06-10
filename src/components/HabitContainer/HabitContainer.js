@@ -53,7 +53,7 @@ export default class HabitContainer extends Component {
                 // Create a habit card for each habit in state.habits
                 const accentColor = this.state.accentColors[habit.habit_id];
                 return (
-                    <HabitCard 
+                    <HabitCard
                         picture={habit.picture}
                         info={habit.info}
                         title={habit.title}
