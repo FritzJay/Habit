@@ -25,6 +25,7 @@ export default class App extends React.Component {
         this.state = { 
             user: '',
             menu: { },
+            habitContainer: { },
             token: this.props.navigation.state.params.token
         };
 
@@ -47,6 +48,8 @@ export default class App extends React.Component {
         }
         // Set menu to be passed down to children
         this.setState({ menu: this.menu });
+        // Set habitContainer to be passed down to children
+        this.setState({ habitContainer: this.habitContainer });
     }
 
     render () {
@@ -57,7 +60,8 @@ export default class App extends React.Component {
                     barStyle="light-content"
                 />
                 <NavBar menu={ this.state.menu } />
-                <HabitContainer 
+                <HabitContainer
+                    ref={(habitContainer) => { this.habitContainer = habitContainer }}
                     user_id={this.state.user.user_id} 
                     url={this.props.url}
                     token={this.state.token}
@@ -66,6 +70,9 @@ export default class App extends React.Component {
                     ref={(menu) => { this.menu = menu }}
                     navigate={this.props.navigation}
                     user={this.state.user}
+                />
+                <PushController
+                    habitContainer = {this.state.habitContainer}
                 />
             </View>
         );

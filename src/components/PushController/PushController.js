@@ -7,9 +7,9 @@ export default class PushController extends Component {
         super(props);
     }
 
-    handleNotification () {
-        console.log(this.props.habit)
-        this.props.habit.updateProgress(this.props.habit);
+    handleNotification (data) {
+        console.log("Handle Notification index: " + data.index);
+        this.props.habitContainer.updateProgress(data.index);
     }
 
     componentDidMount () {
@@ -21,6 +21,7 @@ export default class PushController extends Component {
     }
 
     render() {
+        console.log(this.props.habitContainer)
         return null;
     }
 }

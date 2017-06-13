@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PushNotification from 'react-native-push-notification';
 import config from '../../config';
 import ProgressBar from './ProgressBar/ProgressBar';
-import PushController from '../PushController/PushController';
 import { 
     View, 
     Text,
@@ -18,23 +17,19 @@ export default class HabitCard extends Component {
 
         this.state = {
             isNotifiActive: false,
-            id: this.props.id,
-            interval: this.props.interval,
-            progress: 0,
         }
-
-        this.updateProgress = this.updateProgress.bind(this);
     }
 
     onNotificationPressed () {
-        console.log(this)
+        console.log(this.props.title)
         Vibration.vibrate([0, 50]);
         if (!this.state.isNotifiActive) {
             console.log('Notification is now enabled');
             PushNotification.localNotificationSchedule({
-                id: this.state.id,
+                index: this.props.index,
+                id: this.props.id,
                 ticker: "My Notification Ticker",
-                bigText: "My Big Text",
+                bigText: "Big Text",
                 smallText: "My Small Text",
                 subText: "Subtext",
                 vibrate: true,
@@ -43,7 +38,7 @@ export default class HabitCard extends Component {
                 ongoing: true,
                 message: "My Notification Message",
                 date: new Date(Date.now() + (5 * 1000)),
-                title: "My Notification Title",
+                title: this.props.title,
                 playSound: true,
                 soundName: 'default',
                 number: '100',
@@ -55,28 +50,15 @@ export default class HabitCard extends Component {
             })
         } else {
             console.log('Notifications are now disabled.');
-            PushNotification.cancelLocalNotifications({ id: this.state.id })
+            //PushNotification.cancelAllLocalNotifications();
+            PushNotification.cancelLocalNotifications({ id: this.props.id })
             this.setState({
                 isNotifiActive: false
             })
         }
     }
 
-    updateProgress () {
-        // If time.now is within the active hours of this habit
-
-        // Get the total number of active hours
-
-        // Get the hours that have already passed this day
-
-        // Get the percentage of the active day that has already passed
-        // TotalHours / passedHours
-
-        // Return percentage * 100
-    }
-
     render () {
-        this.updateProgress();
         return (
             <View style={ styles.mainContainer }>
                 <View style={ styles.topContainer }>
@@ -101,7 +83,7 @@ export default class HabitCard extends Component {
                 </View>
 
                 <ProgressBar
-                    progress={ this.state.progress }
+                    progress={ this.props.progress }
                     accentColor={this.props.accentColor} 
                 />
 
