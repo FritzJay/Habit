@@ -120,6 +120,7 @@ export default class HabitContainer extends Component {
                         end={habit.end_time}            // The time of day this habit becomes inactive
                         progress={habit.progress}       // The current progress of this habit throught it's active day
                         index={habit.index}             // The index of this habit within habitContainer's state.habits (used by push notifications)
+                        isActive={habit.isActive}       // Is the habit currently sending push notifications
                     />
                 )
             });

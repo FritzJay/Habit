@@ -3,7 +3,7 @@ import {
     View, 
     Text,
     Image,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet
 } from 'react-native';
 
@@ -31,14 +31,14 @@ export default class NavBar extends Component {
 
     render () {
         const menuButton = (this.props.menu.slideInView === undefined) ? 
-            <TouchableHighlight style={ styles.menuButtonContainer } >
+            <TouchableOpacity style={ styles.menuButtonContainer } >
                 <Image                              // Menu button
                     source={require('./menu.png')}
                     style={ styles.menuButton }
                 />
-            </TouchableHighlight>
+            </TouchableOpacity>
             :
-            <TouchableHighlight
+            <TouchableOpacity
                 style={ styles.menuButtonContainer }
                 onPress={this.onMenuPressed}
             >
@@ -46,7 +46,7 @@ export default class NavBar extends Component {
                     source={require('./menu.png')}
                     style={ styles.menuButton }
                 />
-            </TouchableHighlight>
+            </TouchableOpacity>
         return (
             <View style={ styles.navbarContainer }>
                     <View style={{                      // Left hand container

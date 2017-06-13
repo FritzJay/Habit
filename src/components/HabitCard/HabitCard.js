@@ -7,7 +7,7 @@ import {
     Text,
     Image,
     Vibration,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet
 } from 'react-native';
 
@@ -16,14 +16,14 @@ export default class HabitCard extends Component {
         super(props);
 
         this.state = {
-            isNotifiActive: false,
+            isActive: this.props.isActive,
         }
     }
 
     onNotificationPressed () {
         console.log(this.props.title)
         Vibration.vibrate([0, 50]);
-        if (!this.state.isNotifiActive) {
+        if (!this.state.isActive) {
             console.log('Notification is now enabled');
             PushNotification.localNotificationSchedule({
                 index: this.props.index,
@@ -41,20 +41,20 @@ export default class HabitCard extends Component {
                 repeatTime: (this.props.interval * 1000)
             })
             this.setState({
-                isNotifiActive: true
+                isActive: true
             })
         } else {
             console.log('Notifications are now disabled.');
             //PushNotification.cancelAllLocalNotifications();
             PushNotification.cancelLocalNotifications({ id: this.props.id })
             this.setState({
-                isNotifiActive: false
+                isActive: false
             })
         }
     }
 
     render () {
-        const notification = this.state.isNotifiActive ? (
+        const notification = this.state.isActive ? (
             <Image 
                 style={ styles.icon }
                 source={require('./icons/notification.png')}
@@ -115,14 +115,14 @@ export default class HabitCard extends Component {
                             source={require('./icons/share.png')}
                             style={ styles.icon }
                         />
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={ styles.iconButton }
                             onPress={this.onNotificationPressed.bind(this)}
                             underlayColor='#fff'
                             accessibilityLabel='Enable/Disable notifications for this habit'
                         >
                             {notification}
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
@@ -210,8 +210,7 @@ const styles = StyleSheet.create({
     },
     iconButton: {
         width: 20,
-        height: 20,
-        opacity: 0.84
+        height: 20
     },
     icon: {
         opacity: 0.54,

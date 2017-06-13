@@ -11,9 +11,7 @@ import {
     Text,
     View,
     StatusBar,
-    Animated,
     StyleSheet,
-    AsyncStorage,
     AppState
 } from 'react-native';
 
