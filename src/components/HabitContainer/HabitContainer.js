@@ -62,22 +62,27 @@ export default class HabitContainer extends Component {
         function checkTime(i) {
             return (i < 10) ? "0" + i : i;
         }
+        function calculateSeconds(hms) {
+            var a = hms.split(':'); // split it at the colons
+            // minutes are worth 60 seconds. Hours are worth 60 minutes.
+            return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+        }
         const time = new Date(),
             h = checkTime(time.getHours()),
             m = checkTime(time.getMinutes()),
             s = checkTime(time.getSeconds());
-        //const now = (h + ':' + m + ':' + s);
-        const now = '10:00:00' // Temporary for testing
+        const now = (h + ':' + m + ':' + s);
         // If time.now is within the active hours of this habit
         if (now >= habit.start_time && now <= habit.end_time)
         {
-            // Get the total number of active hours
-            const activeHours = habit.end_time.slice(0, 2) - habit.start_time.slice(0, 2);
-            // Get the hours that have passed since the active hours have started
-            const passedHours = 10 - habit.start_time.slice(0, 2); // USE 10 TEMPORARILY
+            // Get the total number of active seconds
+            const activeSeconds = calculateSeconds(habit.end_time) - calculateSeconds(habit.start_time);
+            // Get the seconds that have passed since the active hours have started
+            const passedSeconds = calculateSeconds(now) - calculateSeconds(habit.start_time);
             // Get the percentage of the active day that has already passed
-            const progress = (passedHours / activeHours) * 100;
-            return progress;
+            const progress = (passedSeconds / activeSeconds) * 100;
+            console.log('Progress: ' + Math.floor(progress) + '%')
+            return Math.floor(progress);
         } else {
             return 100;
         }
@@ -89,7 +94,7 @@ export default class HabitContainer extends Component {
         // Create a copy of the habits array to be modified
         habits = this.state.habits;
         // Update the specified habit's progress
-        habits[id].progress = parseInt(progress) + 25;
+        habits[id].progress = parseInt(progress);
         console.log('new progress: ' + habits[id].progress)
         this.setState({
             habits: habits

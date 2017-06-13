@@ -37,13 +37,13 @@ export default class HabitCard extends Component {
                 tag: 'My Tag',
                 ongoing: true,
                 message: "My Notification Message",
-                date: new Date(Date.now() + (5 * 1000)),
+                date: new Date(Date.now() + (this.props.interval * 1000)),
                 title: this.props.title,
                 playSound: true,
                 soundName: 'default',
                 number: '100',
                 repeatType: 'time',
-                repeatTime: (this.state.interval * 1000)
+                repeatTime: (this.props.interval * 1000)
             })
             this.setState({
                 isNotifiActive: true
@@ -59,6 +59,19 @@ export default class HabitCard extends Component {
     }
 
     render () {
+        const notification = this.state.isNotifiActive ? (
+            <Image 
+                style={ styles.icon }
+                source={require('./icons/notification.png')}
+                tintColor='red'
+            />
+        ) : (
+            <Image 
+                style={ styles.icon }
+                source={require('./icons/notification.png')}
+            />
+        );
+
         return (
             <View style={ styles.mainContainer }>
                 <View style={ styles.topContainer }>
@@ -113,10 +126,7 @@ export default class HabitCard extends Component {
                             underlayColor='#fff'
                             accessibilityLabel='Enable/Disable notifications for this habit'
                         >
-                            <Image 
-                                style={ styles.icon }
-                                source={require('./icons/notification.png')}
-                            />
+                            {notification}
                         </TouchableHighlight>
                     </View>
 
