@@ -6,7 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 import HabitCard from '../HabitCard/HabitCard';
-import EmptyCard from '../EmptyCard/EmptyCard';
+import EmptyCard from '../HabitCard/EmptyCard/EmptyCard';
 
 export default class HabitContainer extends Component {
     constructor (props) {
@@ -81,7 +81,6 @@ export default class HabitContainer extends Component {
             const passedSeconds = calculateSeconds(now) - calculateSeconds(habit.start_time);
             // Get the percentage of the active day that has already passed
             const progress = (passedSeconds / activeSeconds) * 100;
-            console.log('Progress: ' + Math.floor(progress) + '%')
             return Math.floor(progress);
         } else {
             return 100;
@@ -131,6 +130,7 @@ export default class HabitContainer extends Component {
             habits.push(
                 <EmptyCard
                     key={habits.length}
+                    accentColor={this.state.accentColors[habits.length]}
                 />    
             );
         }

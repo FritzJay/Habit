@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PushNotification from 'react-native-push-notification';
 import config from '../../config';
 import ProgressBar from './ProgressBar/ProgressBar';
+import PushNotification from 'react-native-push-notification';
 import { 
     View, 
     Text,
@@ -28,15 +28,10 @@ export default class HabitCard extends Component {
             PushNotification.localNotificationSchedule({
                 index: this.props.index,
                 id: this.props.id,
-                ticker: "My Notification Ticker",
-                bigText: "Big Text",
-                smallText: "My Small Text",
-                subText: "Subtext",
+                ticker: this.props.info,
                 vibrate: true,
                 vibration: 300,
-                tag: 'My Tag',
                 ongoing: true,
-                message: "My Notification Message",
                 date: new Date(Date.now() + (this.props.interval * 1000)),
                 title: this.props.title,
                 playSound: true,
@@ -63,7 +58,7 @@ export default class HabitCard extends Component {
             <Image 
                 style={ styles.icon }
                 source={require('./icons/notification.png')}
-                tintColor='red'
+                tintColor='#992233'
             />
         ) : (
             <Image 
@@ -216,9 +211,10 @@ const styles = StyleSheet.create({
     iconButton: {
         width: 20,
         height: 20,
-        borderRadius: 10
+        opacity: 0.84
     },
     icon: {
+        opacity: 0.54,
         width: 20, 
         height: 20
     }
