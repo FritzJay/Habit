@@ -18,6 +18,7 @@ export default class HabitContainer extends Component {
         
         // Bind functions to component
         this.getHabits = this.getHabits.bind(this);
+        this.createHabits = this.createHabits.bind(this);
         this.calculateProgress = this.calculateProgress.bind(this);
     }
 
@@ -54,6 +55,43 @@ export default class HabitContainer extends Component {
             })
     }
 
+    createHabits () {
+        let habits = [];
+        // Map habits to an array of Card 
+        if (this.state.habits.length > 0) {
+            habits = this.state.habits.map((habit) => {
+                // Create a habit card for each habit in state.habits
+                const accentColor = this.state.accentColors[habit.index];
+                return (
+                    <HabitCard
+                        key={habit.index}               // Required by react-native
+                        picture={habit.picture}         // Url to picture
+                        info={habit.info}               // Habit info
+                        title={habit.title}             // Habit title
+                        id={habit.habit_id}             // Habit id
+                        accentColor={accentColor}       // The color used by this habit's progress bar
+                        interval={habit.interval}       // Time between notifications (in seconds)
+                        start={habit.start_time}        // The time of day this habit becomes active
+                        end={habit.end_time}            // The time of day this habit becomes inactive
+                        progress={habit.progress}       // The current progress of this habit throught it's active day
+                        index={habit.index}             // The index of this habit within habitContainer's state.habits (used by push notifications)
+                        isActive={habit.isActive}       // Is the habit currently sending push notifications
+                    />
+                )
+            });
+        }
+
+        // Fill remaining space in habits with empty cards
+        while (habits.length < 3) {
+            habits.push(
+                <EmptyCard
+                    key={habits.length}
+                    accentColor={this.state.accentColors[habits.length]}
+                />    
+            );
+        }
+        return habits;
+    }
 
     calculateProgress (habit) {
         console.log(this.state)
@@ -101,40 +139,7 @@ export default class HabitContainer extends Component {
     }
 
     render () {
-        let habits = [];
-        // Map habits to an array of Card 
-        if (this.state.habits.length > 0) {
-            habits = this.state.habits.map((habit) => {
-                // Create a habit card for each habit in state.habits
-                const accentColor = this.state.accentColors[habit.index];
-                return (
-                    <HabitCard
-                        key={habit.index}               // Required by react-native
-                        picture={habit.picture}         // Url to picture
-                        info={habit.info}               // Habit info
-                        title={habit.title}             // Habit title
-                        id={habit.habit_id}             // Habit id
-                        accentColor={accentColor}       // The color used by this habit's progress bar
-                        interval={habit.interval}       // Time between notifications (in seconds)
-                        start={habit.start_time}        // The time of day this habit becomes active
-                        end={habit.end_time}            // The time of day this habit becomes inactive
-                        progress={habit.progress}       // The current progress of this habit throught it's active day
-                        index={habit.index}             // The index of this habit within habitContainer's state.habits (used by push notifications)
-                        isActive={habit.isActive}       // Is the habit currently sending push notifications
-                    />
-                )
-            });
-        }
-
-        // Fill remaining space in habits with empty cards
-        while (habits.length < 3) {
-            habits.push(
-                <EmptyCard
-                    key={habits.length}
-                    accentColor={this.state.accentColors[habits.length]}
-                />    
-            );
-        }
+        const habits = this.createHabits();
 
         return(
             <ScrollView>
