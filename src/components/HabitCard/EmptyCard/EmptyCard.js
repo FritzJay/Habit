@@ -4,10 +4,21 @@ import {
     View,
     Text, 
     Image,
+    TouchableOpacity,
     StyleSheet
 } from 'react-native';
 
 export default class EmptyCard extends Component {
+    constructor (props) {
+        super(props);
+
+        this.onAddHabitPress = this.onAddHabitPress.bind(this);
+    }
+
+    onAddHabitPress () {
+        console.log('AddHabit has been pressed')
+    }
+
     render () {
         return (
             <View style={ styles.opacityContainer }>
@@ -59,11 +70,15 @@ export default class EmptyCard extends Component {
                     </View>
                 </View>
                 <View style={ styles.addHabitContainer}>
-                    <Image
-                        style={ styles.addHabitImage }
-                        source={require('./AddHabit.png')}
-                        tintColor={ this.props.accentColor }
-                    />
+                    <TouchableOpacity
+                        onPress={this.onAddHabitPress}
+                    >
+                        <Image
+                            style={ styles.addHabitImage }
+                            source={require('./AddHabit.png')}
+                            tintColor={ this.props.accentColor }
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         )

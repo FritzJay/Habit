@@ -10,23 +10,6 @@ import {
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            isMenuActive: true
-        }
-
-        this.onMenuPressed = this.onMenuPressed.bind(this);
-    }
-
-    onMenuPressed () {
-        if (this.state.isMenuActive) {
-            this.props.menu.slideInView.slideIn();
-            this.setState({ isMenuActive: false });
-        }
-        else {
-            this.props.menu.slideInView.slideOut();
-            this.setState({ isMenuActive: true });
-        }
     }
 
     render () {
@@ -40,7 +23,7 @@ export default class NavBar extends Component {
             :
             <TouchableOpacity
                 style={ styles.menuButtonContainer }
-                onPress={this.onMenuPressed}
+                onPress={ this.props.menu.slideInView.handleMenuPressed }
             >
                 <Image                              // Menu button
                     source={require('./menu.png')}
