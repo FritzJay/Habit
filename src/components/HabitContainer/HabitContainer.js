@@ -3,6 +3,7 @@ import {
     View, 
     Text,
     ScrollView,
+    RefreshControl,
     StyleSheet
 } from 'react-native';
 import HabitCard from '../HabitCard/HabitCard';
@@ -13,22 +14,23 @@ export default class HabitContainer extends Component {
         super(props);
         this.state = {
             habits: [],
-            accentColors: ['#F44336', '#FFC107', '#3F51B5']        // The accent colors that will be passed down to habit Cards
+            accentColors: ['#F44336', '#FFC107', '#3F51B5'],        // The accent colors that will be passed down to habit Cards
+            refreshing: false
         }
         
         // Bind functions to component
         this.getHabits = this.getHabits.bind(this);
         this.createHabits = this.createHabits.bind(this);
         this.calculateProgress = this.calculateProgress.bind(this);
-    }
-
-    componentWillMount(props) {
-        this.getHabits();
+        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
     // Fetches habits associated with the current user
     // from the api server
     getHabits () {
+        this.setState({
+            refreshing: true
+        });
        fetch(this.props.url + '/habits/1', {                // fetches info from supplied url
             method: 'GET',
             headers: {
@@ -47,7 +49,8 @@ export default class HabitContainer extends Component {
                 console.log("NEW HABITS: ")
                 console.log(habits)
                 this.setState({
-                    habits: habits
+                    habits: habits,
+                    refreshing: false,
                 });
             })
             .catch((err) => {
@@ -125,24 +128,52 @@ export default class HabitContainer extends Component {
         }
     }
 
-    updateProgress (id) {
-        console.log('Update progress, id: ' + id)
-        const progress = this.calculateProgress(this.state.habits[id]);
+    updateProgress (index) {
+        console.log('Update progress, index: ' + index)
+        const progress = this.calculateProgress(this.state.habits[index]);
         // Create a copy of the habits array to be modified
         habits = this.state.habits;
         // Update the specified habit's progress
-        habits[id].progress = parseInt(progress);
-        console.log('new progress: ' + habits[id].progress)
+        habits[index].progress = parseInt(progress);
+        console.log('new progress: ' + habits[index].progress)
         this.setState({
             habits: habits
         })
+    }
+
+    handleRefresh () {
+        console.log('refreshing')
+        this.setState({
+            refreshing: true
+        });
+        // Refresh habits
+        this.getHabits();
+        // Refresh the progress bar of each habit
+        if (this.state.habits.length > 0)
+            this.state.habits.forEach((habit) => {
+                this.updateProgress(habit.index);
+            })
+        this.setState({
+            refreshing: false
+        });
+    }
+
+    componentWillMount(props) {
+    this.getHabits();
     }
 
     render () {
         const habits = this.createHabits();
 
         return(
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.handleRefresh}
+                    />
+                }
+            >
                 <View style={ styles.habitContainer }>
                     {habits}
                 </View>
