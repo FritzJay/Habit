@@ -22,6 +22,10 @@ export default class Menu extends Component {
     this.state = {
       touchOpacity: 0.54
     }
+
+    this.onLogoutPressed = this.onLogoutPressed.bind(this);
+    this.onProfilePressed = this.onProfilePressed.bind(this);
+    this.onHabitsPressed = this.onHabitsPressed.bind(this); 
   }
 
   async onLogoutPressed () {
@@ -37,56 +41,67 @@ export default class Menu extends Component {
       navigate('Login');
   }
 
-    componentWillMount () {
-      this._panResponder = PanResponder.create({
-        // Ask to be the responder:
-        onStartShouldSetPanResponder: (evt, gestureState) => true,
-        onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-        onMoveShouldSetPanResponder: (evt, gestureState) => true,
-        onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+  onProfilePressed () {
+    console.log('Profile Pressed');
+  }
 
-        onPanResponderGrant: (evt, gestureState) => {
-          // The gesture has started. Show visual feedback so the user knows
-          // what is happening!
-          console.log('onPanResponderGrant');
-          this.setState({
-            touchOpacity: 0.84
+  onHabitsPressed () {
+    console.log('Habits Pressed');
+    // Redirect to login screen
+    let { navigate } = this.props.navigate;
+      navigate('HabitEditor');
+  }
+
+  componentWillMount () {
+    this._panResponder = PanResponder.create({
+      // Ask to be the responder:
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+
+      onPanResponderGrant: (evt, gestureState) => {
+        // The gesture has started. Show visual feedback so the user knows
+        // what is happening!
+        console.log('onPanResponderGrant');
+        this.setState({
+          touchOpacity: 0.84
+        })
+
+        // gestureState.d{x,y} will be set to zero now
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        // The most recent move distance is gestureState.move{X,Y}
+        this.slideInView.move(gestureState.moveX);
+        // The accumulated gesture distance since becoming responder is
+        // gestureState.d{x,y}
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+        // The user has released all touches while this view is the
+        // responder. This typically means a gesture has succeeded
+        console.log('PanResponderRelease');
+        if(gestureState.moveX >= windowWidth - 75 || gestureState.vx > 1.25) {
+          this.slideInView.slideOut();
+        } else {
+          this.slideInView.reset();
+        }
+        this.setState({
+            touchOpacity: 0.54
           })
-
-          // gestureState.d{x,y} will be set to zero now
-        },
-        onPanResponderMove: (evt, gestureState) => {
-          // The most recent move distance is gestureState.move{X,Y}
-          this.slideInView.move(gestureState.moveX);
-          // The accumulated gesture distance since becoming responder is
-          // gestureState.d{x,y}
-        },
-        onPanResponderTerminationRequest: (evt, gestureState) => true,
-        onPanResponderRelease: (evt, gestureState) => {
-          // The user has released all touches while this view is the
-          // responder. This typically means a gesture has succeeded
-          console.log('PanResponderRelease');
-          if(gestureState.moveX >= windowWidth - 75 || gestureState.vx > 1.25) {
-            this.slideInView.slideOut();
-          } else {
-            this.slideInView.reset();
-          }
-          this.setState({
-              touchOpacity: 0.54
-            })
-        },
-        onPanResponderTerminate: (evt, gestureState) => {
-          // Another component has become the responder, so this gesture
-          // should be cancelled
-          console.log('PanResponderTerminate')
-        },
-        onShouldBlockNativeResponder: (evt, gestureState) => {
-          // Returns whether this component should block native components from becoming the JS
-          // responder. Returns true by default. Is currently only supported on android.
-          return true;
-        },
-      });
-    }
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        // Another component has become the responder, so this gesture
+        // should be cancelled
+        console.log('PanResponderTerminate')
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        // Returns whether this component should block native components from becoming the JS
+        // responder. Returns true by default. Is currently only supported on android.
+        return true;
+      },
+    });
+  }
   
   render() {
     return (
@@ -137,6 +152,14 @@ export default class Menu extends Component {
           >
             <Text>
               Profile
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.onHabitsPressed}
+            style={ styles.button }
+          >
+            <Text>
+              Habits
             </Text>
           </TouchableOpacity>
         </View>

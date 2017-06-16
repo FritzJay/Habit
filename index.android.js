@@ -10,7 +10,8 @@ import {
  import { StackNavigator } from 'react-navigation';
  import Register from './src/components/Authentication/Register/Register';
  import Login from './src/components/Authentication/Login/Login';
- import App from './src/components/App/App'
+ import App from './src/components/App/App';
+ import HabitEditor from './src/components/HabitEditor/HabitEditor';
  import Config from './src/config';
 
 // --------------------- HABIT ------------------------
@@ -28,9 +29,10 @@ class Habit extends Component {
 }
 
 const HabitRouter = StackNavigator({
-    Login:      { screen: Login    },
-    Register:   { screen: Register },
-    Home:       { screen: Habit    },
+    Login:          { screen: Login    },
+    Register:       { screen: Register },
+    Home:           { screen: Habit    },
+    HabitEditor:    { screen: HabitEditor }
 })
 
 AppRegistry.registerComponent('AwesomeProject', () => HabitRouter);
