@@ -48,7 +48,7 @@ export default class Register extends React.Component {
     async onLoginPressed () {
         this.setState({showProgress: true})
         try {
-            let response = await fetch('http://192.168.0.108:3001/api/authenticate', {
+            let response = await fetch('http://192.168.0.102:3001/api/authenticate', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

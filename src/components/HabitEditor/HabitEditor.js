@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native'
+import MiniHabit from './MiniHabit/MiniHabit';
+import ListHabit from './ListHabit/ListHabit';
 
 export default class HabitEditor extends Component {
     static navigationOptions = {
@@ -22,6 +24,8 @@ export default class HabitEditor extends Component {
         this.getHabits = this.getHabits.bind(this);
         this.createHabitList = this.createHabitList.bind(this);
         this.handleBackPressed = this.handleBackPressed.bind(this);
+        this.addToList = this.addToList.bind(this);
+        this.removeFromList = this.removeFromList.bind(this);
     }
 
     getHabits () {
@@ -55,15 +59,13 @@ export default class HabitEditor extends Component {
 
         this.state.habits.map((habit) => {
             habits.push(
-                <TouchableOpacity
-                    style={ styles.habitNameContainer}
+                <ListHabit
                     key={ habits.length }
+                    title={ habit.title }
+                    add={ this.addToList }
+                    remove={ this.removeFromList }
                 >
-                    <Text style={ styles.habitName } >
-                        
-                        {habit.title}
-                    </Text>
-                </TouchableOpacity>
+                </ListHabit>
             );
         });
         console.log(habits);
@@ -73,6 +75,37 @@ export default class HabitEditor extends Component {
     handleBackPressed () {
         const { goBack } = this.props.navigation;
         goBack(null);
+    }
+
+    addToList (habit) {
+        // Create a ListHabit out of 'habit'
+        const newHabit = (
+            <ListHabit
+                key={ habits.length + 1}
+                title={ habit.title }
+                add={ this.addToList }
+                remove={ this.removeFromList }
+            >
+            </ListHabit>
+        )
+        let habits = this.state.habits;
+        // Add the habit to the list of habits
+        habits.push(newHabit);
+        // Adds the habit to the list of habits
+        this.setState({
+            habits: habits
+        })
+    }
+
+    removeFromList (id) {
+        // Remove the habit from the list
+        let habits = this.state.habits.filter((habit) => {
+            return habit.id !== id
+        });
+        // Removes the habit from the list of habits
+        this.setState({
+            habits: habits
+        })
     }
 
     componentWillMount (props) {
@@ -100,18 +133,15 @@ export default class HabitEditor extends Component {
                     <View
                         style={ styles.leftContainer }
                     >
-                        <View
-                            style={ styles.habit }
-                        >
-                        </View>
-                        <View
-                            style={ styles.habit }
-                        >
-                        </View>
-                        <View
-                            style={ styles.habit }
-                        >
-                        </View>
+                        <MiniHabit
+                            title='MiniHabit1' 
+                        />
+                        <MiniHabit
+                            title='MiniHabit2' 
+                        />
+                        <MiniHabit
+                            title='MiniHabit3' 
+                        />
                         <View
                             style={ styles.buttonContainer }
                         >
@@ -190,26 +220,5 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         backgroundColor: 'blue',
         height: 300
-    },
-    habitNameContainer: {
-        alignSelf: 'stretch',
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 8,
-        paddingVertical: 3,
-        paddingHorizontal: 3,
-        borderRadius: 3
-    },
-    habitName: {
-        fontSize: 16,
-    },
-    habit: {
-        height: 50,
-        alignSelf: 'stretch',
-        marginVertical: 15,
-        marginHorizontal: 25,
-        backgroundColor: 'white',
-        borderRadius: 3
     }
 });
