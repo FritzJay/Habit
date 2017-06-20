@@ -1,3 +1,7 @@
 Create an edit profile page
 
- 
+ Create a Splash Page!
+    if (!alreadyIntro'd)
+        intro
+    else
+        login

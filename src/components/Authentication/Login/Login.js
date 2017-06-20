@@ -12,6 +12,7 @@ import {
     Keyboard
 } from 'react-native';
 import CheckBox from 'react-native-check-box'
+import config from '../../../config.js'
 
 export default class Register extends React.Component {
     static navigationOptions = {
@@ -48,7 +49,7 @@ export default class Register extends React.Component {
     async onLoginPressed () {
         this.setState({showProgress: true})
         try {
-            let response = await fetch('http://192.168.0.102:3001/api/authenticate', {
+            let response = await fetch('http://' + config.ip + ':' + config.port + '/api/authenticate', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
