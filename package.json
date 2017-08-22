@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "express-graphql": "^0.6.7",
+    "graphql": "^0.10.5",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.3",
     "react-navigation": "^1.0.0-beta.11"

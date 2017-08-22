@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     title: {
         alignSelf: 'center', 
         fontSize: 22, 
-        color: '#000080'
+        color: '#172E58',
+        fontFamily: 'Roboto'
     }
 })

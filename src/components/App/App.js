@@ -7,12 +7,13 @@ import PushController from '../PushController/PushController.js';
 import FadeInView from '../FadeInView';
 import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
+import SplashScreen from '../SplashScreen/SplashScreen';
 import {
     Text,
     View,
     StatusBar,
     StyleSheet,
-    AppState
+    AppState,
 } from 'react-native';
 
 // App will be in charge of fetching all user related data from the database...
@@ -72,6 +73,7 @@ export default class App extends React.Component {
                 <PushController
                     habitContainer = {this.state.habitContainer}
                 />
+                <SplashScreen />
             </View>
         );
     }

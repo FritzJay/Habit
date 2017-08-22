@@ -14,7 +14,7 @@ export default class HabitContainer extends Component {
         super(props);
         this.state = {
             habits: [],
-            accentColors: ['#F44336', '#FFC107', '#3F51B5'],        // The accent colors that will be passed down to habit Cards
+            accentColors: ['#E84721', '#F9BE01', '#0595C2'],        // The accent colors that will be passed down to habit Cards
             refreshing: false
         }
         
