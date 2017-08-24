@@ -13,13 +13,33 @@ class FadeInView extends Component {
   }
 
   componentDidMount() {
-    Animated.timing(                            // Animate over time
-      this.state.fadeAnim,                      // The animated value to drive
-      {
-        toValue: 1,                             // Animate to opacity: 1, or fully opaque
-        duration: this.props.duration,
-      }
-    ).start();                                  // Starts the animation
+    if (this.props.fadeOut) {
+      Animated.sequence([
+        Animated.timing(                            // Animate over time
+          this.state.fadeAnim,                      // The animated value to drive
+          {
+            toValue: 1,                             // Animate to opacity: 1, or fully opaque
+            duration: this.props.duration,
+          }
+        ),
+        Animated.delay(this.props.duration * 2),
+        Animated.timing(                            // Animate over time
+          this.state.fadeAnim,                      // The animated value to drive
+          {
+            toValue: 0,                             // Animate to opacity: 0, or fully transparent
+            duration: this.props.duration,
+          }
+        )
+      ]).start()
+    } else {
+      Animated.timing(                            // Animate over time
+        this.state.fadeAnim,                      // The animated value to drive
+        {
+          toValue: 1,                             // Animate to opacity: 1, or fully opaque
+          duration: this.props.duration,
+        }
+      ).start();                                  // Starts the animation
+    }
   }
   
   render() {

@@ -5,58 +5,89 @@ import {
     View, 
     Text,
     Dimensions,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
+import TimerMixin from 'react-timer-mixin'
 import FadeInView from '../FadeInView'
 
 export default class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hidden: false,
+            mixins: [TimerMixin]
+        }
+    }
+
     static navigationOptions = {
         header: null
     };
 
+    componentDidMount() {
+        console.log("splash mounted")
+        // I love es6
+        setTimeout(
+            () => {
+                console.log("remove splash")
+                this.setState({ hidden: true })
+            }, 
+            totalDuration
+        )
+    }
+
     render () {
-        return (
-            <FadeInView
-                style={{
-                    position: 'absolute',
-                    width: windowWidth,
-                    height: windowHeight,
-                    backgroundColor: 'white',
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                }}
-            duration= {500}
-            >
-                <Text 
-                    style={ styles.title }
-                >
-                    Habit
-                </Text>
+        if (!this.state.hidden) {
+            return (
                 <View
-                    style={ styles.circlesContainer }
+                    style={{
+                        position: 'absolute',
+                        width: windowWidth,
+                        height: windowHeight,
+                        backgroundColor: 'white',
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                    }}
                 >
-                    <View
-                        style={[
-                            styles.circle,
-                            styles.circleOne 
-                        ]}
-                    />
-                    <View
-                        style={[
-                            styles.circle,
-                            styles.circleTwo 
-                        ]}
-                    />
-                    <View
-                        style={[
-                            styles.circle,
-                            styles.circleThree 
-                        ]}
-                    />
+                    <FadeInView
+                        duration={fadeDuration}
+                        fadeOut={true}
+                    >
+                        <Text 
+                            style={ styles.title }
+                        >
+                            Habit
+                        </Text>
+                        <View
+                            style={ styles.circlesContainer }
+                        >
+                            <View
+                                style={[
+                                    styles.circle,
+                                    styles.circleOne 
+                                ]}
+                            />
+                            <View
+                                style={[
+                                    styles.circle,
+                                    styles.circleTwo 
+                                ]}
+                            />
+                            <View
+                                style={[
+                                    styles.circle,
+                                    styles.circleThree 
+                                ]}
+                            />
+                        </View>
+                    </FadeInView>
                 </View>
-            </FadeInView>
-        );
+            );
+        } else {
+            return (
+                <View />
+            );
+        }
     }
 }
 
@@ -71,8 +102,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
     },
     circle: {
-        width: 35,
-        height: 35,
+        width: 32,
+        height: 32,
         borderRadius: 29,
         margin: 5,
     },
@@ -89,3 +120,6 @@ const styles = StyleSheet.create({
 
 const windowWidth = Dimensions.get('window').width,
   windowHeight = Dimensions.get('window').height
+
+const fadeDuration  = 250,
+      totalDuration = 3000
