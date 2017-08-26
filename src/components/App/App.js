@@ -7,7 +7,6 @@ import PushController from '../PushController/PushController.js';
 import FadeInView from '../FadeInView';
 import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
-import SplashScreen from '../SplashScreen/SplashScreen';
 import {
     Text,
     View,
@@ -43,7 +42,7 @@ export default class App extends React.Component {
         // Return to the login screen
         if (!this.GetUser()) {
             // Go back to the login screen
-            //this.redirect('Login');
+            this.redirect('Login');
         }
         // Set menu to be passed down to children
         this.setState({ menu: this.menu });
@@ -73,7 +72,6 @@ export default class App extends React.Component {
                 <PushController
                     habitContainer = {this.state.habitContainer}
                 />
-                <SplashScreen />
             </View>
         );
     }

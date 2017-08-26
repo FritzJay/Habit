@@ -6,36 +6,62 @@ import {
     Text,
     Dimensions,
     StyleSheet,
+    AsyncStorage,
 } from 'react-native';
 import TimerMixin from 'react-timer-mixin'
 import FadeInView from '../FadeInView'
-
+ 
 export default class Register extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            hidden: false,
-            mixins: [TimerMixin]
+            hidden: true
         }
+
+        this.showSplash = this.showSplash.bind(this)
+        this.setSeenSplash = this.setSeenSplash.bind(this)
     }
 
     static navigationOptions = {
         header: null
     };
 
-    componentDidMount() {
-        console.log("splash mounted")
-        // I love es6
+    showSplash () {
+        console.log("SplashScreen.showSplash: Initiated")
         setTimeout(
             () => {
-                console.log("remove splash")
-                this.setState({ hidden: true })
+                this.setSeenSplash()
+                this.setState({ 
+                    hidden: true
+                })
             }, 
             totalDuration
         )
     }
 
+    async setSeenSplash () {
+        // Store a seen_splash value so we can skip showing it
+        // the next time a user uses the app.
+        try {
+            // seen_splash is consumed in Authentication/Login
+            await AsyncStorage.setItem('seen_splash', 'true')
+            console.log("SplashScreen.setSeenSplash: Succesfully stored 'seen_splash' as 'true'")
+        } catch (error) {
+            console.log("Something went wrong: " + error)
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        console.log("SplashScreen.componentWillReceiveProps: Initiated")
+        if (props.showSplash) {
+            this.showSplash()
+            this.setState({ hidden: false })
+        }
+    }
+
     render () {
+        console.log('SplashScreen.render: this.state.hidden = ' + this.state.hidden)
         if (!this.state.hidden) {
             return (
                 <View

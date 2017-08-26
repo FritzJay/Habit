@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box'
 import config from '../../../config.js'
+import SplashScreen from '../../SplashScreen/SplashScreen';
+
 
 export default class Register extends React.Component {
     static navigationOptions = {
@@ -27,13 +29,17 @@ export default class Register extends React.Component {
             password: "",
             token: "",
             errors: [],
-            showProgress: false
+            showProgress: false,
+            showSplash: false,
         };
 
-        this.redirect = this.redirect.bind(this);
-        this.onRegisterPressed = this.onRegisterPressed.bind(this);
-        this.onLoginPressed = this.onLoginPressed.bind(this);
-        this.storeToken = this.storeToken.bind(this);
+        this.redirect = this.redirect.bind(this)
+        this.onRegisterPressed = this.onRegisterPressed.bind(this)
+        this.onLoginPressed = this.onLoginPressed.bind(this)
+        this.storeToken = this.storeToken.bind(this)
+        this.getToken = this.getToken.bind(this)
+        this.setShowSplash = this.setShowSplash.bind(this)
+        this.clearShowSplash = this.clearShowSplash.bind(this)
     }
 
     redirect (routeName, token) {
@@ -94,20 +100,41 @@ export default class Register extends React.Component {
         }
     }
 
-    componentWillMount () {
+    async getToken () {
         // If a token is already stored on the device
         // redirect to home and send the token as a param
-        var token;
         AsyncStorage.getItem('access_token').then((data) => {
             if (data) {
-                console.log('data')
-                console.log(data);
+                console.log('Login.getToken: data = ' + data)
                 this.redirect('Home', data);
             }
         });
     }
 
+    async setShowSplash () {
+        // If it's the first time the user has used this app
+        // Display the splash screen
+        AsyncStorage.getItem('seen_splash').then((data) => {
+            console.log('Login.setShowSplash: seen_splash = ' + data)
+            if (data == null) {
+                this.setState({ showSplash: true })
+            }
+        })
+    }
+
+    async clearShowSplash () {
+        // Temp function to clear showSplash AsyncStorage
+        AsyncStorage.removeItem('seen_splash')
+        console.log('Login.clearShowSplash: Cleared "seen_splash" from storage.')
+    }
+
+    componentWillMount () {
+        this.getToken()
+        this.setShowSplash()
+    }
+
     render () {
+        console.log("Login.render: showSplash = " + this.state.showSplash)
         return (
             <View>
                 <Text> Login: </Text>
@@ -134,9 +161,16 @@ export default class Register extends React.Component {
                     <Text> Register </Text>
                 </TouchableHighlight>
 
+                <TouchableHighlight
+                    onPress={this.clearShowSplash}>
+                    <Text> Clear 'seen_splash' </Text>
+                </TouchableHighlight>
+
                 <Errors errors={this.state.errors}/>
 
                 <ActivityIndicator animating={this.state.showProgress} size="large" />
+
+                <SplashScreen showSplash={this.state.showSplash} />
             </View>
         );
     }
