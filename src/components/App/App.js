@@ -13,6 +13,7 @@ import {
     StatusBar,
     StyleSheet,
     AppState,
+    AsyncStorage,
 } from 'react-native';
 
 // App will be in charge of fetching all user related data from the database...
@@ -29,21 +30,9 @@ export default class App extends React.Component {
 
         // bind functions to this component
         this.GetUser = this.GetUser.bind(this);
-        this.redirect = this.redirect.bind(this);
-    }
-
-    redirect (routeName) {
-        let { navigate } = this.props.navigation;
-        navigate(routName)
     }
 
     componentDidMount () {
-        // If we cannot successfully get the user from the database
-        // Return to the login screen
-        if (!this.GetUser()) {
-            // Go back to the login screen
-            this.redirect('Login');
-        }
         // Set menu to be passed down to children
         this.setState({ menu: this.menu });
         // Set habitContainer to be passed down to children

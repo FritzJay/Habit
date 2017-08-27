@@ -30,7 +30,6 @@ export default class Register extends React.Component {
             token: "",
             errors: [],
             showProgress: false,
-            showSplash: false,
         };
 
         this.redirect = this.redirect.bind(this)
@@ -38,7 +37,6 @@ export default class Register extends React.Component {
         this.onLoginPressed = this.onLoginPressed.bind(this)
         this.storeToken = this.storeToken.bind(this)
         this.getToken = this.getToken.bind(this)
-        this.setShowSplash = this.setShowSplash.bind(this)
         this.clearShowSplash = this.clearShowSplash.bind(this)
     }
 
@@ -84,19 +82,17 @@ export default class Register extends React.Component {
             let formErrors = JSON.parse(error);
             console.log(formErrors);
             this.setState({errors: formErrors});
-            this.setState({showProgress: false});    
+            this.setState({showProgress: false});
         }
     }
 
     async storeToken (accessToken) {
-        console.log("storeToken");
-        console.log(accessToken)
         try {
             await AsyncStorage.setItem('access_token', accessToken);
-            console.log("Token was stored successfully");
+            console.log("Login.storeToken: Token was stored successfully");
             this.redirect('Home', accessToken);
         } catch (error) {
-            console.log("Something went wrong: " + error);
+            console.log("Login.storeToken: Something went wrong: " + error);
         }
     }
 
@@ -111,15 +107,8 @@ export default class Register extends React.Component {
         });
     }
 
-    async setShowSplash () {
-        // If it's the first time the user has used this app
-        // Display the splash screen
-        AsyncStorage.getItem('seen_splash').then((data) => {
-            console.log('Login.setShowSplash: seen_splash = ' + data)
-            if (data == null) {
-                this.setState({ showSplash: true })
-            }
-        })
+    componentWillMount () {
+        this.getToken()
     }
 
     async clearShowSplash () {
@@ -128,13 +117,7 @@ export default class Register extends React.Component {
         console.log('Login.clearShowSplash: Cleared "seen_splash" from storage.')
     }
 
-    componentWillMount () {
-        this.getToken()
-        this.setShowSplash()
-    }
-
     render () {
-        console.log("Login.render: showSplash = " + this.state.showSplash)
         return (
             <View>
                 <Text> Login: </Text>
@@ -169,8 +152,6 @@ export default class Register extends React.Component {
                 <Errors errors={this.state.errors}/>
 
                 <ActivityIndicator animating={this.state.showProgress} size="large" />
-
-                <SplashScreen showSplash={this.state.showSplash} />
             </View>
         );
     }

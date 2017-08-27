@@ -12,32 +12,44 @@ import TimerMixin from 'react-timer-mixin'
 import FadeInView from '../FadeInView'
  
 export default class Register extends React.Component {
+    static navigationOptions = {
+        header: null
+    };
+
     constructor(props) {
         super(props);
 
         this.state = {
-            hidden: true
+            hidden: false
         }
 
         this.showSplash = this.showSplash.bind(this)
         this.setSeenSplash = this.setSeenSplash.bind(this)
+        this.getShowSplash = this.getShowSplash.bind(this)
     }
-
-    static navigationOptions = {
-        header: null
-    };
 
     showSplash () {
         console.log("SplashScreen.showSplash: Initiated")
         setTimeout(
             () => {
-                this.setSeenSplash()
-                this.setState({ 
-                    hidden: true
-                })
+                const { navigate } = this.props.navigation;
+                navigate('Login')
             }, 
             totalDuration
         )
+    }
+
+    async getShowSplash () {
+        // If it's the first time the user has used this app
+        // Display the splash screen
+        AsyncStorage.getItem('seen_splash').then((data) => {
+            console.log('SplashScreen.getShowSplash: seen_splash = ' + data)
+            if (data == null) {
+                return true
+            } else {
+                return false
+            }
+        })
     }
 
     async setSeenSplash () {
@@ -52,68 +64,58 @@ export default class Register extends React.Component {
         }
     }
 
-    componentWillReceiveProps(props) {
+    componentWillMount () {
         console.log("SplashScreen.componentWillReceiveProps: Initiated")
-        if (props.showSplash) {
-            this.showSplash()
-            this.setState({ hidden: false })
-        }
+        this.showSplash()
     }
 
     render () {
-        console.log('SplashScreen.render: this.state.hidden = ' + this.state.hidden)
-        if (!this.state.hidden) {
-            return (
-                <View
-                    style={{
-                        position: 'absolute',
-                        width: windowWidth,
-                        height: windowHeight,
-                        backgroundColor: 'white',
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                    }}
+        return (
+            <View
+                style={{
+                    position: 'absolute',
+                    width: windowWidth,
+                    height: windowHeight,
+                    backgroundColor: 'white',
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                }}
+            >
+                <FadeInView
+                    duration={fadeDuration}
+                    fadeOut={true}
                 >
-                    <FadeInView
-                        duration={fadeDuration}
-                        fadeOut={true}
+                    <Text 
+                        style={ styles.title }
                     >
-                        <Text 
-                            style={ styles.title }
-                        >
-                            Habit
-                        </Text>
+                        Habit
+                    </Text>
+                    <View
+                        style={ styles.circlesContainer }
+                    >
                         <View
-                            style={ styles.circlesContainer }
-                        >
-                            <View
-                                style={[
-                                    styles.circle,
-                                    styles.circleOne 
-                                ]}
-                            />
-                            <View
-                                style={[
-                                    styles.circle,
-                                    styles.circleTwo 
-                                ]}
-                            />
-                            <View
-                                style={[
-                                    styles.circle,
-                                    styles.circleThree 
-                                ]}
-                            />
-                        </View>
-                    </FadeInView>
-                </View>
-            );
-        } else {
-            return (
-                <View />
-            );
-        }
+                            style={[
+                                styles.circle,
+                                styles.circleOne 
+                            ]}
+                        />
+                        <View
+                            style={[
+                                styles.circle,
+                                styles.circleTwo 
+                            ]}
+                        />
+                        <View
+                            style={[
+                                styles.circle,
+                                styles.circleThree 
+                            ]}
+                        />
+                    </View>
+                </FadeInView>
+            </View>
+        );
     }
 }
 

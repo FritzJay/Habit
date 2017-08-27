@@ -12,6 +12,7 @@ import {
  import Login from './src/components/Authentication/Login/Login';
  import App from './src/components/App/App';
  import HabitEditor from './src/components/HabitEditor/HabitEditor';
+ import SplashScreen from './src/components/SplashScreen/SplashScreen';
  import Config from './src/config';
 
 // --------------------- HABIT ------------------------
@@ -20,19 +21,20 @@ class Habit extends Component {
         header: null
     };
     render() {
-    return (
-        <View style={{flex:1}}>
-            <App url={"http://" + Config.ip + ":" + Config.port + "/api"} navigation={this.props.navigation} />
-        </View>
-    );
+        return (
+            <View style={{flex:1}}>
+                <App url={"http://" + Config.ip + ":" + Config.port + "/api"} navigation={this.props.navigation} />
+            </View>
+        );
     }
 }
 
 const HabitRouter = StackNavigator({
+    SplashScreen:   { screen: SplashScreen },
     Login:          { screen: Login    },
-    Register:       { screen: Register },
     Home:           { screen: Habit    },
-    HabitEditor:    { screen: HabitEditor }
+    Register:       { screen: Register },
+    HabitEditor:    { screen: HabitEditor },
 })
 
 AppRegistry.registerComponent('AwesomeProject', () => HabitRouter);
